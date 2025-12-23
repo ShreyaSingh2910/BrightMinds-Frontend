@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Match Game</title>
+  <link rel="stylesheet" href="game.css">
+  <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
+</head>
+<body>
+
+<audio id="bg-music" loop>
+  <source src="assets/music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<div class="game-container">
+  <div class="grid" id="grid"></div>
+</div>
+
+
+<div id="win-overlay" class="win-overlay">
+  <div class="win-content">
+    <div id="lottie-win" style="width: 200px; margin: 0 auto;"></div>
+    <h2>Amazing Job!</h2>
+    <p>You matched all the letters!</p>
+    <div class="button-group">
+      <button onclick="location.reload()">Replay</button>
+      <button onclick="window.location.href='index.html'">Exit</button>
+    </div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
