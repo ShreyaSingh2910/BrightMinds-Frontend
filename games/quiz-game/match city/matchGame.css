@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-family: "Comic Sans MS", "Baloo", cursive;
+  font-family: 'Fredoka', sans-serif;
   background: linear-gradient(135deg, #9adcff, #ffb5e8);
   color: #2d3436;
 }
@@ -312,4 +312,5 @@ h1 {
   50% { opacity: 1; }
   100% { opacity: 0; transform: scale(1.3); }
 }
+
 
