@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: "Comic Sans MS", cursive;
+  font-family: 'Fredoka', sans-serif;
   background: linear-gradient(270deg, #ffe29f, #ffa99f, #ffd36a);
   background-size: 600% 600%;
   animation: gradientMove 10s ease infinite;
@@ -118,4 +118,5 @@ button:hover {
 
 button:active {
   transform: scale(0.95);
+
 }
