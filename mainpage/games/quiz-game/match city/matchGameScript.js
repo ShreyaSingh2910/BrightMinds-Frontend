@@ -136,6 +136,8 @@ const message = document.getElementById("message");
 const scoreText = document.getElementById("score");
 const leftTitle = document.getElementById("leftTitle");
 const rightTitle = document.getElementById("rightTitle");
+const gameArea = document.querySelector(".game-area");
+const startHint = document.getElementById("startHint");
 
 
 
@@ -161,6 +163,12 @@ function clearSelection() {
 
 
 function loadGame(type) {
+  
+
+  // ✅ SHOW GAME, HIDE HINT
+  gameArea.style.display = "flex";
+  startHint.style.display = "none";
+
   leftDiv.innerHTML = "";
   rightDiv.innerHTML = "";
   selectedLeft = null;
@@ -170,6 +178,7 @@ function loadGame(type) {
   message.innerText = "Now choose the correct match 😊";
 
   const fullGame = gameData[type];
+
 
   
   const selectedData = getRandomSubset(fullGame.data, 4);
