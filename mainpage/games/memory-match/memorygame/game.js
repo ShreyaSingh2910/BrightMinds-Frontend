@@ -1,6 +1,4 @@
-// =======================
-// LETTER ↔ IMAGE PAIRS
-// =======================
+
 const cardsData = [
   { pair: 1, img: "A.jpg" },
   { pair: 1, img: "apple.jpg" },
@@ -31,7 +29,6 @@ window.addEventListener('load', () => {
   const music = document.getElementById("bg-music");
   music.volume = 0.3; // Keeps it soft
   music.play().catch(error => {
-    // If the browser still blocks it, play it on the first card click
     console.log("Waiting for user interaction to play music...");
     document.addEventListener('click', () => {
       music.play();
@@ -39,7 +36,6 @@ window.addEventListener('load', () => {
   });
 });
 
-// Shuffle cards
 cardsData.sort(() => 0.5 - Math.random());
 
 const grid = document.getElementById("grid");
@@ -48,9 +44,6 @@ let firstCard = null;
 let secondCard = null;
 let lockBoard = false;
 
-// =======================
-// CREATE CARD ELEMENTS
-// =======================
 cardsData.forEach(item => {
   const card = document.createElement("div");
   card.classList.add("card");
@@ -84,9 +77,7 @@ cardsData.forEach(item => {
   grid.appendChild(card);
 });
 
-
-
-// =======================  
+  
 let matchedPairs = 0;
 const totalPairs = cardsData.length / 2;
 
@@ -96,20 +87,17 @@ function checkMatch() {
 
     lockBoard = true;
 
-    // STEP 1: Move both cards to center
     firstCard.classList.add("match-join");
     secondCard.classList.add("match-join");
 
-    // STEP 2: Pause slightly, then move down-left
     setTimeout(() => {
       firstCard.classList.remove("match-join");
       secondCard.classList.remove("match-join");
 
       firstCard.classList.add("match-exit");
       secondCard.classList.add("match-exit");
-    }, 900); // slow pause at center
+    }, 900); 
 
-    // STEP 3: Remove after animation
     setTimeout(() => {
       firstCard.classList.add("matched");
       secondCard.classList.add("matched");
@@ -124,7 +112,7 @@ function checkMatch() {
       }
 
       resetBoard();
-    }, 2600); // total animation time
+    }, 2600); 
 
   } else {
     setTimeout(() => {
@@ -140,18 +128,18 @@ function checkMatch() {
 function resetBoard() {
   firstCard = null;
   secondCard = null;
-  lockBoard = false; // THIS IS THE KEY: It must be false for the next click
+  lockBoard = false; 
 }
 
 function showWinMessage() {
   document.getElementById("win-overlay").style.display = "flex";
   
-  // Optional: Add a celebratory Lottie animation
   lottie.loadAnimation({
     container: document.getElementById("lottie-win"),
     renderer: "svg",
     loop: true,
     autoplay: true,
-    path: "lottie/celebration.json" // Make sure you have a celebration JSON!
+    path: "lottie/celebration.json" 
   });
+
 }
