@@ -165,7 +165,6 @@ function clearSelection() {
 function loadGame(type) {
   
 
-  // ✅ SHOW GAME, HIDE HINT
   gameArea.style.display = "flex";
   startHint.style.display = "none";
 
@@ -226,24 +225,19 @@ function checkAnswer(div, value) {
   const leftItem = [...document.querySelectorAll("#states .item")]
     .find(i => i.innerText === selectedLeft);
 
-  // ✅ CORRECT
   if (currentGame.data[selectedLeft] === value) {
 
-    // LOCK INPUT
     leftItem.style.pointerEvents = "none";
     div.style.pointerEvents = "none";
 
-    // STEP 1: MOVE TO CENTER
     leftItem.classList.add("highfive-left");
     div.classList.add("highfive-right");
 
-    // STEP 2: HOLD + GLOW (HIGH FIVE MOMENT)
     setTimeout(() => {
       leftItem.classList.add("highfive-hold");
       div.classList.add("highfive-hold");
     }, 600);
 
-    // STEP 3: BOUNCE + SUCCESS
     setTimeout(() => {
       leftItem.classList.remove("highfive-left", "highfive-hold");
       div.classList.remove("highfive-right", "highfive-hold");
@@ -251,21 +245,17 @@ function checkAnswer(div, value) {
       leftItem.classList.add("correct", "highfive-bounce");
       div.classList.add("correct", "highfive-bounce");
 
-      // SCORE
       score++;
       scoreText.innerText = `Score: ${score} ⭐`;
       message.innerText = "🎉 Awesome Match!";
 
-      // SOUND
       correctSound.currentTime = 0;
       correctSound.play().catch(() => {});
 
-      // CONFETTI + SIDE ANIM
       confettiAnim.goToAndPlay(0, true);
       leftAnim.goToAndPlay(0, true);
       rightAnim.goToAndPlay(0, true);
 
-      // CLEANUP BOUNCE
       setTimeout(() => {
         leftItem.classList.remove("highfive-bounce");
         div.classList.remove("highfive-bounce");
@@ -276,7 +266,6 @@ function checkAnswer(div, value) {
     selectedLeft = null;
   }
 
-  // ❌ WRONG
   else {
     div.classList.add("wrong");
     message.innerText = "❌ Try again!";
@@ -314,3 +303,4 @@ const confettiAnim = lottie.loadAnimation({
   autoplay: false,
   path: "./lottie/success.json"
 });
+
