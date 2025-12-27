@@ -10,9 +10,9 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);  /* always 4 columns */
+  grid-template-columns: repeat(4, 1fr); 
   gap: clamp(10px, 2vw, 18px);
-  width: min(92vw, 650px);   /* BIG grid */
+  width: min(92vw, 650px);   
   padding: clamp(12px, 3vw, 24px);
   background: rgba(255,255,255,0.2);
   border-radius: 25px;
@@ -33,7 +33,7 @@ body {
   border-radius: 20px;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  position: relative;   /* ✅ FIX */
+  position: relative;   
 }
 
 
@@ -54,7 +54,7 @@ body {
 
 .back {
   background: url("assets/card-icon.png") center/cover no-repeat,
-              #1e88e5;   /* ✅ fallback color */
+              #1e88e5;  
 }
 
 .front {
@@ -76,7 +76,7 @@ body {
   filter: brightness(1.05);
 }
 .win-overlay {
-  display: none; /* Hidden by default */
+  display: none; 
   position: fixed;
   top: 0;
   left: 0;
@@ -108,7 +108,6 @@ body {
 .button-group button {
   margin: 10px;
   padding: 10px 25px;
-  /* Use your existing button styles or these: */
   cursor: pointer;
   border-radius: 20px;
   border: none;
@@ -117,9 +116,6 @@ body {
   font-weight: bold;
 }
 
-/* ===============================
-   MATCH ANIMATION
-================================= */
 
 .card.match-join {
   z-index: 100;
@@ -130,7 +126,6 @@ body {
   animation: flyAway 1s ease-in forwards;
 }
 
-/* Cards move toward center */
 @keyframes joinTogether {
   0% {
     transform: scale(1) rotate(0deg);
@@ -140,7 +135,6 @@ body {
   }
 }
 
-/* Cards fly out */
 @keyframes flyAway {
   0% {
     transform: scale(1.15);
@@ -182,4 +176,5 @@ body {
     padding: 14px 36px;
   }
 }
+
 
