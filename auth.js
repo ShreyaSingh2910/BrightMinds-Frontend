@@ -1,4 +1,3 @@
-/**************** FIREBASE SETUP ****************/
 const firebaseConfig = {
   apiKey: "AIzaSyBmz23pK8TQ8iE5_EjRbOo0qCazLOBmcBw",
   authDomain: "brightminds-52de2.firebaseapp.com",
@@ -12,10 +11,8 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 
-// ✅ PERSIST LOGIN
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-// ✅ AUTO LOGIN CHECK
 auth.onAuthStateChanged(user => {
   const isGuest = localStorage.getItem("loginMode") === "guest";
 
@@ -26,7 +23,6 @@ auth.onAuthStateChanged(user => {
 });
 
 
-/**************** ELEMENTS ****************/
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 
@@ -37,7 +33,6 @@ const googleBtn = document.getElementById("googleBtn");
 const manualLoginBtn = document.getElementById("manualLoginBtn");
 const startGuestBtn = document.getElementById("startGuest");
 
-/**************** TAB SWITCH ****************/
 loginTab.onclick = () => {
   loginTab.classList.add("active");
   guestTab.classList.remove("active");
@@ -52,7 +47,6 @@ guestTab.onclick = () => {
   guestSection.classList.remove("hidden");
 };
 
-/**************** GOOGLE LOGIN ****************/
 googleBtn.onclick = async () => {
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -67,7 +61,6 @@ googleBtn.onclick = async () => {
   }
 };
 
-/**************** EMAIL/PASSWORD LOGIN ****************/
 manualLoginBtn.onclick = async () => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -89,8 +82,8 @@ manualLoginBtn.onclick = async () => {
   window.location.href = "mainpage/index.html";
 };
 
-/**************** GUEST ****************/
 startGuestBtn.onclick = () => {
   localStorage.setItem("loginMode", "guest");
   window.location.href = "mainpage/index.html";
 };
+
