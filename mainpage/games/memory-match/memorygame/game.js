@@ -1,6 +1,4 @@
-// =======================
-// ALL 26 LETTER ↔ IMAGE PAIRS
-// =======================
+
 const allLetters = [
   { img: "A.jpg", match: "apple.jpg" },
   { img: "B.jpg", match: "Baloon.jpg" },
@@ -30,9 +28,6 @@ const allLetters = [
   { img: "Z.jpg", match: "zebra.avif" }
 ];
 
-// =======================
-// PICK RANDOM 8 LETTERS
-// =======================
 function getRandomCards() {
   const shuffled = [...allLetters].sort(() => 0.5 - Math.random());
   const selected = shuffled.slice(0, 8);
@@ -49,15 +44,9 @@ function getRandomCards() {
   return cards;
 }
 
-// =======================
-// GAME DATA (16 CARDS)
-// =======================
 const cardsData = getRandomCards();
 cardsData.sort(() => 0.5 - Math.random());
 
-// =======================
-// BACKGROUND MUSIC
-// =======================
 window.addEventListener("load", () => {
   const music = document.getElementById("bg-music");
   if (!music) return;
@@ -70,9 +59,7 @@ window.addEventListener("load", () => {
   });
 });
 
-// =======================
-// GAME VARIABLES
-// =======================
+
 const grid = document.getElementById("grid");
 let firstCard = null;
 let secondCard = null;
@@ -80,9 +67,6 @@ let lockBoard = false;
 let matchedPairs = 0;
 const totalPairs = cardsData.length / 2;
 
-// =======================
-// CREATE CARD ELEMENTS
-// =======================
 cardsData.forEach(item => {
   const card = document.createElement("div");
   card.classList.add("card");
@@ -116,18 +100,15 @@ cardsData.forEach(item => {
   grid.appendChild(card);
 });
 
-// =======================
-// CHECK MATCH
-// =======================
+
 function checkMatch() {
 
   if (firstCard.dataset.pair === secondCard.dataset.pair) {
 
-    // STEP 1: Move to center
+
     firstCard.classList.add("match-join");
     secondCard.classList.add("match-join");
 
-    // STEP 2: Exit animation
     setTimeout(() => {
       firstCard.classList.remove("match-join");
       secondCard.classList.remove("match-join");
@@ -136,7 +117,7 @@ function checkMatch() {
       secondCard.classList.add("match-exit");
     }, 900);
 
-    // STEP 3: Remove cards
+
     setTimeout(() => {
       firstCard.classList.add("matched");
       secondCard.classList.add("matched");
@@ -162,18 +143,14 @@ function checkMatch() {
   }
 }
 
-// =======================
-// RESET BOARD
-// =======================
+
 function resetBoard() {
   firstCard = null;
   secondCard = null;
   lockBoard = false;
 }
 
-// =======================
-// WIN MESSAGE
-// =======================
+
 function showWinMessage() {
   document.getElementById("win-overlay").style.display = "flex";
 
@@ -185,3 +162,4 @@ function showWinMessage() {
     path: "lottie/celebration.json"
   });
 }
+
