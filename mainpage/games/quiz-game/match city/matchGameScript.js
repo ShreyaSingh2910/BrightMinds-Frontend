@@ -59,7 +59,7 @@ const gameData = {
       Rose: "Pink",
       Sun: "Yellow",
       Cloud: "White",
-      Orange: "Orange"
+      Carrot: "Orange"
     }
   },
 
@@ -192,10 +192,10 @@ const gameData = {
       Japan: "Yen",
       China: "Yuan",
       Germany: "Euro",
-      France: "Euro",
+      Thailand: "Thai Baht",
       Russia: "Ruble",
       Brazil: "Real",
-      Australia: "Dollar"
+      SaudiArabia: "Saudi Riyal"
     }
   },
 
@@ -453,3 +453,4 @@ function startBackgroundMusic() {
 document.addEventListener("click", () => {
   startBackgroundMusic();
 }, { once: true });
+
