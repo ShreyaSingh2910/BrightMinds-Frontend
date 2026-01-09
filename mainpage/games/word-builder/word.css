@@ -1,0 +1,247 @@
+* {
+  box-sizing: border-box;
+  font-family: "Comic Sans MS", "Baloo", cursive;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    radial-gradient(circle at top, #b6ccff, transparent 40%),
+    linear-gradient(180deg, #3b5bdb, #1c2fa3);
+}
+
+.game-wrapper {
+  width: 90%;
+  max-width: 520px;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  margin-bottom: 18px;
+}
+
+.progress-bar {
+  width: 70%;
+  height: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #51cf66;
+  transition: width 0.4s ease;
+}
+
+.question-card {
+  background: linear-gradient(180deg, #2a3dbf, #1c2fa3);
+  padding: 30px;
+  border-radius: 26px;
+  box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+  text-align: center;
+  color: white;
+}
+
+.question-card h2 {
+  margin-bottom: 25px;
+  font-size: 1.4rem;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.options button {
+  padding: 12px;
+  font-size: 1.05rem;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  background: #4dabf7;
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+.options button:hover {
+  transform: scale(1.06);
+}
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-card {
+  background: #ffffff;              /* 👈 WHITE BG */
+  padding: 36px;
+  border-radius: 30px;
+  text-align: center;
+  color: #1c2fa3;                   /* 👈 DARK BLUE TEXT */
+
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.35);
+}
+
+.popup-card h1 {
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.popup-card p {
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+  color: #364fc7;
+}
+
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.popup-buttons button:first-child {
+  background: linear-gradient(180deg, #51cf66, #2f9e44);
+  color: #ffffff;
+}
+
+.popup-buttons button:last-child {
+  background: linear-gradient(180deg, #74c0fc, #4dabf7);
+  color: #ffffff;
+}
+
+.popup-buttons button {
+  padding: 10px 28px;
+  font-size: 1rem;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+
+  box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.popup-buttons button:hover {
+  transform: scale(1.05);
+}
+
+.bg-animations {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-animations span {
+  position: absolute;
+  bottom: -80px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+
+.bg-animations span:nth-child(1) {
+  left: 8%;
+  width: 28px;
+  height: 28px;
+  animation-duration: 14s;
+}
+
+.bg-animations span:nth-child(2) {
+  left: 22%;
+  width: 45px;
+  height: 45px;
+  animation-duration: 20s;
+}
+
+.bg-animations span:nth-child(3) {
+  left: 40%;
+  width: 32px;
+  height: 32px;
+  animation-duration: 17s;
+}
+
+.bg-animations span:nth-child(4) {
+  left: 58%;
+  width: 55px;
+  height: 55px;
+  animation-duration: 24s;
+}
+
+.bg-animations span:nth-child(5) {
+  left: 75%;
+  width: 36px;
+  height: 36px;
+  animation-duration: 19s;
+}
+
+.bg-animations span:nth-child(6) {
+  left: 90%;
+  width: 26px;
+  height: 26px;
+  animation-duration: 15s;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-120vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 20px;
+
+  background: linear-gradient(180deg, #028ffb, #058bf8);
+  color: #ffffff;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 0 #1864ab;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.05);
+}
+
+.back-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #1864ab;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Word Builder – Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="word.css" />
+</head>
+<body>
+
+  <div class="game-wrapper">
+
+    <div class="top-bar">
+      <span id="counter">1 / 8</span>
+
+      <div class="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <h2 id="question-text"></h2>
+
+      <div class="options" id="options"></div>
+    </div>
+
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-card">
+      <h1>🎉 Well Done! 🎉</h1>
+      <p>You completed the Word Builder game!</p>
+
+      <div class="popup-buttons">
+        <button onclick="restartGame()">Replay</button>
+        <button onclick="goHome()">Back</button>
+      </div>
+    </div>
+  </div>
+
+<div class="bg-animations">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<button class="back-btn"  onclick="goHome()">⬅</button>
+
+  <script src="questions.js"></script>
+  <script src="word.js"></script>
+</body>
+</html>
