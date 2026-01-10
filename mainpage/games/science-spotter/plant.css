@@ -22,9 +22,7 @@ body {
   position: relative;
 }
 
-/* ===============================
-   🫧 STRONGER BUBBLE + DOT BG
-================================ */
+
 .bg-bubbles {
   position: fixed;
   inset: 0;
@@ -44,9 +42,6 @@ body {
   to   { transform: translateY(-500px); }
 }
 
-/* ===============================
-   TITLE
-================================ */
 .title {
   margin-top: 18px;
   font-size: 40px;
@@ -68,9 +63,6 @@ body {
   position: relative;
 }
 
-/* ===============================
-   🌿 PLANT IMAGE
-================================ */
 .plant-wrapper {
   position: relative;
   display: inline-block;
@@ -85,9 +77,6 @@ body {
   width: 340px;
 }
 
-/* ===============================
-   🎯 DROP ZONES (TEXT ONLY)
-================================ */
 .drop-zone {
   position: absolute;
   width: 135px;
@@ -115,16 +104,12 @@ body {
   100% { transform: scale(1); }
 }
 
-/* positions */
 .flower { top: 29px; right: -140px; }
 .leaf   { top: 145px; right: -140px; }
 .fruit  { top: 220px; right: -140px; }
 .stem   { top: 295px; right: -140px; }
 .root   { top: 350px; right: -140px; }
 
-/* ===============================
-   🎮 SOFT PILL BUTTONS
-================================ */
 .options {
   margin: 26px auto 32px;
   display: flex;
@@ -155,15 +140,11 @@ body {
   box-shadow: 0 2px 0 #9ccc65;
 }
 
-/* disabled after correct */
 .label.used {
   opacity: 0.5;
   cursor: default;
 }
 
-/* ===============================
-   ⬅ BACK BUTTON
-================================ */
 .back-btn {
   position: fixed;
   top: 10px;
@@ -196,7 +177,6 @@ body {
     background 0.15s ease;
 }
 
-/* hover */
 .back-btn:hover {
   background: linear-gradient(135deg, #dcedc8, #aed581);
   transform: translateY(-2px);
@@ -205,7 +185,6 @@ body {
     0 14px 26px rgba(0,0,0,0.3);
 }
 
-/* click */
 .back-btn:active {
   transform: translateY(4px);
   box-shadow:
@@ -213,9 +192,6 @@ body {
     0 6px 12px rgba(0,0,0,0.25);
 }
 
-/* ===============================
-   📘 LEARN BUTTON
-================================ */
 .learn-btn {
   position: fixed;
   bottom: 16px;
@@ -241,9 +217,6 @@ body {
   box-shadow: 0 2px 0 #75bc7a;
 }
 
-/* ===============================
-   📖 LEARNING PANEL
-================================ */
 .learn-panel {
   position: fixed;
   inset: 0;
@@ -282,7 +255,6 @@ body {
   color: #2e7d32;
 }
 
-/* learning item */
 .learn-item {
   display: flex;
   gap: 14px;
@@ -301,7 +273,6 @@ body {
   color: #33691e;
 }
 
-/* close button */
 .close-learn {
   position: absolute;
   top: 12px;
@@ -312,35 +283,27 @@ body {
   cursor: pointer;
 }
 
-/* ===============================
-   📱 MOBILE FIX (SMALL SCREENS)
-================================ */
 @media (max-width: 480px) {
 
-  /* push content down so back button doesn't overlap */
   body {
     padding-top: 60px;
   }
 
-  /* scale plant area to fit screen */
   .plant-wrapper {
     transform: scale(0.85);
     transform-origin: top center;
   }
 
-  /* reduce image size */
   .plant-img {
     width: 260px;
   }
 
-  /* move drop zones INSIDE screen */
   .flower { left: 190px; right: auto; }
   .leaf   { left: 190px; right: auto; }
   .fruit  { left: 190px; right: auto; }
   .stem   { left: 190px; right: auto; }
   .root   { left: 190px; right: auto; }
 
-  /* options tighter */
   .options {
     gap: 10px;
   }
@@ -352,18 +315,13 @@ body {
 }
 
 
-/* ===============================
-   📱 MOBILE DROP-ZONE FIX
-================================ */
 @media (max-width: 480px) {
 
-  /* make plant area slightly smaller */
   .plant-wrapper {
     transform: scale(0.85);
     transform-origin: top center;
   }
 
-  /* 🔧 FIX DROP-ZONE SIZE */
   .drop-zone {
     width: 100px;          /* 🔽 reduced */
     height: 28px;          /* 🔽 reduced */
@@ -371,7 +329,6 @@ body {
     border-radius: 14px;
   }
 
-  /* 🔧 FIX DROP-ZONE POSITION */
 .flower { top: 32px;  left: 280px; right: auto; top:25px; }
   .leaf   { top: 140px; left: 280px; right: auto; top:110px; }
   .fruit  { top: 215px; left: 280px; right: auto; top:170px; }
@@ -379,9 +336,6 @@ body {
   .root   { top: 335px; left: 280px; right: auto; top:270px; }
 }
 
-/* ===============================
-   🎉 CELEBRATION OVERLAY
-================================ */
 .celebration {
   position: fixed;
   inset: 0;
@@ -424,7 +378,6 @@ body {
   cursor: pointer;
 }
 
-/* 🎉 Celebration buttons layout */
 .celebration-buttons {
   display: flex;
   justify-content: center;
@@ -432,7 +385,6 @@ body {
   margin-top: 14px;
 }
 
-/* 🎉 Celebration buttons layout */
 .celebration-buttons {
   display: flex;
   justify-content: center;
@@ -440,7 +392,6 @@ body {
   margin-top: 16px;
 }
 
-/* 🔘 COMMON BUTTON STYLE (Replay + Back) */
 .celebration-buttons button {
   padding: 10px 20px;
   border-radius: 18px;
@@ -456,12 +407,11 @@ body {
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* hover */
 .celebration-buttons button:hover {
   background: #43a047;
 }
 
-/* click */
 .celebration-buttons button:active {
   transform: scale(0.96);
 }
+
