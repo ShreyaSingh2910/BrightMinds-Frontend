@@ -9,7 +9,6 @@ body {
   color: white;
   text-align: center;
 
-  /* 🌌 Deep space base color (matches image) */
   background:
     radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08), transparent 40%),
     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06), transparent 45%),
@@ -23,13 +22,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ===============================
-   ✨ VISIBLE MOVING STARS
-================================ */
-/* ===============================
-   ✨ BIG & VISIBLE STARS
-================================ */
-
 .stars,
 .stars2,
 .stars3 {
@@ -39,7 +31,6 @@ body {
   z-index: 0;
 }
 
-/* ⭐ BIG STARS */
 .stars {
   background-image:
     radial-gradient(4px 4px at 40px 60px, #ffffff, transparent),
@@ -53,7 +44,6 @@ body {
   filter: drop-shadow(0 0 6px white);
 }
 
-/* ✨ MEDIUM STARS */
 .stars2 {
   background-image:
     radial-gradient(3px 3px at 100px 200px, #ffffffcc, transparent),
@@ -65,7 +55,6 @@ body {
   filter: drop-shadow(0 0 4px white);
 }
 
-/* 🌟 SMALL TWINKLING STARS */
 .stars3 {
   background-image:
     radial-gradient(2.5px 2.5px at 150px 90px, #ffffffaa, transparent),
@@ -76,20 +65,6 @@ body {
   opacity: 0.4;
 }
 
-/* Star motion */
-@keyframes moveStars {
-  from { transform: translate(0, 0); }
-  to   { transform: translate(-400px, 250px); }
-}
-
-@keyframes moveStarsAlt {
-  from { transform: translate(0, 0); }
-  to   { transform: translate(300px, -350px); }
-}
-
-
-
-/* Star motion */
 @keyframes moveStars {
   from { transform: translate(0, 0); }
   to   { transform: translate(-300px, 200px); }
@@ -100,27 +75,6 @@ body {
   to   { transform: translate(200px, -300px); }
 }
 
-
-
-/* Star animations */
-@keyframes starMoveSlow {
-  from {
-    transform: translate(0, 0);
-  }
-  to {
-    transform: translate(-200px, 120px);
-  }
-}
-
-@keyframes starMoveFast {
-  from {
-    transform: translate(0, 0);
-  }
-  to {
-    transform: translate(150px, -180px);
-  }
-}
-
 .solar-wrapper,
 .title,
 .panel,
@@ -129,13 +83,11 @@ body {
   z-index: 1;
 }
 
-
 .title {
   margin: 20px 0;
   font-size: 32px;
 }
 
-/* Layout */
 .solar-wrapper {
   display: flex;
   justify-content: center;
@@ -155,46 +107,38 @@ body {
   object-fit: cover;
 }
 
-/* ===============================
-   🌍 PLANET BASE (FIXED)
-================================ */
 .planet {
   position: absolute;
   transform: translate(-50%, -50%);
   cursor: pointer;
   text-align: center;
-  border-radius: 50%;          /* ✅ circular hit area */
+  border-radius: 50%;         
 }
 
-/* IMAGE — MAKE IT ROUND */
 .planet img {
   display: block;
-  border-radius: 50%;          /* ✅ removes square */
-  overflow: hidden;            /* ✅ clips glow */
+  border-radius: 50%;          
+  overflow: hidden;         
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
 
-/* HOVER — ROUND GLOW */
 .planet:hover img {
   transform: scale(1.15);
   box-shadow: 0 0 20px rgba(255,255,255,0.9);
 }
 
-/* ACTIVE — STRONGER ROUND GLOW */
 .planet.active img {
   transform: scale(1.25);
   box-shadow: 0 0 28px rgba(255,255,255,1);
 }
 
-/* LOCKED */
 .planet.locked {
   pointer-events: none;
   filter: brightness(1.1);
 }
 
-/* NAME LABEL */
 .planet span {
   display: none;
   margin-top: 6px;
@@ -205,31 +149,6 @@ body {
   display: block;
 }
 
-/* ===============================
-   🌟 ADVANCED: SOFT PULSE GLOW
-================================ */
-.planet.active::after {
-  content: "";
-  position: absolute;
-  inset: -10%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255,255,255,0.4),
-    rgba(255,255,255,0)
-  );
-  animation: pulseGlow 1.6s infinite;
-  pointer-events: none;
-}
-
-@keyframes pulseGlow {
-  0%   { transform: scale(0.9); opacity: 0.6; }
-  100% { transform: scale(1.2); opacity: 0; }
-}
-
-/* ===============================
-   PLANET SIZES
-================================ */
 .mercury img { width: 50px; }
 .venus img   { width: 78px; }
 .earth img   { width: 78px; }
@@ -239,9 +158,6 @@ body {
 .uranus img  { width: 70px; }
 .neptune img { width: 75px; }
 
-/* ===============================
-   PLANET POSITIONS
-================================ */
 .mercury { top: 52%; left: 18.8%; }
 .venus   { top: 52%; left: 27.5%; }
 .earth   { top: 52%; left: 37%; }
@@ -251,9 +167,6 @@ body {
 .uranus  { top: 50%; left: 77.8%; }
 .neptune { top: 50%; left: 86%; }
 
-/* ===============================
-   GAME PANEL
-================================ */
 .panel {
   margin-top: 4px;
 }
@@ -270,10 +183,6 @@ body {
   margin: auto;
 
 }
-
-/* ===============================
-   🚀 SPACE QUIZ BUTTONS (KIDS)
-================================ */
 
 .options button {
   background: linear-gradient(
@@ -299,7 +208,6 @@ body {
     filter 0.15s ease;
 }
 
-/* Hover – glow + lift */
 .options button:hover {
   transform: translateY(-3px);
   box-shadow:
@@ -308,14 +216,12 @@ body {
   filter: brightness(1.1);
 }
 
-/* Pressed */
 .options button:active {
   transform: translateY(6px);
   box-shadow:
     0 4px 0 rgba(0,0,0,0.25);
 }
 
-/* ✅ CORRECT ANSWER */
 .options button.correct {
   background: linear-gradient(
     135deg,
@@ -327,7 +233,6 @@ body {
     0 8px 0 rgba(0,0,0,0.25);
 }
 
-/* ❌ WRONG ANSWER */
 .options button.wrong {
   background: linear-gradient(
     135deg,
@@ -354,7 +259,6 @@ body {
   }
 }
 
-
 #hintBtn {
   margin-top: 14px;
   background: transparent;
@@ -371,16 +275,9 @@ body {
   animation: pop 0.8s infinite alternate;
 }
 
-/* ===============================
-   🪐 SATURN SPECIAL CASE
-================================ */
-.saturn {
-  border-radius: 0;            /* remove circular clipping */
-}
-
 .saturn img {
-  border-radius: 0;            /* allow rings */
-  overflow: visible;           /* do NOT cut rings */
+  border-radius: 0;           
+  overflow: visible;          
 }
 .saturn:hover img {
   box-shadow: 0 0 24px rgba(255,255,255,0.9);
@@ -390,28 +287,23 @@ body {
   box-shadow: 0 0 32px rgba(255,255,255,1);
 }
 
-
-
 @keyframes pop {
   from { transform: scale(1); }
   to   { transform: scale(1.1); }
 }
 
-/* 🌙 MOON */
 .moon img {
   width: 40px;
 }
 
-/* Position Moon near Earth */
 .moon {
   top: 37%;
   left: 40.5%;
 }
 
-/* 🌙 MOON LABEL FIX (AVOID EARTH OVERLAP) */
 .moon span {
   position: absolute;
-  bottom: 110%;          /* move label above moon */
+  bottom: 110%;          
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
@@ -420,7 +312,6 @@ body {
   text-shadow: 0 0 6px rgba(0,0,0,0.8);
 }
 
-/* show label only after solved (locked) */
 .moon span {
   display: none;
 }
@@ -429,10 +320,6 @@ body {
   display: block;
 }
 
-
-/* ===============================
-   📝 START INSTRUCTION MESSAGE
-================================ */
 .start-message {
   position: relative;
   margin: 4px auto 0;
@@ -451,7 +338,6 @@ body {
   100% { transform: translateY(0); opacity: 0.9; }
 }
 
-/* Smooth disappear */
 .start-message.hide {
   animation: fadeOut 0.5s forwards;
 }
@@ -462,10 +348,6 @@ body {
     transform: translateY(10px);
   }
 }
-
-/* ===============================
-   📱 MOBILE ROTATE TO LANDSCAPE
-================================ */
 
 .rotate-overlay {
   position: fixed;
@@ -496,42 +378,31 @@ body {
   opacity: 0.9;
 }
 
-/* 📱 PORTRAIT MODE → SHOW ROTATE MESSAGE */
 @media (max-width: 900px) and (orientation: portrait) {
   .rotate-overlay {
     display: flex;
   }
 
-  /* hide game underneath */
   body > *:not(.rotate-overlay) {
     display: none !important;
   }
 }
 
-/* 📱 LANDSCAPE MODE → SHOW GAME */
 @media (max-width: 900px) and (orientation: landscape) {
   .rotate-overlay {
     display: none;
   }
 }
 
-/* ===============================
-   📱 MOBILE PLANET SIZE REDUCTION
-================================ */
-
-/* All mobile devices (portrait + landscape) */
 @media (max-width: 950px) {
-
-  /* Base scale for ALL planets */
   .planet img {
-    width: auto;              /* keep aspect ratio */
-    transform: scale(0.65);   /* 🔧 adjust this value */
+    width: auto;              
+    transform: scale(0.65);  
   }
   .uranus img{
     width:85px;
   }
 
-  /* Hover / active effects adjusted */
   .planet:hover img {
     transform: scale(0.85);
   }
@@ -539,8 +410,6 @@ body {
   .planet.active img {
     transform: scale(0.95);
   }
-
-  /* Moon slightly smaller */
   .moon img {
     transform: scale(0.65);
   }
