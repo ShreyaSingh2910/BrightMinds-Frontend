@@ -1,6 +1,4 @@
-/*********************************
- 🔊 AUDIO SETUP
-**********************************/
+
 const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
@@ -14,12 +12,10 @@ wrongSound.volume = 1;
 
 let audioStarted = false;
 
-// Unlock & start background music on first interaction
 function startAudio() {
   if (audioStarted) return;
   audioStarted = true;
 
-  // unlock sounds silently
   [correctSound, wrongSound].forEach(sound => {
     sound.muted = true;
     sound.play().then(() => {
@@ -35,9 +31,6 @@ function startAudio() {
 // Any first click/touch
 window.addEventListener("pointerdown", startAudio, { once: true });
 
-/*********************************
- 🎯 DRAG & DROP LOGIC
-**********************************/
 let dragged = null;
 
 document.querySelectorAll(".label").forEach(label => {
@@ -55,7 +48,6 @@ document.querySelectorAll(".drop-zone").forEach(zone => {
 
     const answer = zone.dataset.answer;
 
-    // ✅ CORRECT
     if (dragged.dataset.name === answer && !zone.classList.contains("filled")) {
   zone.textContent = dragged.textContent;
   zone.classList.add("filled");
@@ -66,12 +58,11 @@ document.querySelectorAll(".drop-zone").forEach(zone => {
   dragged.remove();
   correctCount++;
 
-  // 🎉 SHOW CELEBRATION WHEN ALL DONE
   if (correctCount === TOTAL_PARTS) {
     setTimeout(showCelebration, 600);
   }
 }
-    // ❌ WRONG
+    
     else {
       wrongSound.currentTime = 0;
       wrongSound.play().catch(() => {});
@@ -81,17 +72,12 @@ document.querySelectorAll(".drop-zone").forEach(zone => {
   });
 });
 
-/*********************************
- ⬅ BACK BUTTON LOGIC
-**********************************/
+
 function goBack() {
   // change this to your category / topic page
   window.location.href = "topic.html";
 }
 
-/*********************************
- 📘 LEARN PANEL LOGIC
-**********************************/
 function openLearn() {
   document.getElementById("learnPanel").classList.remove("hidden");
 }
@@ -111,3 +97,4 @@ function showCelebration() {
     path: "lottie/celebration2.json"
   });
 }
+
