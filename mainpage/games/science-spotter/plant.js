@@ -28,7 +28,6 @@ function startAudio() {
   bgMusic.play().catch(() => {});
 }
 
-// Any first click/touch
 window.addEventListener("pointerdown", startAudio, { once: true });
 
 let dragged = null;
@@ -97,4 +96,5 @@ function showCelebration() {
     path: "lottie/celebration2.json"
   });
 }
+
 
