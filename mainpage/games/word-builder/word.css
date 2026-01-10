@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: "Comic Sans MS", "Baloo", cursive;
+ font-family: 'Fredoka', sans-serif;
 }
 
 body {
@@ -245,4 +245,5 @@ body {
   transform: translateY(3px);
   box-shadow: 0 2px 0 #1864ab;
 }
+
 
