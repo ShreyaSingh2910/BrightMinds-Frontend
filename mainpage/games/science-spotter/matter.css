@@ -1,6 +1,4 @@
-/* ===============================
-   🌍 GLOBAL
-================================ */
+
 * {
   box-sizing: border-box;
   font-family: "Comic Sans MS", "Baloo", cursive;
@@ -21,9 +19,6 @@ body {
   );
 }
 
-/* ===============================
-   🧠 TITLE (SIMPLE COLOR ONLY)
-================================ */
 .title {
   margin-top: 20px;
   font-size: 36px;
@@ -37,9 +32,6 @@ body {
   font-size: 18px;
 }
 
-/* ===============================
-   🧺 BASKETS LAYOUT
-================================ */
 .bins {
   display: flex;
   justify-content: center;
@@ -47,9 +39,6 @@ body {
   margin: 30px 0;
 }
 
-/* ===============================
-   🧺 COMMON BASKET
-================================ */
 .bin {
   width: 180px;
   height: 180px;
@@ -75,9 +64,6 @@ body {
   color: #263238;
 }
 
-/* ===============================
-   🧺 LIST INSIDE BASKET
-================================ */
 .list {
   list-style: none;
   padding: 0;
@@ -96,9 +82,6 @@ body {
   margin-top: 16px;
 }
 
-/* ======================
-   🧊 SOLID BASKET (ICE SHINE)
-====================== */
 .solid {
   background: linear-gradient(145deg, #e3f2fd, #bbdefb);
   border-color: #64b5f6;
@@ -125,9 +108,6 @@ body {
   to   { transform: translateX(100%); }
 }
 
-/* ======================
-   💧 LIQUID BASKET (WAVES)
-====================== */
 .liquid {
   background: linear-gradient(145deg, #b2dfdb, #4db6ac);
   border-color: #26a69a;
@@ -151,9 +131,6 @@ body {
   to   { transform: translateX(-50%); }
 }
 
-/* ======================
-   🌫️ GAS BASKET (FLOATING BUBBLES)
-====================== */
 .gas {
   background: linear-gradient(145deg, #ede7f6, #d1c4e9);
   border-color: #9575cd;
@@ -179,7 +156,6 @@ body {
   to   { transform: translateY(-80px); opacity: 0; }
 }
 
-/* gas text float */
 .gas li {
   animation: gasFloat 1.5s ease-out forwards;
 }
@@ -188,10 +164,6 @@ body {
   from { transform: translateY(0); opacity: 1; }
   to   { transform: translateY(-25px); opacity: 0.9; }
 }
-
-/* ===============================
-   🎮 OBJECT BUTTONS
-================================ */
 .items {
   display: flex;
   justify-content: center;
@@ -217,9 +189,6 @@ body {
   box-shadow: 0 2px 0 rgba(0,0,0,0.25);
 }
 
-/* ===============================
-   WIN / SUCCESS ANIMATION
-================================ */
 
 .win-overlay {
   display: none;
@@ -263,8 +232,6 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
-
-/* 📘 LEARN BUTTON (BOTTOM LEFT) */
 .learn-btn {
   position: fixed;
   bottom: 16px;
@@ -279,7 +246,6 @@ body {
   z-index: 3000;
 }
 
-/* 📘 LEARN OVERLAY */
 .learn-overlay {
   display: none;
   position: fixed;
@@ -352,12 +318,10 @@ body {
   z-index: 5000;
 }
 
-/* Hover effect */
 .back-btn:hover {
   transform: translateY(-2px);
 }
 
-/* Press effect */
 .back-btn:active {
   transform: translateY(4px);
   box-shadow:
@@ -365,18 +329,11 @@ body {
     0 6px 12px rgba(0,0,0,0.25);
 }
 
-/* ===============================
-   📱 MOBILE RESPONSIVE FIX
-================================ */
 @media (max-width: 600px) {
-
-  /* Move title down so it doesn't collide */
   .title {
     margin-top: 80px;
     font-size: 28px;
   }
-
-  /* Slightly smaller back button */
   .back-btn {
     top: 12px;
     left: 12px;
@@ -385,15 +342,12 @@ body {
   }
 }
 
-/* ===============================
-   🌫️ MOVING BUBBLES (GAS EFFECT)
-================================ */
 .bubble-container {
   position: fixed;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  z-index: 0; /* stays behind game */
+  z-index: 0; 
 }
 
 .bubble {
@@ -406,7 +360,6 @@ body {
   animation: rise 8s linear infinite;
 }
 
-/* Different sizes & speeds */
 .b1 { left: 15%; animation-duration: 25s; width: 14px; height: 14px; }
 .b2 { left: 35%; animation-duration: 20s; width: 20px; height: 20px; }
 .b3 { left: 55%; animation-duration: 20s; width: 12px; height: 12px; }
@@ -426,3 +379,4 @@ body {
     opacity: 0;
   }
 }
+
