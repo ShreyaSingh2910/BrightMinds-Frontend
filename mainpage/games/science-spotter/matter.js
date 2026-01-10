@@ -1,6 +1,6 @@
 let dragged = null;
-let placedCount = 0;          // ✅ track correct drops
-const TOTAL_ITEMS = 6; // ✅ number of draggable items
+let placedCount = 0;          
+const TOTAL_ITEMS = 6; 
 
 const correctSound = document.getElementById("correct-sound");
 const wrongSound = document.getElementById("wrong-sound");
@@ -14,10 +14,6 @@ window.addEventListener("load", () => {
   });
 });
 
-
-/* ===============================
-   🎯 ALL POSSIBLE ITEMS (20)
-================================ */
 const allItems = [
   { name: "🧊 Ice", type: "solid" },
   { name: "🍎 Apple", type: "solid" },
@@ -43,18 +39,12 @@ const allItems = [
   { name: "🫧 Vapor", type: "gas" }
 ];
 
-/* ===============================
-   🎲 PICK RANDOM 6 ITEMS
-================================ */
 const randomSix = [...allItems]
   .sort(() => 0.5 - Math.random())
   .slice(0, TOTAL_ITEMS);
 
 const itemsContainer = document.querySelector(".items");
 
-/* ===============================
-   🎮 CREATE DRAG ITEMS
-================================ */
 randomSix.forEach(obj => {
   const div = document.createElement("div");
   div.className = "item";
@@ -64,9 +54,6 @@ randomSix.forEach(obj => {
   itemsContainer.appendChild(div);
 });
 
-/* ===============================
-   🧲 DRAG LOGIC
-================================ */
 document.querySelectorAll(".item").forEach(item => {
   item.addEventListener("dragstart", () => {
     dragged = item;
@@ -82,7 +69,6 @@ document.querySelectorAll(".bin").forEach(bin => {
 
     const binType = bin.dataset.type;
 
-    // ✅ CORRECT DROP
     if (dragged.dataset.type === binType) {
 
       correctSound.currentTime = 0;
@@ -96,15 +82,11 @@ correctSound.play();
       setTimeout(() => bin.classList.remove("hit"), 400);
 
       dragged.remove();
-      placedCount++;        // ✅ count correct placement
-
-      // 🏆 ALL ITEMS PLACED → WIN
+      placedCount++;        
       if (placedCount === TOTAL_ITEMS) {
         setTimeout(showWinMessage, 600);
       }
-
     } 
-    // ❌ WRONG DROP
     else {
       wrongSound.currentTime = 0;
 wrongSound.play();
@@ -123,10 +105,6 @@ wrongSound.play();
     dragged = null;
   });
 });
-
-/* ===============================
-   🏆 WIN / SUCCESS ANIMATION
-================================ */
 function showWinMessage() {
   const overlay = document.getElementById("win-overlay");
   overlay.style.display = "flex";
@@ -149,3 +127,4 @@ function toggleLearn() {
 function goBack() {
   window.location.href = "topic.html";
 }
+
