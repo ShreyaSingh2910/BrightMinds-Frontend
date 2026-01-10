@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Comic Sans MS", "Baloo", cursive;
+font-family: 'Fredoka', sans-serif;
 }
 
 body {
@@ -134,4 +134,5 @@ body {
     width: 150px;
   }
 }
+
 
