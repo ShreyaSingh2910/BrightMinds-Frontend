@@ -78,20 +78,15 @@ body {
       color: white;
     }
 
-/* LEFT SIDE */
-#pos-1 { top: 8%; left: 120%; }   /* Brain */
-#pos-2 { top: 35%; left: -19%; }   /* Lungs */
-#pos-3 { top: 42%; left: 120%; }   /* h */
-#pos-4 { top: 54%; left: -19%; }  /* l */
-#pos-5 { top: 58%; left: 120%; }  /* Stomach */
-#pos-6 { top: 65%; left: -19%; }  /* k */
-#pos-7 { top: 69%; left: 120%; }  /* Large Intestine */
-#pos-8 { top: 80%; left: 120%; }  /* Small Intestine */
+#pos-1 { top: 8%; left: 120%; }   
+#pos-2 { top: 35%; left: -19%; }   
+#pos-3 { top: 42%; left: 120%; }   
+#pos-4 { top: 54%; left: -19%; }  
+#pos-5 { top: 58%; left: 120%; }  
+#pos-6 { top: 65%; left: -19%; }  
+#pos-7 { top: 69%; left: 120%; }  
+#pos-8 { top: 80%; left: 120%; }  
 
-
-
-
-    /* 📦 Parts Bin (No Scroll) */
     .parts-bin {
       display: flex;
       flex-wrap: wrap;
@@ -118,7 +113,6 @@ body {
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    /* 🚀 Lottie Corners */
     .corner-lottie {
       position: fixed;
       bottom: 0;
@@ -159,19 +153,14 @@ body {
     transform: scale(0.85);
   }
 
-  /* RIGHT SIDE labels */
   #pos-1, #pos-3, #pos-5, #pos-7, #pos-8 {
     left: 60% !important;
   }
 
-  /* LEFT SIDE labels */
   #pos-2, #pos-4, #pos-6 {
     left: 10% !important;
   }
 }
-
-
-
     @media (max-width: 768px) {
   .corner-lottie {
     display: none;
@@ -185,8 +174,6 @@ body {
     border-radius: 20px;
   }
 }
-
-/* 🌑 Overlay */
 .modal {
   position: fixed;
   inset: 0;
@@ -202,7 +189,6 @@ body {
   display: none;
 }
 
-/* 🪟 Card */
 .modal-card {
   background: white;
   color: #2d1b4f;
@@ -214,14 +200,12 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.4);
 }
 
-/* 🎉 Lottie */
 .success-lottie {
   width: 140px;
   height: 140px;
   margin: auto;
 }
 
-/* 🧠 Text */
 .modal-card h2 {
   margin: 10px 0;
   font-size: 26px;
@@ -232,7 +216,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* 🔘 Buttons */
 .modal-buttons {
   display: flex;
   gap: 15px;
@@ -251,4 +234,5 @@ body {
 
 .modal-buttons button:last-child {
   background: #6a1b9a;
+
 }
