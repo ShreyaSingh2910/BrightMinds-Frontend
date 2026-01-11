@@ -4,7 +4,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: white;
 
   background: linear-gradient(-45deg, #1a0b2e, #902ed6, #2d1b4f, #de8ee1);
@@ -17,7 +17,14 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-    
+.game-title{
+  margin-bottom:2px;
+}
+.game-instruction {
+  font-size: 18px;
+  margin-bottom: 15px;   
+  line-height: 1.3;     
+}
     .diagram-area {
       position: relative;
       display: flex;
@@ -25,15 +32,16 @@ body {
       justify-content: center;
       width: 100%;
       max-width: 1100px;
-      height: 650px;
-      margin-top: 20px;
+      height: auto;
+     margin-top: 4px;  
+  margin-bottom: 6px;
       z-index: 2;
     }
 
     .image-container {
       position: relative;
   width: 100%;
-  max-width: 360px;  /* desktop size */
+  max-width: 360px;  
   margin: auto; 
     }
 
@@ -47,7 +55,7 @@ body {
   .label-wrapper {
   position: absolute;
   pointer-events: none;
-  z-index: 3;/* wrapper ignores mouse */
+  z-index: 3;
 }
 
 .game-instruction{
@@ -79,8 +87,8 @@ body {
     }
 
 #pos-1 { top: 8%; left: 120%; }   
-#pos-2 { top: 35%; left: -19%; }   
-#pos-3 { top: 42%; left: 120%; }   
+#pos-2 { top: 35%; left: -19%; }  
+#pos-3 { top: 42%; left: 120%; }  
 #pos-4 { top: 54%; left: -19%; }  
 #pos-5 { top: 58%; left: 120%; }  
 #pos-6 { top: 65%; left: -19%; }  
@@ -98,7 +106,7 @@ body {
       background: rgba(255,255,255,0.05);
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.1);
-       margin-top: 35px; 
+       margin-top: 6px;     
       margin-bottom: 30px;
       z-index: 2;
     }
@@ -152,20 +160,13 @@ body {
   .label-wrapper {
     transform: scale(0.85);
   }
-
-  #pos-1, #pos-3, #pos-5, #pos-7, #pos-8 {
-    left: 60% !important;
-  }
-
-  #pos-2, #pos-4, #pos-6 {
-    left: 10% !important;
-  }
 }
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
   .corner-lottie {
     display: none;
   }
 }
+
 
 @media (max-width: 768px) {
   .image-holder {
@@ -174,6 +175,7 @@ body {
     border-radius: 20px;
   }
 }
+
 .modal {
   position: fixed;
   inset: 0;
@@ -234,6 +236,134 @@ body {
 
 .modal-buttons button:last-child {
   background: #6a1b9a;
-
 }
 
+
+@media (max-width: 768px) {
+
+  .game-instruction {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .image-container {
+    max-width: 260px;
+  }
+
+  .image-container {
+    overflow: visible;
+  }
+
+  .drop-zone {
+    width: 90px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .drop-zone {
+    transform: translate(-50%, -50%);
+  }
+
+  .corner-lottie {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+
+  #pos-1,
+  #pos-3,
+  #pos-5,
+  #pos-7,
+  #pos-8 {
+    transform: translate(-5%, -10%);
+  }
+
+  #pos-2,
+  #pos-4,
+  #pos-6 {
+    transform: translate(7%, -10%);
+  }
+}
+
+.check-btn {
+  margin-bottom: 20px;
+  padding: 10px 30px;
+  border-radius: 30px;
+  border: none;
+  background: #00e5ff;
+  color: #1a0b2e;
+  font-weight: 700;
+  cursor: pointer;
+}
+.drop-zone.wrong {
+  background: #ff5252;
+  border-color: white;
+  color: white;
+}
+
+.drop-zone.filled {
+  background: #4caf7a;
+  border-color: white;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .image-container {
+    margin-left: 30px;  
+    margin-right: auto;
+  }
+ 
+  .diagram-area {
+    justify-content: center;
+  }
+  .parts-bin {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .check-btn {
+    display: block;
+    margin: 16px auto 0;
+  }
+}
+@media (max-width: 768px) {
+  .diagram-area {
+    justify-content: center;
+  }
+
+  .image-container {
+    max-width: 260px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+ #pos-1,
+  #pos-3,
+  #pos-5,
+  #pos-7,
+  #pos-8 {
+    left: 120%;
+  }
+
+  #pos-1 { top: 10%; }
+  #pos-3 { top: 43%; }
+  #pos-5 { top: 55%; }
+  #pos-7 { top: 67%; }
+  #pos-8 { top: 80%; }
+
+  .drop-zone {
+    width: 90px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .parts-bin {
+    margin: 10px auto;
+  }
+
+  .check-btn {
+    display: block;
+    margin: 16px auto 0;
+  }
+}
