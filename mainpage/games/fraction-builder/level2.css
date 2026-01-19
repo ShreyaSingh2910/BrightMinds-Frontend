@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Comic Sans MS", cursive;
+  font-family: 'Fredoka', sans-serif;
 }
 
 .game-card {
@@ -109,7 +109,7 @@ button {
   font-weight: bold;
   color: #00695c;
 }
-/* Change filled fraction color from purple to green */
+
 .filled path,
 .filled rect {
   fill: #2ecc71;   /* green */
@@ -117,9 +117,7 @@ button {
 svg path {
   fill: #009688 !important;
 }
-/* ===============================
-   🎉 CELEBRATION OVERLAY
-================================ */
+
 .celebration {
   position: fixed;
   inset: 0;
@@ -154,8 +152,6 @@ svg path {
   color: #00897b;
   font-size: 18px;
 }
-
-/* Buttons match your Check button */
 .celebration-actions {
   display: flex;
   gap: 14px;
@@ -177,15 +173,13 @@ svg path {
   transform: translateY(4px);
   box-shadow: 0 3px 0 #004d40;
 }
-/* Lottie animation container */
+
 .lottie-box {
   width: 180px;
   height: 180px;
   margin: 0 auto 12px;
 }
 
-
-/* Entry animation */
 @keyframes popIn {
   from {
     transform: scale(0.7);
@@ -196,14 +190,12 @@ svg path {
     opacity: 1;
   }
 }
-/* ===============================
-   📱 MOBILE RESPONSIVE
-================================ */
+
 @media (max-width: 480px) {
  .game-card {
-    width: 100vw;        /* almost full screen */
-    max-width: 450px;  /* allow larger size */
-    padding: 20px;     /* comfortable touch spacing */
+    width: 100vw;       
+    max-width: 450px;  
+    padding: 20px;    
   }
 
 
@@ -248,7 +240,6 @@ svg path {
     padding: 12px;
   }
 
-  /* Celebration popup */
   .celebration-card {
     width: 90%;
     padding: 24px;
@@ -279,7 +270,7 @@ svg path {
   z-index: 1000;
 
   height: 36px;
-  width: 46px;              /* 👈 SMALL WIDTH */
+  width: 46px;             
   border-radius: 999px;
 
   border: none;
@@ -308,7 +299,6 @@ svg path {
   transform: scale(0.92);
 }
 
-/* 📱 Mobile */
 @media (max-width: 480px) {
   .back-btn-small {
     height: 32px;
@@ -320,4 +310,5 @@ svg path {
 }
 .level2-back {
   background: linear-gradient(135deg, #ff9800, #ff5722);
+
 }
