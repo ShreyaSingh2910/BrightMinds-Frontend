@@ -1,4 +1,3 @@
-/* ================= ELEMENTS ================= */
 const partsArea = document.getElementById("partsArea");
 const filledSVG = document.getElementById("filledSVG");
 const rightWhole = document.getElementById("rightWhole");
@@ -25,7 +24,6 @@ document.addEventListener("click", startMusicOnce);
 
 document.addEventListener("click", startMusicOnce);
 
-/* ================= LEVEL DATA ================= */
 const All_levels = [
   { left: { n: 1, d: 2 }, right: { n: 3, d: 6 } },
   { left: { n: 1, d: 3 }, right: { n: 2, d: 6 } },
@@ -54,17 +52,14 @@ function pickRandomLevels(all, count) {
   return result;
 }
 
-
 const levels = pickRandomLevels(All_levels, 5);
 
 let levelIndex = 0;
 let placedIndexes = [];
 let activePart = null;
 
-/* ================= INIT ================= */
 initLevel();
 
-/* ================= INIT LEVEL ================= */
 function initLevel() {
   placedIndexes = [];
   activePart = null;
@@ -75,22 +70,13 @@ function initLevel() {
 
   const current = levels[levelIndex];
 
-  // Left text
   leftFractionText.textContent = `${current.left.n} / ${current.left.d}`;
-
-  // Left visual
   drawLeftCircle(current.left.n, current.left.d);
-
-  // Right visual
   drawRightCircle(current.right.d);
-
-  // Parts
   buildParts(current.right.d);
-
   updateRightFraction();
 }
 
-/* ================= LEFT CIRCLE ================= */
 function drawLeftCircle(n, d) {
   const svg = document.querySelector(".side svg");
   svg.innerHTML = "";
@@ -126,7 +112,6 @@ function drawLeftCircle(n, d) {
   svg.appendChild(outline);
 }
 
-/* ================= RIGHT EMPTY CIRCLE ================= */
 function drawRightCircle(d) {
   rightWhole.setAttribute("viewBox", "0 0 200 200");
 
@@ -156,7 +141,6 @@ function drawRightCircle(d) {
   }
 }
 
-/* ================= PARTS ================= */
 function buildParts(count) {
   for (let i = 0; i < count; i++) {
     const part = document.createElement("div");
@@ -172,7 +156,6 @@ function buildParts(count) {
   }
 }
 
-/* ================= DROP ================= */
 dropZone.addEventListener("dragover", e => e.preventDefault());
 
 dropZone.addEventListener("drop", e => {
@@ -189,7 +172,6 @@ dropZone.addEventListener("drop", e => {
   updateRightFraction();
 });
 
-/* ================= FILLED SLICES ================= */
 function redrawFilledSlices() {
   filledSVG.innerHTML = "";
   filledSVG.setAttribute("viewBox", "0 0 200 200");
@@ -219,7 +201,6 @@ function redrawFilledSlices() {
   });
 }
 
-/* ================= REMOVE ================= */
 function removeSlice(idx) {
   placedIndexes = placedIndexes.filter(i => i !== idx);
 
@@ -230,7 +211,6 @@ function removeSlice(idx) {
   updateRightFraction();
 }
 
-/* ================= FRACTION TEXT ================= */
 function updateRightFraction() {
   const d = levels[levelIndex].right.d;
   rightFraction.textContent =
@@ -239,7 +219,6 @@ function updateRightFraction() {
       : `${placedIndexes.length} / ${d}`;
 }
 
-/* ================= CHECK ================= */
 checkBtn.addEventListener("click", () => {
   const current = levels[levelIndex];
 
@@ -279,15 +258,12 @@ function showCelebration() {
   initCelebrationLottie();
 }
 
-
-/* Replay game */
 replayBtn.addEventListener("click", () => {
   celebration.classList.add("hidden");
   levelIndex = 0;
   initLevel();
 });
 
-/* Back button (customize as needed) */
 backBtn.addEventListener("click", () => {
   window.history.back(); 
   // OR: window.location.href = "levels.html";
@@ -304,11 +280,10 @@ function initCelebrationLottie() {
     loop: true,
     autoplay: true,
     path: "lottie/celebration2.json"
-    // 🎈 You can replace this URL with your own Lottie JSON
+    
   });
 }
 
-/* ================= NEXT ================= */
 function nextLevel() {
   levelIndex++;
 
@@ -322,5 +297,6 @@ function nextLevel() {
 function goBack() {
   window.location.href="fraction.html";
 }
+
 
 
