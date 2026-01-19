@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Build Fraction</title>
+  <link rel="stylesheet" href="level1.css">
+</head>
+<body>
+
+<div class="game-card">
+
+  <h1>🍕 Build Fraction</h1>
+  <p class="instruction">
+    Build the fraction: <b>3 / 4</b>
+  </p>
+
+  <!-- WHOLE CIRCLE AREA -->
+  <div class="whole-area" id="dropZone">
+
+    <!-- ✅ EMPTY SVG (JavaScript will draw the circle & lines here) -->
+    <svg viewBox="0 0 200 200"
+         class="whole-circle"
+         id="wholeSVG">
+    </svg>
+
+    <!-- ✅ SVG where filled parts appear -->
+    <svg viewBox="0 0 200 200"
+         class="filled"
+         id="filledSVG">
+    </svg>
+
+  </div>
+
+  <!-- PARTS TRAY -->
+  <div class="parts-area">
+    <div class="part-item" draggable="true"></div>
+    <div class="part-item" draggable="true"></div>
+    <div class="part-item" draggable="true"></div>
+    <div class="part-item" draggable="true"></div>
+  </div>
+
+  <button id="checkBtn">Check</button>
+  <p class="result" id="resultMsg"></p>
+
+</div>
+<!-- 🎉 SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    
+    <!-- LOTTIE -->
+    <div id="successLottie" class="lottie-box"></div>
+
+    <h2>🎉 Great Job!</h2>
+    <p>You completed all fractions!</p>
+
+    <div class="success-actions">
+      <button id="replayBtn">🔁 Play Again</button>
+      <button id="backBtn">⬅ Back</button>
+    </div>
+  </div>
+</div>
+<!-- 🎵 Background Music -->
+<audio id="bgMusic" src="sound/bg-music.mp3" loop preload="auto"></audio>
+
+<!-- 🔊 Sound Effects -->
+<audio id="correctSound" src="sound/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="sound/wrong.mp3" preload="auto"></audio>
+<!-- LOTTIE PLAYER -->
+
+<button class="back-btn-small" onclick="goBack()">←</button>
+
+<script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+
+<script src="level1.js"></script>
+</body>
+</html>

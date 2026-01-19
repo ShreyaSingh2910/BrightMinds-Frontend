@@ -1,0 +1,323 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg,#b2fef7,#4db6ac,#00796b);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Comic Sans MS", cursive;
+}
+
+.game-card {
+  width: 480px;
+  background: #faffff;
+  border-radius: 28px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+h1 {
+  margin: 0;
+  color: #00695c;
+}
+
+.instruction {
+  margin: 8px 0 18px;
+  color: #00897b;
+}
+
+.board {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.side {
+  flex: 1;
+}
+
+.side h2 {
+  margin-bottom: 10px;
+  color: #00695c;
+}
+
+.circle {
+  width: 180px;
+  height: 180px;
+}
+
+.drop-zone {
+  position: relative;
+}
+
+.drop-zone svg {
+  position: absolute;
+  inset: 0;
+}
+
+.parts-area {
+  margin: 22px 0;
+  display: flex;
+  justify-content: center;
+  gap: clamp(4px, 1vw, 12px);
+  padding: 14px 5px;
+  background: #e0f2f1;
+  border-radius: 18px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.part {
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  border-radius: 14px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.part::before {
+  content: "";
+  width: 48px;
+  height: 48px;
+  background: #b2dfdb;
+  border: 3px solid #009688;
+  border-radius: 8px;
+}
+
+.part.used {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(180deg,#26a69a,#00796b);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #004d40;
+}
+
+.result {
+  margin-top: 12px;
+  font-weight: bold;
+  color: #00695c;
+}
+/* Change filled fraction color from purple to green */
+.filled path,
+.filled rect {
+  fill: #2ecc71;   /* green */
+}
+svg path {
+  fill: #009688 !important;
+}
+/* ===============================
+   🎉 CELEBRATION OVERLAY
+================================ */
+.celebration {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 121, 107, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.celebration.hidden {
+  display: none;
+}
+
+.celebration-card {
+  background: #faffff;
+  padding: 32px;
+  width: 360px;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  animation: popIn 0.5s ease;
+}
+
+.celebration-card h1 {
+  margin: 0;
+  color: #00695c;
+}
+
+.celebration-card p {
+  margin: 10px 0 24px;
+  color: #00897b;
+  font-size: 18px;
+}
+
+/* Buttons match your Check button */
+.celebration-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.celebration-actions button {
+  flex: 1;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(180deg,#26a69a,#00796b);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #004d40;
+}
+
+.celebration-actions button:active {
+  transform: translateY(4px);
+  box-shadow: 0 3px 0 #004d40;
+}
+/* Lottie animation container */
+.lottie-box {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 12px;
+}
+
+
+/* Entry animation */
+@keyframes popIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+/* ===============================
+   📱 MOBILE RESPONSIVE
+================================ */
+@media (max-width: 480px) {
+ .game-card {
+    width: 100vw;        /* almost full screen */
+    max-width: 450px;  /* allow larger size */
+    padding: 20px;     /* comfortable touch spacing */
+  }
+
+
+  .board {
+    gap: 14px;
+  }
+
+  .circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .parts-area {
+    padding: 10px 4px;
+    gap: 6px;
+  }
+
+  .part {
+    width: 52px;
+    height: 52px;
+  }
+
+  .part::before {
+    width: 40px;
+    height: 40px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .instruction {
+    font-size: 14px;
+  }
+
+  .side h2 {
+    font-size: 18px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  /* Celebration popup */
+  .celebration-card {
+    width: 90%;
+    padding: 24px;
+  }
+
+  .lottie-box {
+    width: 140px;
+    height: 140px;
+  }
+}
+.equal-sign {
+  font-size: 42px;
+  font-weight: bold;
+  color: #00695c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 480px) {
+  .equal-sign {
+    font-size: 34px;
+  }
+}
+.back-btn-small {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 1000;
+
+  height: 36px;
+  width: 46px;              /* 👈 SMALL WIDTH */
+  border-radius: 999px;
+
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #26a69a,#00796b);
+  color: white;
+
+  font-size: 1.1rem;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.back-btn-small:active {
+  transform: scale(0.92);
+}
+
+/* 📱 Mobile */
+@media (max-width: 480px) {
+  .back-btn-small {
+    height: 32px;
+    width: 40px;
+    font-size: 1rem;
+    top: 10px;
+    left: 10px;
+  }
+}
+.level2-back {
+  background: linear-gradient(135deg, #ff9800, #ff5722);
+}
