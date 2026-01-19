@@ -42,11 +42,20 @@ body {
 }
 
 .games {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
   justify-content: center;
   gap: 40px;
   padding: 40px 20px;
-  flex-wrap: wrap;
+}
+
+.games a:nth-child(4),
+.games a:nth-child(5) {
+  grid-column: span 1;
+}
+
+.games a:nth-child(4) {
+  grid-column: 1.5;
 }
 
 .game-card {
@@ -113,6 +122,29 @@ body {
   padding: 20px;
   font-size: 15px;
   color: #fff;
+}
+
+.game-card.fraction {
+  border-top: 10px solid #ff6f91;
+}
+
+.game-card.fraction button {
+  background: linear-gradient(135deg,  #ffd166, #ff9f1c);
+}
+@media (max-width: 1024px) {
+  .games {
+    grid-template-columns: repeat(2, 300px);
+  }
+
+  .games a:nth-child(4) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .games {
+    grid-template-columns: 1fr;
+  }
 }
 
 
