@@ -1,3 +1,6 @@
+/*********************************
+ 🔥 FIREBASE CONFIG
+**********************************/
 const firebaseConfig = {
   apiKey: "AIzaSyBmz23pK8TQ8iE5_EjRbOo0qCazLOBmcBw",
   authDomain: "brightminds-52de2.firebaseapp.com",
@@ -10,31 +13,37 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
+
+/*********************************
+ 🔁 AUTO REDIRECT ON PAGE LOAD
+**********************************/
 auth.onAuthStateChanged(user => {
-  const isGuest = localStorage.getItem("loginMode") === "guest";
+  const loginMode = localStorage.getItem("loginMode");
   const avatarCreated = localStorage.getItem("avatarCreated");
 
-  if (user && !isGuest) {
+  // Logged in user (not guest)
+  if (user && loginMode !== "guest") {
     if (!avatarCreated) {
-      window.location.href = "Dashboard/avtar.html";
+      // First time → avatar page
+      window.location.href = "mainpage/Dashboard/avtar.html";
     } else {
+      // Normal flow → home
       window.location.href = "mainpage/index.html";
     }
   }
 });
 
+
+/*********************************
+ 🧭 TAB SWITCHING
+**********************************/
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 
 const loginSection = document.getElementById("loginSection");
 const guestSection = document.getElementById("guestSection");
-
-const googleBtn = document.getElementById("googleBtn");
-const manualLoginBtn = document.getElementById("manualLoginBtn");
-const startGuestBtn = document.getElementById("startGuest");
 
 loginTab.onclick = () => {
   loginTab.classList.add("active");
@@ -50,6 +59,12 @@ guestTab.onclick = () => {
   guestSection.classList.remove("hidden");
 };
 
+
+/*********************************
+ 🔐 GOOGLE LOGIN
+**********************************/
+const googleBtn = document.getElementById("googleBtn");
+
 googleBtn.onclick = async () => {
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -58,14 +73,11 @@ googleBtn.onclick = async () => {
     localStorage.setItem("loginMode", "google");
     localStorage.setItem("userEmail", result.user.email);
 
-    // 🔑 check if avatar already created
     const avatarCreated = localStorage.getItem("avatarCreated");
 
     if (!avatarCreated) {
-      // first time → avatar page
       window.location.href = "mainpage/Dashboard/avtar.html";
     } else {
-      // normal flow
       window.location.href = "mainpage/index.html";
     }
 
@@ -74,6 +86,11 @@ googleBtn.onclick = async () => {
   }
 };
 
+
+/*********************************
+ ✉️ EMAIL / PASSWORD LOGIN
+**********************************/
+const manualLoginBtn = document.getElementById("manualLoginBtn");
 
 manualLoginBtn.onclick = async () => {
   const email = document.getElementById("email").value.trim();
@@ -93,14 +110,17 @@ manualLoginBtn.onclick = async () => {
   localStorage.setItem("loginMode", "manual");
   localStorage.setItem("userEmail", email);
 
+  // Manual users always go to avatar first
   window.location.href = "mainpage/Dashboard/avtar.html";
 };
+
+
+/*********************************
+ 👤 GUEST MODE
+**********************************/
+const startGuestBtn = document.getElementById("startGuest");
 
 startGuestBtn.onclick = () => {
   localStorage.setItem("loginMode", "guest");
   window.location.href = "mainpage/index.html";
 };
-
-
-
-
