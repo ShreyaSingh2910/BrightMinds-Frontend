@@ -10,19 +10,11 @@ const resultMsg = document.getElementById("resultMsg");
 const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
+const celebration = document.getElementById("celebration");
+const replayBtn = document.getElementById("replayBtn");
+const backBtn = document.getElementById("backBtn");
 
-function startMusicOnce() {
-  if (!bgMusic) return;
-
-  bgMusic.volume = 0.4;
-  bgMusic.play().catch(() => {});
-  document.removeEventListener("click", startMusicOnce);
-}
-
-document.addEventListener("click", startMusicOnce);
-
-
-document.addEventListener("click", startMusicOnce);
+let celebrationAnimation = null;
 
 const All_levels = [
   { left: { n: 1, d: 2 }, right: { n: 3, d: 6 } },
@@ -32,37 +24,24 @@ const All_levels = [
   { left: { n: 3, d: 6 }, right: { n: 1, d: 2 } },
   { left: { n: 1, d: 2 }, right: { n: 2, d: 4 } },
   { left: { n: 2, d: 4 }, right: { n: 4, d: 8 } },
-   { left: { n: 3, d: 4 }, right: { n: 6, d: 8 } },
+  { left: { n: 3, d: 4 }, right: { n: 6, d: 8 } },
 ];
 
 function pickRandomLevels(all, count) {
-  const usedLeft = new Set();
-  const shuffled = [...all].sort(() => Math.random() - 0.5);
-  const result = [];
-
-  for (const level of shuffled) {
-    const key = `${level.left.n}/${level.left.d}`;
-    if (!usedLeft.has(key)) {
-      usedLeft.add(key);
-      result.push(level);
-    }
-    if (result.length === count) break;
-  }
-
-  return result;
+  return [...all].sort(() => Math.random() - 0.5).slice(0, count);
 }
 
 const levels = pickRandomLevels(All_levels, 5);
 
-let levelIndex = 0;
-let placedIndexes = [];
-let activePart = null;
 
+let levelIndex = 0;
+let activePart = null;
+let occupiedSlices = new Set();
 initLevel();
 
 function initLevel() {
-  placedIndexes = [];
   activePart = null;
+  occupiedSlices.clear();
   partsArea.innerHTML = "";
   filledSVG.innerHTML = "";
   rightWhole.innerHTML = "";
@@ -71,6 +50,7 @@ function initLevel() {
   const current = levels[levelIndex];
 
   leftFractionText.textContent = `${current.left.n} / ${current.left.d}`;
+
   drawLeftCircle(current.left.n, current.left.d);
   drawRightCircle(current.right.d);
   buildParts(current.right.d);
@@ -80,64 +60,24 @@ function initLevel() {
 function drawLeftCircle(n, d) {
   const svg = document.querySelector(".side svg");
   svg.innerHTML = "";
-  svg.setAttribute("viewBox", "0 0 200 200");
 
   const sliceAngle = 360 / d;
 
   for (let i = 0; i < n; i++) {
-    const start = i * sliceAngle;
-    const end = start + sliceAngle;
-
-    const x1 = 100 + 100 * Math.cos(start * Math.PI / 180);
-    const y1 = 100 + 100 * Math.sin(start * Math.PI / 180);
-    const x2 = 100 + 100 * Math.cos(end * Math.PI / 180);
-    const y2 = 100 + 100 * Math.sin(end * Math.PI / 180);
-
-    const slice = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    slice.setAttribute(
-      "d",
-      `M100 100 L${x1} ${y1} A100 100 0 0 1 ${x2} ${y2} Z`
-    );
-    slice.setAttribute("fill", "#009688");
-    svg.appendChild(slice);
+    const a1 = i * sliceAngle * Math.PI / 180;
+    const a2 = (i + 1) * sliceAngle * Math.PI / 180;
+    svg.appendChild(makeSlice(a1, a2, "#009688"));
   }
 
-  const outline = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  outline.setAttribute("cx", 100);
-  outline.setAttribute("cy", 100);
-  outline.setAttribute("r", 98);
-  outline.setAttribute("fill", "none");
-  outline.setAttribute("stroke", "#555");
-  outline.setAttribute("stroke-width", "2");
-  svg.appendChild(outline);
+  svg.appendChild(makeOutline());
 }
 
 function drawRightCircle(d) {
-  rightWhole.setAttribute("viewBox", "0 0 200 200");
-
-  const outline = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  outline.setAttribute("cx", 100);
-  outline.setAttribute("cy", 100);
-  outline.setAttribute("r", 98);
-  outline.setAttribute("fill", "none");
-  outline.setAttribute("stroke", "#555");
-  outline.setAttribute("stroke-width", "2");
-  rightWhole.appendChild(outline);
+  rightWhole.appendChild(makeOutline());
 
   for (let i = 0; i < d; i++) {
-    const angle = (360 / d) * i;
-    const rad = angle * Math.PI / 180;
-
-    const x = 100 + 100 * Math.cos(rad);
-    const y = 100 + 100 * Math.sin(rad);
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", 100);
-    line.setAttribute("y1", 100);
-    line.setAttribute("x2", x);
-    line.setAttribute("y2", y);
-    line.setAttribute("stroke", "#555");
-    rightWhole.appendChild(line);
+    const a = (360 / d) * i * Math.PI / 180;
+    rightWhole.appendChild(svgLine(a));
   }
 }
 
@@ -146,7 +86,6 @@ function buildParts(count) {
     const part = document.createElement("div");
     part.className = "part";
     part.draggable = true;
-    part.dataset.index = i;
 
     part.addEventListener("dragstart", () => {
       activePart = part;
@@ -162,10 +101,23 @@ dropZone.addEventListener("drop", e => {
   e.preventDefault();
   if (!activePart || activePart.classList.contains("used")) return;
 
-  const d = levels[levelIndex].right.d;
-  if (placedIndexes.length >= d) return;
+  const rect = dropZone.getBoundingClientRect();
+  const x = e.clientX - rect.left - 100;
+  const y = e.clientY - rect.top - 100;
 
-  placedIndexes.push(activePart.dataset.index);
+
+  if (Math.hypot(x, y) > 100) return;
+
+  let angle = Math.atan2(y, x) * 180 / Math.PI;
+  if (angle < 0) angle += 360;
+
+  const d = levels[levelIndex].right.d;
+  const sliceAngle = 360 / d;
+  const sliceIndex = Math.floor(angle / sliceAngle);
+
+  if (occupiedSlices.has(sliceIndex)) return;
+
+  occupiedSlices.add(sliceIndex);
   activePart.classList.add("used");
 
   redrawFilledSlices();
@@ -174,129 +126,130 @@ dropZone.addEventListener("drop", e => {
 
 function redrawFilledSlices() {
   filledSVG.innerHTML = "";
-  filledSVG.setAttribute("viewBox", "0 0 200 200");
-
   const d = levels[levelIndex].right.d;
   const sliceAngle = 360 / d;
 
-  placedIndexes.forEach((idx, i) => {
-    const start = i * sliceAngle;
-    const end = start + sliceAngle;
+  occupiedSlices.forEach(i => {
+    const a1 = i * sliceAngle * Math.PI / 180;
+    const a2 = (i + 1) * sliceAngle * Math.PI / 180;
 
-    const x1 = 100 + 100 * Math.cos(start * Math.PI / 180);
-    const y1 = 100 + 100 * Math.sin(start * Math.PI / 180);
-    const x2 = 100 + 100 * Math.cos(end * Math.PI / 180);
-    const y2 = 100 + 100 * Math.sin(end * Math.PI / 180);
-
-    const slice = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    slice.setAttribute(
-      "d",
-      `M100 100 L${x1} ${y1} A100 100 0 0 1 ${x2} ${y2} Z`
-    );
-    slice.setAttribute("fill", "#009688");
+    const slice = makeSlice(a1, a2, "#009688");
     slice.style.cursor = "pointer";
 
-    slice.addEventListener("click", () => removeSlice(idx));
+    slice.addEventListener("click", () => {
+      occupiedSlices.delete(i);
+      redrawFilledSlices();
+      updateRightFraction();
+
+      const used = document.querySelector(".part.used");
+      used && used.classList.remove("used");
+    });
+
     filledSVG.appendChild(slice);
   });
-}
-
-function removeSlice(idx) {
-  placedIndexes = placedIndexes.filter(i => i !== idx);
-
-  const part = document.querySelector(`.part[data-index="${idx}"]`);
-  if (part) part.classList.remove("used");
-
-  redrawFilledSlices();
-  updateRightFraction();
 }
 
 function updateRightFraction() {
   const d = levels[levelIndex].right.d;
   rightFraction.textContent =
-    placedIndexes.length === 0
+    occupiedSlices.size === 0
       ? `? / ${d}`
-      : `${placedIndexes.length} / ${d}`;
+      : `${occupiedSlices.size} / ${d}`;
 }
 
 checkBtn.addEventListener("click", () => {
   const current = levels[levelIndex];
 
-  if (placedIndexes.length === current.right.n) {
-
-    if (correctSound) {
-      correctSound.pause();
-      correctSound.currentTime = 0;
-      correctSound.play();
-    }
-
+  if (occupiedSlices.size === current.right.n) {
+    correctSound && correctSound.play();
     resultMsg.textContent =
-      `${current.left.n}/${current.left.d} is equal to ${current.right.n}/${current.right.d}.`;
+      `${current.left.n}/${current.left.d} = ${current.right.n}/${current.right.d}`;
     resultMsg.style.color = "green";
-
     setTimeout(nextLevel, 1500);
-
   } else {
-
-    if (wrongSound) {
-      wrongSound.pause();
-      wrongSound.currentTime = 0;
-      wrongSound.play();
-    }
-
+    wrongSound && wrongSound.play();
     resultMsg.textContent = "Try adjusting the pieces 😊";
     resultMsg.style.color = "orange";
   }
 });
 
-const celebration = document.getElementById("celebration");
-const replayBtn = document.getElementById("replayBtn");
-const backBtn = document.getElementById("backBtn");
-
-function showCelebration() {
-  celebration.classList.remove("hidden");
-  initCelebrationLottie();
-}
-
-replayBtn.addEventListener("click", () => {
-  celebration.classList.add("hidden");
-  levelIndex = 0;
-  initLevel();
-});
-
-backBtn.addEventListener("click", () => {
-  window.history.back(); 
-  // OR: window.location.href = "levels.html";
-});
-
-let celebrationAnimation = null;
-
-function initCelebrationLottie() {
-  if (celebrationAnimation) return;
-
-  celebrationAnimation = lottie.loadAnimation({
-    container: document.getElementById("lottieCelebration"),
-    renderer: "svg",
-    loop: true,
-    autoplay: true,
-    path: "lottie/celebration2.json"
-    
-  });
-}
-
 function nextLevel() {
   levelIndex++;
 
   if (levelIndex >= levels.length) {
-    showCelebration();
+    showCelebration(); 
     return;
   }
 
   initLevel();
 }
-function goBack() {
-  window.location.href="fraction.html";
+
+function makeSlice(a1, a2, color) {
+  return svg("path", {
+    d: `M100 100
+        L${100 + 100*Math.cos(a1)} ${100 + 100*Math.sin(a1)}
+        A100 100 0 0 1 ${100 + 100*Math.cos(a2)} ${100 + 100*Math.sin(a2)}
+        Z`,
+    fill: color
+  });
 }
 
+function makeOutline() {
+  return svg("circle", {
+    cx: 100, cy: 100, r: 98,
+    fill: "none", stroke: "#555", "stroke-width": 2
+  });
+}
 
+function svgLine(a) {
+  return svg("line", {
+    x1: 100, y1: 100,
+    x2: 100 + 100 * Math.cos(a),
+    y2: 100 + 100 * Math.sin(a),
+    stroke: "#555"
+  });
+}
 
+function svg(tag, attrs) {
+  const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (let k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+function goBack() {
+  window.location.href = "fraction.html";
+}
+
+function showCelebration() {
+  celebration.classList.remove("hidden");
+
+  if (!celebrationAnimation) {
+    celebrationAnimation = lottie.loadAnimation({
+      container: document.getElementById("lottieCelebration"),
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "lottie/celebration2.json" 
+    });
+  }
+}
+function nextLevel() {
+  levelIndex++;
+
+  if (levelIndex >= levels.length) {
+    showCelebration();  
+    return;
+  }
+
+  initLevel();
+}
+replayBtn.addEventListener("click", () => {
+  celebration.classList.add("hidden");
+  levelIndex = 0;
+  placedIndexes = [];
+  initLevel();
+});
+backBtn.addEventListener("click", () => {
+  window.history.back();
+   window.location.href = "fraction.html";
+});
