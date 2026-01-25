@@ -30,7 +30,9 @@ saveBtn.addEventListener("click", () => {
     createdAt: Date.now()
   };
 
- localStorage.setItem("avatarCreated", "true");
-window.location.href = "../mainpage/index.html";
+localStorage.setItem("avatarCreated", "true");
+window.location.href = "../index.html";
+
 
 });
+
