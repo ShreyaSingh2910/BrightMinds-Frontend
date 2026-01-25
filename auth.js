@@ -84,6 +84,7 @@ manualLoginBtn.onclick = async () => {
 
 startGuestBtn.onclick = () => {
   localStorage.setItem("loginMode", "guest");
-  window.location.href = "mainpage/index.html";
+  window.location.href = "Dashboard/avtar.html";
 };
+
 
