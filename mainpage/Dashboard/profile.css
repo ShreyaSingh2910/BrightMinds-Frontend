@@ -9,7 +9,6 @@ body {
   background: linear-gradient(135deg, #ffe3e3, #e6ddff);
 }
 
-/* ================= LAYOUT ================= */
 .dashboard {
   display: flex;
   padding: 20px;
@@ -17,7 +16,6 @@ body {
   min-height: 100vh;
 }
 
-/* ================= SIDE PANEL ================= */
 .side-panel {
   width: 90px;
   background: #5b2d8b;
@@ -60,7 +58,7 @@ body {
 .side-bottom {
   margin-top: auto;
 }
-/* ================= MAIN ================= */
+
 .main {
   flex: 1;
   display: flex;
@@ -68,7 +66,6 @@ body {
   gap: 22px;
 }
 
-/* ================= HELLO CARD ================= */
 .hello-card {
   background: linear-gradient(135deg, #ff7a2f, #ff5a1f);
   color: white;
@@ -95,7 +92,6 @@ body {
   border-radius: 14px;
 }
 
-/* ================= GREEN SCORE PANEL ================= */
 .score-panel {
   background: linear-gradient(135deg, #2ecc71, #1fa463);
   color: white;
@@ -125,7 +121,6 @@ body {
   opacity: 0.9;
 }
 
-/* ================= GAME PROFILE ================= */
 .game-profile {
   background: linear-gradient(135deg, #ffffff, #f6f3ff);
   padding: 26px;
@@ -137,7 +132,6 @@ body {
   color: #5b2d8b;
 }
 
-/* STATS GRID */
 .game-stats {
   margin-top: 18px;
   display: grid;
@@ -164,7 +158,6 @@ body {
   color: #333;
 }
 
-/* BADGE CARD */
 .badge {
   background: linear-gradient(135deg, #43cea2, #185a9d);
   color: white;
@@ -175,7 +168,6 @@ body {
   color: white;
 }
 
-/* ================= RECENT ================= */
 .recent {
   background: linear-gradient(135deg, #ffffff, #f9f7ff);
   padding: 22px;
@@ -197,8 +189,6 @@ body {
   color: #555;
 }
 
-/* ================= PROFILE ================= */
-/* ================= PROFILE (IMPROVED) ================= */
 .profile {
   width: 260px;
   background: linear-gradient(135deg, #ffffff, #f6f3ff);
@@ -216,7 +206,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* AVATAR */
 .avatar {
   width: 120px;
   border-radius: 50%;
@@ -224,7 +213,6 @@ body {
   border: 4px solid #ff6a1a;
 }
 
-/* PROFILE INFO CARDS */
 .profile-cards {
   width: 100%;
   display: flex;
@@ -242,7 +230,6 @@ body {
   box-shadow: 0 8px 16px rgba(0,0,0,0.12);
 }
 
-/* ICON */
 .profile-card-item .icon {
   width: 40px;
   height: 40px;
@@ -254,7 +241,6 @@ body {
   font-size: 18px;
 }
 
-/* TEXT */
 .profile-card-item .text {
   text-align: left;
 }
@@ -270,7 +256,16 @@ body {
   color: #333;
 }
 
-/* SUCCESS COLOR */
 .success {
   color: #2ecc71;
+}
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.game-profile {
+  min-height: 220px;
 }
