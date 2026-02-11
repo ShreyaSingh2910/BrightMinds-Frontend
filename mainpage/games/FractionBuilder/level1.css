@@ -297,3 +297,66 @@ button {
     left: 10px;
   }
 }
+@media (max-width: 480px) {
+
+  body {
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  .game-card {
+    width: 92vw;              /* bigger card */
+    max-width: 420px;
+    padding: 26px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .instruction {
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+
+  .whole-area {
+    width: 260px;             /* bigger circle */
+    height: 260px;
+  }
+
+  .parts-area {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .part-item {
+    width: 72px;
+    height: 72px;
+  }
+
+  .part-item::before {
+    width: 68px;
+    height: 68px;
+  }
+
+  button {
+    font-size: 18px;
+    padding: 14px;
+  }
+
+  .result {
+    font-size: 18px;
+  }
+
+  /* Bigger Back Arrow */
+  .back-btn-small {
+    height: 44px;
+    width: 54px;
+    font-size: 1.4rem;
+    top: 14px;
+    left: 14px;
+  }
+
+}
+
+
