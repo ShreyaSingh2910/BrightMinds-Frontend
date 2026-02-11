@@ -6,13 +6,55 @@ const leftFractionText = document.getElementById("leftFraction");
 const dropZone = document.getElementById("dropZone");
 const checkBtn = document.getElementById("checkBtn");
 const resultMsg = document.getElementById("resultMsg");
+const celebration = document.getElementById("celebration");
+const replayBtn = document.getElementById("replayBtn");
+const backBtn = document.getElementById("backBtn");
 
 const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
-const celebration = document.getElementById("celebration");
-const replayBtn = document.getElementById("replayBtn");
-const backBtn = document.getElementById("backBtn");
+
+function startBgMusic() {
+  if (!bgMusic) return;
+
+  bgMusic.volume = 0.35;
+  bgMusic.play().catch(() => {});
+
+  document.removeEventListener("click", startBgMusic);
+  document.removeEventListener("touchstart", startBgMusic);
+}
+
+document.addEventListener("click", startBgMusic);
+document.addEventListener("touchstart", startBgMusic);
+
+function playCorrectSound() {
+  if (!correctSound) return;
+
+  if (bgMusic) bgMusic.volume = 0.15;
+
+  correctSound.pause();
+  correctSound.currentTime = 0;
+  correctSound.play();
+
+  setTimeout(() => {
+    if (bgMusic) bgMusic.volume = 0.35;
+  }, 700);
+}
+
+function playWrongSound() {
+  if (!wrongSound) return;
+
+  if (bgMusic) bgMusic.volume = 0.15;
+
+  wrongSound.pause();
+  wrongSound.currentTime = 0;
+  wrongSound.play();
+
+  setTimeout(() => {
+    if (bgMusic) bgMusic.volume = 0.35;
+  }, 500);
+}
+
 
 let celebrationAnimation = null;
 
@@ -269,4 +311,5 @@ replayBtn.addEventListener("click", () => {
 backBtn.addEventListener("click", () => {
   window.history.back();
    window.location.href = "fraction.html";
+
 });
