@@ -30,56 +30,46 @@ const data = {
 };
 
 function getAvatarImage(avatarName) {
-  if (!avatarName) return "assets/fox-avtar.avif";
-  return `avatars/${avatarName}.jpeg`;
+  if (!avatarName) return "assets/avatars/fox.jpeg";
+  return `assets/avatars/${avatarName}.jpeg`;
 }
 
-// ---------------- LOAD GAME PROFILE ----------------
 async function loadGame(gameKey, event) {
 
-  // Highlight active menu
   document.querySelectorAll(".menu").forEach(m => m.classList.remove("active"));
   event.target.classList.add("active");
 
   const g = data[gameKey];
 
-  // Static UI text
   document.getElementById("gameTitle").innerText = g.title;
   document.getElementById("badge").innerText = g.badge;
 
   try {
-    // 🔹 Fetch profile data
     const res = await fetch(
       `${API_BASE}/profileData?email=${currentUserEmail}&gameName=${g.gameName}`
     );
 
     const p = await res.json();
 
-    // -------- HEADER --------
     document.getElementById("username").innerText = p.name || "Player";
     document.querySelector(".profile-name").innerText = p.name || "Player";
 
-    // -------- SCORE PANEL --------
     document.getElementById("scoreBig").innerText = p.totalScore ?? 0;
 
-    // -------- GAME STATS --------
     document.getElementById("played").innerText = p.gamesPlayed ?? 0;
     document.getElementById("rank").innerText =
       p.rank > 0 ? `#${p.rank}` : "—";
-
-    // -------- AVG SCORE --------
+    
     document.querySelector(
       ".profile-card-item:nth-child(1) b"
     ).innerText = Math.round(p.avgScore ?? 0);
 
-    // -------- JOIN DATE --------
     document.querySelector(
       ".profile-card-item:nth-child(2) b"
     ).innerText = p.joined
       ? new Date(p.joined).toDateString()
       : "-";
 
-    // -------- AVATAR --------
     const avatarImg = document.querySelector(".avatar");
     avatarImg.src = getAvatarImage(p.avatar);
 
@@ -87,7 +77,6 @@ async function loadGame(gameKey, event) {
       this.src =getAvatarImage(data.avatar);
     };
 
-    // -------- RECENTLY PLAYED --------
     const recentRes = await fetch(
       `${API_BASE}/recentGame?email=${currentUserEmail}`
     );
@@ -101,17 +90,15 @@ async function loadGame(gameKey, event) {
     console.error("Profile load failed:", err);
   }
 }
-
-// ---------------- BACK BUTTON ----------------
 function goBack() {
-  window.location.href = "../index2.html";
+  window.location.href = "../index.html";
 }
 
-// ---------------- INITIAL LOAD ----------------
 document.addEventListener("DOMContentLoaded", () => {
   loadGame("physics", {
     target: document.querySelector(".menu.active")
   });
 });
+
 
 
