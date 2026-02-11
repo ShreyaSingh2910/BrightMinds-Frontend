@@ -1,0 +1,137 @@
+:root {
+  --bg-main: linear-gradient(180deg, #7ee8fa, #eec0ff);
+
+  --surface: #ffffff;
+  --surface-soft: #f7f9ff;
+
+  --text-main: #2d2a32;
+  --text-muted: #6b7280;
+
+  --cta: #ff9f1c;
+  --cta-hover: #ffb703;
+}
+
+/* =========================
+   BASE
+========================= */
+* {
+  box-sizing: border-box;
+  font-family: 'Fredoka', sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-main);
+  overflow: hidden;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.start-container {
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+
+/* =========================
+   LOTTIE
+========================= */
+.lottie {
+  width: 220px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+/* =========================
+   CENTER CARD
+========================= */
+.center-box {
+  background: linear-gradient(180deg, #ffffff, #f7f9ff);
+  padding: 46px;
+  border-radius: 32px;
+  text-align: center;
+
+  box-shadow:
+    0 18px 35px rgba(0,0,0,0.22);
+
+  animation: popIn 0.8s ease;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   LOGO
+========================= */
+.logo {
+  width: 190px;
+  margin-bottom: 14px;
+  animation: wiggle 2.5s infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(4deg); }
+  75% { transform: rotate(-4deg); }
+}
+
+/* =========================
+   TEXT
+========================= */
+h1 {
+  color: var(--text-main);
+  font-size: 42px;
+  margin: 14px 0;
+}
+
+p {
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+/* =========================
+   BUTTON (MATCH GAME CARDS)
+========================= */
+button {
+  padding: 14px 42px;
+  font-size: 20px;
+  border: none;
+  border-radius: 28px;
+
+  background: linear-gradient(135deg, var(--cta), var(--cta-hover));
+  color: #fff;
+  font-weight: bold;
+
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.32);
+}
+
+button:active {
+  transform: scale(0.95);
+}
