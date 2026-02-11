@@ -1,5 +1,3 @@
-// ================= AUTH INSTANCE =================
-// Firebase MUST already be initialized in firebase-init.js
 const auth = firebase.auth();
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
@@ -20,10 +18,8 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-// Keep user logged in across reloads / restarts
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-// ================= SINGLE SOURCE OF TRUTH =================
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) {
@@ -42,28 +38,24 @@ auth.onAuthStateChanged(async (user) => {
     const profileCreated = await response.json();
 
     if (profileCreated) {
-      window.location.replace("index2.html");
+      window.location.replace("mainpage/index.html");
     } else {
-      window.location.replace("avtar.html");
+      window.location.replace("Dashboard/avtar.html");
     }
   } catch (error) {
     console.error("Profile check failed", error);
   }
 });
 
-
-// ================= LOGIN ACTIONS =================
-
 document.getElementById("startGuest").addEventListener("click", () => {
 localStorage.setItem("loginMode","guest");
  localStorage.removeItem("userEmail");
-  window.location.href="guest.html";
+  window.location.href="mainpage/guest.html";
 });
 
-// GOOGLE LOGIN
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
-    localStorage.setItem("loginMode", "google"); // ✅ ADD THIS
+    localStorage.setItem("loginMode", "google"); 
     const provider = new firebase.auth.GoogleAuthProvider();
     await auth.signInWithPopup(provider);
   } catch (error) {
@@ -72,7 +64,6 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
   }
 });
 
-// MANUAL LOGIN / REGISTER
 document.getElementById("manualLoginBtn")?.addEventListener("click", async () => {
 localStorage.removeItem("loginMode");
 localStorage.setItem("loginMode","google");
@@ -95,4 +86,5 @@ localStorage.setItem("loginMode","google");
     }
   }
 });
+
 
