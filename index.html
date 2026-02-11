@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
 <div class="page">
 
-  <div class="login-card">
-    <h2>Welcome 🎮</h2>
+    <div class="login-card">
+        <h2>Welcome 🎮</h2>
 
-    <div class="role-switch">
-      <button id="loginTab" class="active">Login</button>
-      <button id="guestTab">Play as Guest</button>
+        <div class="role-switch">
+            <button id="loginTab" class="active">Login</button>
+            <button id="guestTab">Play as Guest</button>
+        </div>
+
+        <div id="loginSection">
+            <button id="googleBtn" class="google-btn">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg">
+                Login with Google
+            </button>
+
+            <div class="divider">or</div>
+
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+
+            <button id="manualLoginBtn" class="login-btn">
+                Login / Register
+            </button>
+        </div>
+
+        <div id="guestSection" class="hidden">
+            <button id="startGuest" class="guest-btn">
+                🚀 Start Game
+            </button>
+        </div>
     </div>
-
-    <div id="loginSection">
-      <button id="googleBtn" class="google-btn">
-        <img src="https://www.svgrepo.com/show/475656/google-color.svg">
-        Login with Google
-      </button>
-
-      <div class="divider">or</div>
-
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Password">
-
-      <button id="manualLoginBtn" class="login-btn">
-        Login / Register
-      </button>
-    </div>
-
-    <div id="guestSection" class="hidden">
-      <button id="startGuest" class="guest-btn">
-        🚀 Start Game
-      </button>
-    </div>
-  </div>
 
 </div>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
+<script src="firebase-init.js"></script>
 <script src="auth.js"></script>
 </body>
 </html>
-
