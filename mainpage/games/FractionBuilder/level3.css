@@ -1,0 +1,237 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #fff1dc,   /* very light orange */
+    #ffd8a8,
+    #ffb703
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   font-family: 'Fredoka', sans-serif;
+}
+
+.game-card {
+  width: 480px;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+h1 {
+  margin: 0;
+  color: #e67e22;
+}
+
+.instruction {
+  margin: 8px 0 18px;
+  color: #f39c12;
+  font-size: 16px;
+}
+
+.board {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fraction-box {
+  flex: 1;
+  background: #fff6eb;
+  border-radius: 20px;
+  padding: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.fraction-box:hover {
+  transform: scale(1.03);
+  background: #ffedd5;
+}
+
+.fraction-box.selected {
+  outline: 4px solid #f4a261;
+}
+
+.fraction-box h2 {
+  margin: 6px 0;
+  color: #e67e22;
+}
+
+svg {
+  width: 160px;
+  height: 160px;
+}
+
+svg path {
+  fill: #f4a261;
+}
+
+svg circle {
+  stroke: #777;
+}
+
+.result {
+  margin-top: 14px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.options button {
+  width: 60px;
+  height: 60px;
+  font-size: 26px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: #fff6eb;
+  box-shadow: 0 4px 0 #f4a261;
+}
+
+.options button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #f4a261;
+}
+
+.vs {
+  font-size: 28px;
+  font-weight: bold;
+  color: #e67e22;
+  min-width: 40px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.celebration {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 183, 77, 0.9); /* soft orange overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.celebration.hidden {
+  display: none;
+}
+
+.celebration-card {
+  background: #ffffff;
+  padding: 28px;
+  width: 320px;
+  border-radius: 26px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+  animation: popIn 0.4s ease;
+}
+
+.celebration-card h2 {
+  margin: 12px 0 6px;
+  color: #e67e22;
+}
+
+.celebration-card p {
+  margin: 0 0 18px;
+  color: #f39c12;
+}
+.celebration-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.celebration-actions button {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: #fff3e0;
+  box-shadow: 0 4px 0 #f4a261;
+}
+
+.celebration-actions button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #f4a261;
+}
+
+.lottie-box {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.back-btn-small {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 1000;
+
+  height: 36px;
+  width: 46px;
+  border-radius: 999px;
+
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #ff9800, #e67e22);
+  color: white;
+
+  font-size: 1.1rem;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.back-btn-small:active {
+  transform: scale(0.92);
+}
+
+@media (max-width: 480px) {
+  .back-btn-small {
+    height: 32px;
+    width: 40px;
+    font-size: 1rem;
+    top: 10px;
+    left: 10px;
+  }
+}
+.level3-back {
+  background: linear-gradient(135deg, #ff9800, #ff5722);
+
+}

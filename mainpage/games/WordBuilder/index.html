@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Word Builder Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+<body>
+
+<div class="home-wrapper">
+
+    <div class="lottie left">
+        <lottie-player
+                src="lottie/student.json"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay>
+        </lottie-player>
+    </div>
+
+    <div class="logo-area">
+        <img src="assets/logo1.png" alt="Word Builder Logo" class="game-logo">
+
+        <button class="start-btn" onclick="startGame()">
+            START GAME 🚀
+        </button>
+    </div>
+
+    <div class="lottie right">
+        <lottie-player
+                src="lottie/train.json"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay>
+        </lottie-player>
+    </div>
+
+</div>
+
+<script>
+    function startGame() {
+  window.location.href = "word.html";
+}
+
+</script>
+</body>
+</html>

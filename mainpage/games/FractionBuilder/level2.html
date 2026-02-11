@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Equivalent Fractions</title>
+    <link rel="stylesheet" href="level2.css" />
+</head>
+<body>
+
+<div class="game-card">
+
+    <h1>🧩 Equivalent Fractions</h1>
+    <p class="instruction">
+        Make both sides show the same amount
+    </p>
+
+    <div class="board">
+
+        <div class="side">
+            <h2 id="leftFraction">1 / 2</h2>
+            <svg viewBox="0 0 200 200" class="circle">
+                <path d="M100 100 L100 0 A100 100 0 0 1 100 200 Z"
+                      fill="#7c4dff"/>
+                <circle cx="100" cy="100" r="98"
+                        fill="none" stroke="#555" stroke-width="2"/>
+                <line x1="100" y1="0" x2="100" y2="200"
+                      stroke="#555"/>
+            </svg>
+        </div>
+        <div class="equal-sign">=</div>
+
+        <div class="side">
+            <h2 id="rightFraction">? / 4</h2>
+
+            <div class="drop-zone" id="dropZone">
+                <svg viewBox="0 0 200 200" class="circle" id="rightWhole"></svg>
+                <svg viewBox="0 0 200 200" class="circle" id="filledSVG"></svg>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="parts-area" id="partsArea"></div>
+
+    <button id="checkBtn">Check</button>
+    <p class="result" id="resultMsg"></p>
+
+</div>
+
+<div class="celebration hidden" id="celebration">
+    <div class="celebration-card">
+
+        <div id="lottieCelebration" class="lottie-box"></div>
+
+        <h1>🎉 Great Job!</h1>
+        <p>You completed all equivalent fractions!</p>
+
+        <div class="celebration-actions">
+            <button id="replayBtn">Replay</button>
+            <button id="backBtn">Back</button>
+        </div>
+
+    </div>
+</div>
+
+<audio id="bgMusic" src="sound/bg-music.mp3" loop></audio>
+
+<audio id="correctSound" src="sound/correct.mp3"></audio>
+<audio id="wrongSound" src="sound/wrong.mp3"></audio>
+
+<button class="back-btn-small" onclick="goBack()">←</button>
+
+<script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+
+<script src="level2.js"></script>
+</body>
+</html>

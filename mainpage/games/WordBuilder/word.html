@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="word.css">
+</head>
+
+<body>
+
+<div class="desktop-layout">
+
+    <aside class="learning-panel">
+        <div class="learning-header">
+            📘 Learning Panel
+        </div>
+
+        <div class="learning-body">
+            <div class="topic-badge">Grammar Focus</div>
+
+            <h4 id="topic-name">Articles</h4>
+
+            <p id="topic-tip">
+                Use <b>an</b> before words that start with a vowel sound (a, e, i, o, u).
+            </p>
+        </div>
+    </aside>
+
+    <main class="game-center">
+        <div class="game-wrapper">
+
+            <div class="top-bar">
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+
+                <div class="skill-meter">
+                    Skill: <span id="skill-level">Easy</span>
+                </div>
+
+                <span id="progress-text">1 / 10</span>
+            </div>
+
+            <div class="question-card">
+                <h2 id="sentence"></h2>
+                <div class="options" id="options"></div>
+            </div>
+
+        </div>
+    </main>
+
+</div>
+<button class="back-btn" onclick="goBack()">⬅</button>
+
+<div class="popup" id="popup">
+    <div class="popup-card">
+        <h1>🎉 Well Done! 🎉</h1>
+        <p>You completed the Word Builder game!</p>
+
+        <div class="popup-buttons">
+            <button onclick="restartGame()">Replay</button>
+            <button onclick="goBack()">Back</button>
+        </div>
+    </div>
+</div>
+
+<div class="bg-animations">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<script type="module" src="word.js"></script>
+</body>
+</html>

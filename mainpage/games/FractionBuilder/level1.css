@@ -1,0 +1,299 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #cbb7ff, #8e6bff, #5b2d8b);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   font-family: 'Fredoka', sans-serif;
+}
+
+.game-card {
+  width: 380px;
+  background: #f6f2ff;
+  border-radius: 26px;
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+}
+
+h1 {
+  margin: 0;
+  color: #5b2d8b;
+}
+
+.instruction {
+  color: #6a4fb3;
+  margin: 10px 0 20px;
+}
+
+.whole-area {
+  width: 220px;
+  height: 220px;
+  margin: auto;
+  position: relative;
+}
+
+.whole-circle,
+.filled {
+  position: absolute;
+  inset: 0;
+}
+
+.parts-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  margin: 24px 0 14px;
+  padding: 12px;
+  background: rgba(124, 77, 255, 0.08);
+  border-radius: 16px;
+}
+.part-item {
+  width: 70px;
+  height: 70px;
+  cursor: grab;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.part-item::before {
+  content: "";
+  width: 64px;
+  height: 64px;
+  background: no-repeat center/contain;
+  background-image: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>\
+    <path d='M100 100 L0 100 A100 100 0 0 1 100 0 Z' \
+      fill='%23e6dbff' stroke='%237c4dff' stroke-width='2'/>\
+  </svg>");
+}
+
+.part-item.used {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 14px;
+  border: none;
+  background: #7c4dff;
+  color: white;
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.square-part::before {
+  content: "";
+  width: 60px;
+  height: 60px;
+  background: #e6dbff;
+  border: 2px solid #7c4dff;
+}
+.success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(91, 45, 139, 0.65);
+  backdrop-filter: blur(6px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.success-overlay.show {
+  display: flex;
+}
+
+.success-card {
+  background: #fbf9ff;
+  width: 320px;
+  padding: 26px 22px 30px;
+  border-radius: 26px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  animation: popIn 0.4s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.lottie-box {
+  width: 180px;
+  height: 180px;
+  margin: auto;
+}
+
+.success-card h2 {
+  margin: 6px 0 6px;
+  color: #5b2d8b;
+}
+
+.success-card p {
+  margin: 0 0 18px;
+  color: #6a4fb3;
+  font-size: 16px;
+}
+
+.success-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.success-actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(180deg, #7c4dff, #5e35b1);
+  color: white;
+  box-shadow: 0 6px 0 #4527a0;
+  transition: transform 0.1s;
+}
+
+.success-actions button:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #4527a0;
+}
+
+@media (max-width: 480px) {
+ body {
+    align-items: flex-start;
+  }
+
+  .game-card {
+    width: 100vw;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .instruction {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+   .whole-area {
+    width: 240px;
+    height: 240px;
+  }
+
+  .parts-area {
+    gap: 8px;
+    padding: 10px;
+    margin: 20px 0 12px;
+  }
+
+  .part-item {
+    width: 58px;
+    height: 58px;
+  }
+
+  .part-item::before {
+    width: 52px;
+    height: 52px;
+  }
+
+  .square-part::before {
+    width: 48px;
+    height: 48px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 11px;
+  }
+
+  .result {
+    font-size: 16px;
+  }
+
+  .success-card {
+    width: 90%;
+    max-width: 320px;
+    padding: 22px;
+  }
+
+  .lottie-box {
+    width: 140px;
+    height: 140px;
+  }
+
+  .success-card h2 {
+    font-size: 20px;
+  }
+
+  .success-card p {
+    font-size: 14px;
+  }
+
+  .success-actions button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+.back-btn-small {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 1000;
+
+  height: 36px;
+  width: 46px;
+  border-radius: 999px;
+
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg,#7c4dff, #5e35b1);
+  color: white;
+
+  font-size: 1.1rem;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.back-btn-small:active {
+  transform: scale(0.92);
+}
+.level1-back {
+  background: linear-gradient(135deg,#7c4dff, #5e35b1);
+}
+
+@media (max-width: 480px) {
+  .back-btn-small {
+    height: 32px;
+    width: 40px;
+    font-size: 1rem;
+    top: 10px;
+    left: 10px;
+  }
+}
