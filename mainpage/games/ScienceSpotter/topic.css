@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+ font-family: 'Fredoka', sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  background: radial-gradient(
+    circle at top,
+    #7a4dbd,
+    #5a3a8e,
+    #2d1b4f
+  );
+}
+
+#earth-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+#earth-bg svg {
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  text-align: center;
+  margin: 26px 10px;
+  font-size: clamp(26px, 5vw, 44px);
+  color: #ffffff;
+  z-index: 2;
+  position: relative;
+  text-shadow: 2px 3px 0 rgba(0,0,0,0.25);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+.card {
+  cursor: pointer;
+  background: transparent;
+  border-radius: 20%;
+}
+
+.card.wide {
+  grid-column: span 2;
+}
+
+.card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 15px;
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.2); /* Thin glass border */
+  backdrop-filter: blur(5px); /* Frosty effect */
+
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tile-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.solar .card-inner {
+  background: linear-gradient(135deg, #f2b705 0%, #ff8c00 100%);
+}
+
+.body .card-inner {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+}
+
+.plant .card-inner {
+  background: linear-gradient(135deg, #4caf7a 0%, #2ecc71 100%);
+}
+
+.matter .card-inner {
+  background: linear-gradient(135deg, #5a8dee 0%, #3498db 100%);
+}
+
+.solar:hover .card-inner { box-shadow: 0 12px 25px rgba(242, 183, 5, 0.5); }
+.body:hover .card-inner  { box-shadow: 0 12px 25px rgba(238, 82, 83, 0.5); }
+.plant:hover .card-inner { box-shadow: 0 12px 25px rgba(76, 175, 122, 0.5); }
+.matter:hover .card-inner { box-shadow: 0 12px 25px rgba(90, 141, 238, 0.5); }
+
+.corner {
+  position: fixed;
+  bottom: 0;
+  width: 170px;
+  height: 170px;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+}
+
+.corner.left  { left: 10px; }
+
+.corner.right { right: 10px; }

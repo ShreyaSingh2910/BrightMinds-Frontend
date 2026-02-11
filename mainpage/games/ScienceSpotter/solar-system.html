@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Solar System Explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="solar-system.css" />
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
+
+<h1 class="title">🌞 Solar System Explorer</h1>
+
+<div class="solar-wrapper">
+    <div class="solar-container">
+
+        <img src="assets/solar-system.png" class="solar-bg" />
+
+        <div class="planet mercury" data-name="Mercury">
+            <img src="assets/planets/Mercury.png">
+            <span>Mercury</span>
+        </div>
+
+        <div class="planet venus" data-name="Venus">
+            <img src="assets/planets/Venus.png">
+            <span>Venus</span>
+        </div>
+
+        <div class="planet earth" data-name="Earth">
+            <img src="assets/planets/Earth.png">
+            <span>Earth</span>
+        </div>
+
+        <div class="planet moon" data-name="Moon">
+            <img src="assets/planets/Moon.png">
+            <span>Moon</span>
+        </div>
+
+        <div class="planet mars" data-name="Mars">
+            <img src="assets/planets/mars.png">
+            <span>Mars</span>
+        </div>
+
+        <div class="planet jupiter" data-name="Jupiter">
+            <img src="assets/planets/Jupitor.png">
+            <span>Jupiter</span>
+        </div>
+
+        <div class="planet saturn" data-name="Saturn">
+            <img src="assets/planets/saturn.png">
+            <span>Saturn</span>
+        </div>
+
+        <div class="planet uranus" data-name="Uranus">
+            <img src="assets/planets/Uranus.png">
+            <span>Uranus</span>
+        </div>
+
+        <div class="planet neptune" data-name="Neptune">
+            <img src="assets/planets/Neptune.png">
+            <span>Neptune</span>
+        </div>
+
+    </div>
+</div>
+<div class="rotate-overlay" id="rotateOverlay">
+    <div class="rotate-box">
+        🔄 Please rotate your device<br>
+        <span>Use landscape mode for best experience</span>
+    </div>
+</div>
+
+<p id="startMessage" class="start-message">
+    👆 Choose any planet and tell its name!
+</p>
+
+<div class="panel hidden">
+    <p id="message"></p>
+
+    <div class="options">
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+    </div>
+
+    <button id="hintBtn">💡 Hint</button>
+    <p id="hintText"></p>
+</div>
+
+<div id="final" class="hidden">
+    ⭐ You know the Solar System! ⭐
+</div>
+
+<audio id="bgMusic" preload="auto" loop>
+    <source src="assets/sounds/background.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="correctSound" preload="auto">
+    <source src="assets/sounds/correctans.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="wrongSound" preload="auto">
+    <source src="assets/sounds/wrongans.mp3" type="audio/mpeg">
+</audio>
+
+<script src="solar-system.js"></script>
+</body>
+
+</html>
