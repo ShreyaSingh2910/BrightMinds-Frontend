@@ -1,3 +1,17 @@
+:root {
+  --bg-main: linear-gradient(180deg, #7ee8fa, #eec0ff);
+
+  --surface: #ffffff;
+  --surface-soft: #f7f9ff;
+
+  --text-main: #2d2a32;
+  --text-muted: #6b7280;
+
+  --cta: #ff9f1c;
+  --cta-hover: #ffb703;
+}
+
+
 * {
   box-sizing: border-box;
   font-family: 'Fredoka', sans-serif;
@@ -6,82 +20,123 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, #74ebd5, #acb6e5);
+  background: linear-gradient(180deg, #7ee8fa, #eec0ff);
   overflow-x: hidden;
   text-align: center;
 }
+
 .bubble {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.3;
-  animation: float 10s infinite alternate;
+  opacity: 0.25;
+  animation: float 12s infinite alternate;
 }
 
-.b1 { width: 120px; height: 120px; background: #fff; top: 10%; left: 5%; }
-.b2 { width: 80px; height: 80px; background: #fff; top: 60%; left: 10%; }
-.b3 { width: 150px; height: 150px; background: #fff; top: 30%; right: 5%; }
+.b1 { width: 140px; height: 140px; background: #ffffff; top: 10%; left: 5%; }
+.b2 { width: 90px; height: 90px; background: #ffe066; top: 65%; left: 12%; }
+.b3 { width: 180px; height: 180px; background: #ffcad4; top: 30%; right: 5%; }
 
 @keyframes float {
   from { transform: translateY(0); }
-  to { transform: translateY(-40px); }
+  to { transform: translateY(-35px); }
 }
 
 .header {
-  padding: 50px 20px 20px;
-  color: #fff;
+  padding: 50px 20px 10px;
+  color: #2d2a32;
 }
 
 .header h1 {
-  font-size: 42px;
+  font-size: 40px;
   margin: 0;
 }
 
 .header p {
-  font-size: 18px;
-  margin-top: 10px;
+  font-size: 17px;
+  margin-top: 8px;
+  color: #4a4a4a;
 }
 
 .games {
   display: grid;
   grid-template-columns: repeat(3, 300px);
   justify-content: center;
-  gap: 40px;
+  gap: 36px;
   padding: 40px 20px;
 }
 
-.games a:nth-child(4),
-.games a:nth-child(5) {
-  grid-column: span 1;
-}
-
-.games a:nth-child(4) {
-  grid-column: 1.5;
-}
-
 .game-card {
-  width: 300px;
-  background: #fff;
-  border-radius: 30px;
-  padding: 30px 25px 35px;
+  background: linear-gradient(180deg, #ffffff, #f7f9ff);
+  border-radius: 22px;
+  padding: 26px 22px 30px;
   text-decoration: none;
-  color: #333;
-  box-shadow: 0 20px 35px rgba(0,0,0,0.25);
-  position: relative;
-  transition: transform 0.3s ease;
+  color: #2d2a32;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .game-card:hover {
-  transform: translateY(-12px) scale(1.05);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 30px rgba(0,0,0,0.3);
 }
 
-.game-card.memory { border-top: 10px solid #ff9f1c; }
-.game-card.quiz   { border-top: 10px solid #2ec4b6; }
+.game-card.memory   { border-top: 8px solid #ffbe0b; }
+.game-card.quiz     { border-top: 8px solid #3a86ff; }
+.game-card.fraction { border-top: 8px solid #ff006e; }
 
 .badge {
   position: absolute;
-  top: -12px;
-  right: -12px;
-  background: #ff9f1c;
+  top: -10px;
+  right: -10px;
+  background: #ffbe0b;
+  color: #000;
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge.new {
+  background: #3a86ff;
+  color: #fff;
+}
+
+.icon {
+  font-size: 64px;
+  margin-bottom: 12px;
+}
+
+.game-card h2 {
+  font-size: 24px;
+  margin: 8px 0;
+}
+
+.game-card p {
+  font-size: 15px;
+  margin-bottom: 22px;
+  color: #555;
+}
+
+.game-card button {
+  border: none;
+  padding: 12px 26px;
+  border-radius: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffbe0b, #fb5607);
+  color: #fff;
+  font-weight: bold;
+}
+
+.card-label {
+  position: absolute;
+
+  border-radius: 16px 16px 10px 10px;
+
+  box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+  top: -3px;
+  right: -3px;
+  background: #ffbe0b;
   color: #000;
   padding: 6px 14px;
   border-radius: 20px;
@@ -89,55 +144,35 @@ body {
   font-weight: bold;
 }
 
-.badge.new {
-  background: #2ec4b6;
-}
+.card-label.memory  { background: #ffbe0b; }
+.card-label.english { background: #3a86ff; color:#fff; }
+.card-label.ss      { background: #ff006e;; color:#fff; }
+.card-label.science { background: #ffbe0b; color:#fff; }
+.card-label.math    { background: #ff006e; color:#fff; }
 
-.icon {
-  font-size: 70px;
-  margin-bottom: 10px;
-}
-
-.game-card h2 {
-  font-size: 26px;
-  margin: 10px 0;
-}
-
-.game-card p {
-  font-size: 16px;
-  margin-bottom: 25px;
-}
-
-.game-card button {
-  border: none;
-  padding: 12px 26px;
-  border-radius: 25px;
-  font-size: 18px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ffd166, #ff9f1c);
-  font-weight: bold;
+.carousel-item {
+  position: relative;
+  overflow: hidden;
 }
 
 .footer {
   padding: 20px;
-  font-size: 15px;
-  color: #fff;
+  font-size: 14px;
+  color: #2d2a32;
 }
 
-.game-card.fraction {
-  border-top: 10px solid #ff6f91;
-}
-
-.game-card.fraction button {
-  background: linear-gradient(135deg,  #ffd166, #ff9f1c);
-}
 @media (max-width: 1024px) {
-  .games {
-    grid-template-columns: repeat(2, 300px);
+  .content-wrapper {
+    grid-template-columns: 1fr;
   }
 
-  .games a:nth-child(4) {
-    grid-column: auto;
+  .rank-board {
+    margin: 20px auto;
+    max-width: 340px;
+  }
+
+  .games {
+    grid-template-columns: repeat(2, 280px);
   }
 }
 
@@ -145,4 +180,126 @@ body {
   .games {
     grid-template-columns: 1fr;
   }
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 40px;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  min-width: 260px;
+  max-width: 260px;
+  height: 340px;
+   background: var(--surface);
+  border-radius: 26px;
+  padding: 26px 22px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+
+  opacity: 0.5;
+  transform: scale(0.85);
+  transition: all 0.4s ease;
+
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.carousel-item.active {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+}
+
+.carousel-item .icon {
+  font-size: 70px;
+  margin-bottom: 14px;
+}
+
+.carousel-item h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+.carousel-item p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 22px;
+}
+
+.carousel-item button {
+  border: none;
+  padding: 12px 26px;
+  border-radius: 24px;
+  font-size: 16px;
+  cursor: pointer;
+    background: var(--cta);
+  color: #fff;
+  font-weight: bold;
+}
+.carousel-item button:hover {
+  background: var(--cta-hover);
+}
+.carousel-item.memory   { border-top: 6px solid #ffbe0b; }
+.carousel-item.quiz     { border-top: 6px solid #3a86ff; }
+.carousel-item.fraction { border-top: 6px solid #ff006e; }
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  border: none;
+  font-size: 26px;
+  padding: 10px 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+.carousel-btn.left {
+  left: 20px;
+}
+
+.carousel-btn.right {
+  right: 20px;
+}
+
+.games.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.carousel-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  will-change: transform;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-btn {
+  z-index: 5;
+}
+
+.carousel-item {
+  flex-shrink: 0;
 }
