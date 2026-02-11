@@ -1,50 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Create Profile</title>
-  <link rel="stylesheet" href="avtar.css" />
+    <meta charset="UTF-8" />
+    <title>Create Profile</title>
+    <link rel="stylesheet" href="avtar.css" />
 </head>
 <body>
 
 <div class="profile-card">
 
-  <div class="profile-inner">
+    <div class="profile-inner">
 
-    <h1>✨ Welcome Little Learner ✨</h1>
-    <p class="subtitle">Create your magic profile</p>
+        <h1>✨ Welcome Little Learner ✨</h1>
+        <p class="subtitle">Create your magic profile</p>
 
-    <!-- NAME -->
-    <div class="name-section">
-      
-      <input type="text" id="playerName" placeholder="Type your name here" maxlength="12">
+        <!-- NAME -->
+        <div class="name-section">
+
+            <input type="text" id="playerName" placeholder="Type your name here" maxlength="12">
+        </div>
+
+        <!-- AVATARS -->
+        <p class="choose-text">Choose Your Avatar</p>
+        <div class="avatar-grid">
+            <img src="assets/unicorn-avtar.webp" data-avatar="unicorn">
+            <img src="assets/panda.avif" data-avatar="panda">
+            <img src="assets/fox-avtar.avif" data-avatar="fox">
+            <img src="assets/owl-avtar.avif" data-avatar="owl">
+            <img src="assets/rabbit-avtar.avif" data-avatar="bunny">
+        </div>
+
+        <!-- BUTTON -->
+
+        <button id="saveProfile">🚀 Start My Adventure</button>
+
     </div>
-
-    <!-- AVATARS -->
-    <p class="choose-text">Choose Your Avatar</p>
-    <div class="avatar-grid">
-      <img src="assets/unicorn-avtar.webp" data-avatar="unicorn">
-      <img src="assets/panda.avif" data-avatar="panda">
-      <img src="assets/fox-avtar.avif" data-avatar="fox">
-      <img src="assets/owl-avtar.avif" data-avatar="owl">
-      <img src="assets/rabbit-avtar.avif" data-avatar="bunny">
-    </div>
-
-    <!-- BUTTON -->
-    <button id="saveProfile">🚀 Start My Adventure</button>
-
-  </div>
 
 </div>
 <div class="floating-bg">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
 </div>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="firebase-init.js"></script>
 <script src="avtar.js"></script>
 </body>
 </html>
