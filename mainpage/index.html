@@ -7,66 +7,225 @@
   <link rel="stylesheet" href="home.css">
 </head>
 <body>
-
-  <div class="bubble b1"></div>
-  <div class="bubble b2"></div>
-  <div class="bubble b3"></div>
-
-  <header class="header">
-    <h1>🎮 Fun Learning Games</h1>
-    <p>Learn by Playing • Made for Kids</p>
-  </header>
-
-  <section class="games">
-
-    <!-- Existing Card 1 -->
-    <a href="games/memory-match/memorygame/index.html" class="game-card memory">
-      <span class="badge">⭐ Memory</span>
-      <div class="icon">🧠</div>
-      <h2>Memory Magic</h2>
-      <p>Match letters with correct images</p>
-      <button>Play Game ▶</button>
-    </a>
-
-    <a href="games/quiz-game/match city/matchGame.html" class="game-card quiz">
-      <span class="badge new">🆕 SS</span>
-      <div class="icon">🏙️</div>
-      <h2>Discover & Match</h2>
-      <p>Match states with their cities</p>
-      <button>Play Game ▶</button>
-    </a>
-
-    <a href="games/science-spotter/topic.html" class="game-card memory">
-      <span class="badge">🧪 Science</span>
-      <div class="icon">🧬</div>
-      <h2>Science Spotter</h2>
-      <p>Explore and identify science concepts</p>
-      <button>Play Game ▶</button>
-    </a>
-    <a href="games/word-builder/index.html" class="game-card quiz">
-      <span class="badge new">🔤 English</span>
-      <div class="icon">📘</div>
-      <h2>Word Wizard</h2>
-      <p>Build words and improve grammar skills</p>
-      <button>Play Game ▶</button>
-    </a>
-<a href="games/fraction-builder/index.html" class="game-card fraction">
-  <span class="badge new">➗ Math</span>
-  <div class="icon">🍕</div>
-  <h2>Fraction Builder</h2>
-  <p>Build, match, and compare fractions visually</p>
-  <button>Play Game ▶</button>
+<a href="Leaderboard/l.html" class="profile-wrapper">
+  <img
+          id="profileAvatar"
+          src="Leaderboard/avatars/fox.jpeg"
+          alt="Profile"
+  />
+  <span class="profile-text">Profile</span>
 </a>
 
-  </section>
+<div class="bubble b1"></div>
+<div class="bubble b2"></div>
+<div class="bubble b3"></div>
 
-  <footer class="footer">
-    🌈 Designed with ❤️ for Young Learners
-  </footer>
+<header class="header">
+  <h1>🎮 Fun Learning Games</h1>
+  <p>Learn by Playing • Made for Kids</p>
+</header>
+<div class="main-content">
+  <div class="content-wrapper">
+
+    <!-- LEFT RANK LIST -->
+    <aside class="rank-board">
+      <h3>🏆 World Tournament</h3>
+
+      <ul class="rank-list" id="leaderboardList">
+        <!-- leaderboard rows will be injected here -->
+      </ul>
+
+
+      <div class="rank-footer">⭐ Gain Excellent Reputation!</div>
+    </aside>
+
+    <!-- YOUR ORIGINAL GAMES -->
+    <section class="games carousel-container">
+
+      <button class="carousel-btn left" onclick="moveSlide(-1)">❮</button>
+
+      <div class="carousel-track">
+
+        <a href="MemoryGame/index.html" class="carousel-item memory active">
+          <span class="card-label memory">⭐ Memory</span>
+          <div class="icon">🧠</div>
+          <h2>Memory Magic</h2>
+          <p>Train your brain with fun memory games</p>
+          <button>Play</button>
+        </a>
+
+        <a href="WordBuilder/index.html" class="carousel-item quiz">
+          <span class="card-label english">🔤 English</span>
+          <div class="icon">📘</div>
+          <h2>Word Wizard</h2>
+          <p>Build words and improve language</p>
+          <button>Play</button>
+        </a>
+
+        <a href="MatchGame/matchGame.html" class="carousel-item fraction">
+          <span class="card-label ss">🆕 SS</span>
+          <div class="icon">🏙️</div>
+          <h2>Discover & Match</h2>
+          <p>Learn states and their cities</p>
+          <button>Play</button>
+        </a>
+
+        <a href="ScienceSpotter/index.html" class="carousel-item memory">
+          <span class="card-label science">🧪 Science</span>
+          <div class="icon">🧬</div>
+          <h2>Science Spotter</h2>
+          <p>Discover science concepts</p>
+          <button>Play</button>
+        </a>
+
+        <a href="FractionBuilder/index.html" class="carousel-item fraction">
+          <span class="card-label math">➗ Math</span>
+          <div class="icon">🍕</div>
+          <h2>Fraction Builder</h2>
+          <p>Master fractions visually</p>
+          <button>Play</button>
+        </a>
+
+      </div>
+
+      <button class="carousel-btn right" onclick="moveSlide(1)">❯</button>
+
+    </section>
+
+  </div>
+</div>
+
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="firebase-init.js"></script>
+<script>
+  <!-- Firebase core SDK -->
+
+<!-- Firebase services you use -->
+
+  function getAvatarImage(avatarName) {
+  if (!avatarName) return "Leaderboard/avatars/fox.jpeg";
+  return `Leaderboard/avatars/${avatarName}.jpeg`;
+}
+
+async function loadProfileAvatar() {
+  const email = localStorage.getItem("userEmail");
+  if (!email) return;
+
+  try {
+    const res = await fetch(
+      `http://localhost:8080/api/game/avatar?email=${email}`
+    );
+
+
+    if (!res.ok) return;
+
+    const avatarName = (await res.text()).trim();
+    console.log(avatarName);
+    const avatarImg = document.getElementById("profileAvatar");
+    avatarImg.src = getAvatarImage(avatarName);
+
+    avatarImg.onerror = function () {
+  this.src = "Leaderboard/avatars/fox.jpeg";
+};
+
+  } catch (err) {
+    console.error("Avatar load failed", err);
+  }
+}
+
+  const items = document.querySelectorAll('.carousel-item');
+  const track = document.querySelector('.carousel-track');
+
+  let currentIndex = 0;
+  const itemWidth = 300; // card + gap
+
+  function updateCarousel() {
+    items.forEach((item, index) => {
+      item.classList.toggle('active', index === currentIndex);
+    });
+
+    const centerOffset =
+      (track.offsetWidth / 2) - (itemWidth / 2);
+
+    const moveX =
+      centerOffset - (currentIndex * itemWidth);
+
+    track.style.transform = `translateX(${moveX}px)`;
+  }
+
+  function moveSlide(direction) {
+    currentIndex += direction;
+
+    if (currentIndex < 0) currentIndex = items.length - 1;
+    if (currentIndex >= items.length) currentIndex = 0;
+
+    updateCarousel();
+  }
+  window.addEventListener("DOMContentLoaded", () => {
+  loadProfileAvatar();
+  loadLeaderboard();
+});
+
+  window.addEventListener("load", updateCarousel);
+  window.addEventListener("resize", updateCarousel);
+
+
+async function loadLeaderboard() {
+
+  const email = localStorage.getItem("userEmail");
+  if (!email) return;
+
+  // 🔹 fetch user profile to get NAME
+  const profileRes = await fetch(
+    `http://localhost:8080/api/game/profileData?email=${email}&gameName=all`
+  );
+  const profile = await profileRes.json();
+  const loggedUserName = profile.name;
+  try {
+    const res = await fetch("http://localhost:8080/api/game/leaderboard");
+    if (!res.ok) return;
+
+    const data = await res.json(); // List<LeaderBoardEntry>
+    const list = document.getElementById("leaderboardList");
+
+    list.innerHTML = "";
+
+    data.slice(0, 10).forEach(entry => {
+      const li = document.createElement("li");
+
+ if (entry.email === email) {
+    li.classList.add("current-user");
+  }
+      li.innerHTML = `
+        <span>${entry.rank}</span>
+        ${entry.name}
+        <em>${entry.score.toLocaleString()}</em>
+      `;
+
+      list.appendChild(li);
+    });
+
+  } catch (err) {
+    console.error("Leaderboard load failed", err);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", loadLeaderboard);
+
+</script>
+
+
+<footer class="footer">
+  <br>
+  <br>
+  <br>
+  🌈 Designed with ❤️ for Young Learners
+</footer>
 
 </body>
 </html>
-
-
-
-
