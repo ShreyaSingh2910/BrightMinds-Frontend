@@ -1,9 +1,6 @@
 const API_BASE = "http://localhost:8080/api/game";
-
-// Logged-in user email (set during login)
 const currentUserEmail = localStorage.getItem("userEmail");
 
-// Sidebar → BASE game mapping (must match DB prefixes)
 const data = {
   physics: {
     title: "Science Profile",
@@ -32,11 +29,8 @@ const data = {
   }
 };
 
-// ---------------- AVATAR LOGIC ----------------
-
-// Map avatar name → image file
 function getAvatarImage(avatarName) {
-  if (!avatarName) return "avatars/fox.jpeg";
+  if (!avatarName) return "assets/fox-avtar.avif";
   return `avatars/${avatarName}.jpeg`;
 }
 
@@ -119,4 +113,5 @@ document.addEventListener("DOMContentLoaded", () => {
     target: document.querySelector(".menu.active")
   });
 });
+
 
