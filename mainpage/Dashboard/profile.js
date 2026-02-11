@@ -1,82 +1,122 @@
+const API_BASE = "http://localhost:8080/api/game";
+
+// Logged-in user email (set during login)
+const currentUserEmail = localStorage.getItem("userEmail");
+
+// Sidebar → BASE game mapping (must match DB prefixes)
 const data = {
   physics: {
-    title: "Physics Profile",
-    score: 89,
-    rank: "#3",
-    played: 24,
-    badge: "Motion Master"
+    title: "Science Profile",
+    badge: "Science Star",
+    gameName: "ScienceSpotter"
   },
   math: {
     title: "Math Profile",
-    score: 95,
-    rank: "#1",
-    played: 40,
-    badge: "Fraction Master"
+    badge: "Fraction Master",
+    gameName: "FractionBuilder"
   },
   english: {
     title: "English Profile",
-    score: 78,
-    rank: "#4",
-    played: 18,
-    badge: "Word Wizard"
+    badge: "Word Wizard",
+    gameName: "WordBuilder"
   },
   social: {
     title: "Social Science Profile",
-    score: 72,
-    rank: "#6",
-    played: 15,
-    badge: "History Hero"
+    badge: "City Champion",
+    gameName: "MatchCity"
   },
   memory: {
     title: "Memory Profile",
-    score: 92,
-    rank: "#2",
-    played: 30,
-    badge: "Memory King"
+    badge: "Memory King",
+    gameName: "MemoryGame"
   }
 };
 
-const globalRecentGames = [
-  { name: "Fraction Builder", subject: "Math" },
-  { name: "Spell Bee", subject: "English" },
-  { name: "Force Quiz", subject: "Science" },
-  { name: "Card Flip", subject: "Memory" },
-  { name: "Map Quest", subject: "Social Science" }
-];
+// ---------------- AVATAR LOGIC ----------------
 
-function loadGame(game, event) {
+// Map avatar name → image file
+function getAvatarImage(avatarName) {
+  if (!avatarName) return "avatars/fox.jpeg";
+  return `avatars/${avatarName}.jpeg`;
+}
+
+// ---------------- LOAD GAME PROFILE ----------------
+async function loadGame(gameKey, event) {
+
+  // Highlight active menu
   document.querySelectorAll(".menu").forEach(m => m.classList.remove("active"));
   event.target.classList.add("active");
 
-  const g = data[game];
+  const g = data[gameKey];
 
+  // Static UI text
   document.getElementById("gameTitle").innerText = g.title;
-  document.getElementById("rank").innerText = g.rank;
-  document.getElementById("played").innerText = g.played;
   document.getElementById("badge").innerText = g.badge;
-  document.getElementById("scoreBig").innerText = g.score;
+
+  try {
+    // 🔹 Fetch profile data
+    const res = await fetch(
+      `${API_BASE}/profileData?email=${currentUserEmail}&gameName=${g.gameName}`
+    );
+
+    const p = await res.json();
+
+    // -------- HEADER --------
+    document.getElementById("username").innerText = p.name || "Player";
+    document.querySelector(".profile-name").innerText = p.name || "Player";
+
+    // -------- SCORE PANEL --------
+    document.getElementById("scoreBig").innerText = p.totalScore ?? 0;
+
+    // -------- GAME STATS --------
+    document.getElementById("played").innerText = p.gamesPlayed ?? 0;
+    document.getElementById("rank").innerText =
+      p.rank > 0 ? `#${p.rank}` : "—";
+
+    // -------- AVG SCORE --------
+    document.querySelector(
+      ".profile-card-item:nth-child(1) b"
+    ).innerText = Math.round(p.avgScore ?? 0);
+
+    // -------- JOIN DATE --------
+    document.querySelector(
+      ".profile-card-item:nth-child(2) b"
+    ).innerText = p.joined
+      ? new Date(p.joined).toDateString()
+      : "-";
+
+    // -------- AVATAR --------
+    const avatarImg = document.querySelector(".avatar");
+    avatarImg.src = getAvatarImage(p.avatar);
+
+    avatarImg.onerror = function () {
+      this.src =getAvatarImage(data.avatar);
+    };
+
+    // -------- RECENTLY PLAYED --------
+    const recentRes = await fetch(
+      `${API_BASE}/recentGame?email=${currentUserEmail}`
+    );
+    const recentGame = await recentRes.text();
+
+    document.querySelector(
+      ".profile-card-item:nth-child(3) b"
+    ).innerText = recentGame || "-";
+
+  } catch (err) {
+    console.error("Profile load failed:", err);
+  }
 }
 
-function loadGlobalRecent() {
-  const ul = document.getElementById("recentGames");
-  ul.innerHTML = "";
-
-  const game =
-    globalRecentGames[Math.floor(Math.random() * globalRecentGames.length)];
-
-  const li = document.createElement("li");
-  li.innerHTML = `
-    ${game.name}
-   
-  `;
-  ul.appendChild(li);
-}
-
-loadGlobalRecent();
-
-loadGame("physics", { target: document.querySelector(".menu.active") });
-loadGlobalRecent();
-
+// ---------------- BACK BUTTON ----------------
 function goBack() {
-  window.location.href = "../index.html";
+  window.location.href = "../index2.html";
 }
+
+// ---------------- INITIAL LOAD ----------------
+document.addEventListener("DOMContentLoaded", () => {
+  loadGame("physics", {
+    target: document.querySelector(".menu.active")
+  });
+});
+
