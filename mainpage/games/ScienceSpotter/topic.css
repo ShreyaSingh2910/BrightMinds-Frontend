@@ -118,3 +118,12 @@ body {
 .corner.left  { left: 10px; }
 
 .corner.right { right: 10px; }
+@media (max-width: 768px) {
+
+  .card-inner {
+    aspect-ratio: 1 / 1;   /* Force equal square boxes */
+    width: 100%;
+  }
+
+}
+
