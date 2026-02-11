@@ -49,4 +49,13 @@ body {
   transform: translateY(4px);
   box-shadow: 0 5px 0 #e68a00;
 }
+@media (max-width: 768px) {
+
+  #lottie-bg {
+    transform: scale(4);   /* zoom animation */
+    transform-origin: center center;
+  }
+
+}
+
 
