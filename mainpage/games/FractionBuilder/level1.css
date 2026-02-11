@@ -297,66 +297,68 @@ button {
     left: 10px;
   }
 }
+
 @media (max-width: 480px) {
 
   body {
-    align-items: center;
-    padding: 20px 0;
+    align-items: flex-start;
+    padding: 30px 0;
   }
 
   .game-card {
-    width: 92vw;              /* bigger card */
-    max-width: 420px;
-    padding: 26px;
+    width: 96vw;            /* almost full width */
+    max-width: 500px;
+    padding: 32px 24px;
+    border-radius: 30px;
   }
 
   h1 {
-    font-size: 26px;
+    font-size: 30px;        /* bigger title */
   }
 
   .instruction {
-    font-size: 16px;
-    margin-bottom: 18px;
+    font-size: 18px;
+    margin-bottom: 22px;
   }
 
   .whole-area {
-    width: 260px;             /* bigger circle */
-    height: 260px;
+    width: 300px;           /* BIG circle */
+    height: 300px;
   }
 
   .parts-area {
-    gap: 12px;
-    padding: 14px;
+    gap: 16px;
+    padding: 16px;
+    margin: 28px 0 18px;
   }
 
   .part-item {
-    width: 72px;
-    height: 72px;
+    width: 85px;            /* bigger pieces */
+    height: 85px;
   }
 
   .part-item::before {
-    width: 68px;
-    height: 68px;
+    width: 80px;
+    height: 80px;
   }
 
   button {
-    font-size: 18px;
-    padding: 14px;
+    font-size: 20px;
+    padding: 16px;
+    border-radius: 18px;
   }
 
   .result {
-    font-size: 18px;
+    font-size: 20px;
   }
 
-  /* Bigger Back Arrow */
+  /* BIG Back Arrow */
   .back-btn-small {
-    height: 44px;
-    width: 54px;
-    font-size: 1.4rem;
-    top: 14px;
-    left: 14px;
+    height: 52px;
+    width: 64px;
+    font-size: 1.6rem;
+    top: 18px;
+    left: 18px;
   }
 
 }
-
-
