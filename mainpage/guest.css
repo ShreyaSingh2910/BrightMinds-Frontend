@@ -303,3 +303,8 @@ body {
 .carousel-item {
   flex-shrink: 0;
 }
+.footer
+{
+  margin-top:100px;
+}
+
