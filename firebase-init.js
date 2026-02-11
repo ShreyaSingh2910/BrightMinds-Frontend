@@ -1,4 +1,3 @@
-// firebase-init.js
 const firebaseConfig = {
   apiKey: "AIzaSyBmz23pK8TQ8iE5_EjRbOo0qCazLOBmcBw",
   authDomain: "brightminds-52de2.firebaseapp.com",
@@ -10,3 +9,4 @@ const firebaseConfig = {
 
 if(!firebase.apps.length)
 firebase.initializeApp(firebaseConfig);
+
