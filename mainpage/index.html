@@ -1,3 +1,4 @@
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -173,7 +174,7 @@ async function loadLeaderboard() {
   if (!email) return;
   
   const profileRes = await fetch(
-    `http://localhost:8080/api/game/profileData?email=${email}&gameName=all`
+    `${BASE_URL}/api/game/profileData?email=${email}&gameName=all`
   );
   const profile = await profileRes.json();
   const loggedUserName = profile.name;
@@ -219,4 +220,5 @@ window.addEventListener("DOMContentLoaded", loadLeaderboard);
 
 </body>
 </html>
+
 
