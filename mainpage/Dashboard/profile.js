@@ -1,5 +1,6 @@
 const API_BASE = "http://localhost:8080/api/game";
 const currentUserEmail = localStorage.getItem("userEmail");
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 const data = {
   physics: {
@@ -46,7 +47,7 @@ async function loadGame(gameKey, event) {
 
   try {
     const res = await fetch(
-      `${API_BASE}/profileData?email=${currentUserEmail}&gameName=${g.gameName}`
+      `${BASE_URL}/api/game/profileData?email=${currentUserEmail}&gameName=${g.gameName}`
     );
 
     const p = await res.json();
@@ -78,7 +79,7 @@ async function loadGame(gameKey, event) {
     };
 
     const recentRes = await fetch(
-      `${API_BASE}/recentGame?email=${currentUserEmail}`
+      `${BASE_URL}/api/game/recentGame?email=${currentUserEmail}`
     );
     const recentGame = await recentRes.text();
 
@@ -99,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     target: document.querySelector(".menu.active")
   });
 });
+
 
 
 
