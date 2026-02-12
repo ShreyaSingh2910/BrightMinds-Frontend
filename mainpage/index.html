@@ -1,4 +1,4 @@
-const BASE_URL = "https://brightminds-backend-3.onrender.com";
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,6 +100,7 @@ const BASE_URL = "https://brightminds-backend-3.onrender.com";
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="firebase-init.js"></script>
 <script>
+  const BASE_URL = "https://brightminds-backend-3.onrender.com";
   function getAvatarImage(avatarName) {
   if (!avatarName) return "Dashboard/assets/avatars/fox.jpeg";
   return `Dashboard/assets/avatars/${avatarName}.jpeg`;
@@ -111,7 +112,7 @@ async function loadProfileAvatar() {
 
   try {
     const res = await fetch(
-      `http://localhost:8080/api/game/avatar?email=${email}`
+      `${BASE_URL}/api/game/avatar?email=${email}`
     );
 
 
@@ -220,5 +221,6 @@ window.addEventListener("DOMContentLoaded", loadLeaderboard);
 
 </body>
 </html>
+
 
 
