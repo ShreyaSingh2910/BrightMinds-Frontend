@@ -3,6 +3,8 @@ const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 const loginSection = document.getElementById("loginSection");
 const guestSection = document.getElementById("guestSection");
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
+
 
 loginTab.addEventListener("click", () => {
   loginTab.classList.add("active");
@@ -32,7 +34,7 @@ auth.onAuthStateChanged(async (user) => {
 
   try {
     const response = await fetch(
-      `http://localhost:8080/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
+      `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
     );
 
     const profileCreated = await response.json();
@@ -86,5 +88,6 @@ localStorage.setItem("loginMode","google");
     }
   }
 });
+
 
 
