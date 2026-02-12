@@ -1,4 +1,4 @@
- // This means "no level selected yet"
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
 const levels = {
   easy: {
     count: 4,
@@ -279,7 +279,7 @@ async function syncScoreToDb() {
   };
 
   try {
-    await fetch("http://localhost:8080/api/game/saveScore", {
+    await fetch(`${BASE_URL}/api/game/saveScore`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -487,8 +487,9 @@ document.addEventListener("click", () => {
 }, { once: true });
 
 async function fetchAllProgress(email) {
-  const response = await fetch(`http://localhost:8080/api/game/scores?email=${email}`);
+  const response = await fetch(`${BASE_URL}/api/game/scores?email=${email}`);
   const allScores = await response.json();
   // This returns: { "seasonClothes": 4, "stateFood": 5, ... }
   console.log("Player Progress:", allScores);
+
 }
