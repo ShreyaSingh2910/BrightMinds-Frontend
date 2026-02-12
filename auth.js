@@ -42,7 +42,7 @@ auth.onAuthStateChanged(async (user) => {
     if (profileCreated) {
       window.location.replace("mainpage/index.html");
     } else {
-      window.location.replace("Dashboard/avtar.html");
+      window.location.replace("mainpage/Dashboard/avtar.html");
     }
   } catch (error) {
     console.error("Profile check failed", error);
@@ -88,6 +88,7 @@ localStorage.setItem("loginMode","google");
     }
   }
 });
+
 
 
 
