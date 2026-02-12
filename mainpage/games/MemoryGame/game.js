@@ -1,3 +1,4 @@
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
 const allLetters = [
   { img: "A.jpg", match: "apple.jpg" }, { img: "B.jpg", match: "Baloon.jpg" },
   { img: "C.jpg", match: "cake.png" }, { img: "D.jpg", match: "dolphine.png" },
@@ -30,7 +31,7 @@ async function syncScoreToDb(scoreValue) {
     const userEmail = localStorage.getItem("userEmail");
     if (!userEmail) return;
     try {
-        await fetch("http://localhost:8080/api/game/saveScore", {
+        await fetch(`${BASE_URL}/api/game/saveScore`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: userEmail, gameName: "memoryGame", score: scoreValue })
@@ -126,4 +127,5 @@ function showWinMessage() {
     renderer: "svg", loop: true, autoplay: true,
     path: "lottie/celebration.json"
   });
+
 }
