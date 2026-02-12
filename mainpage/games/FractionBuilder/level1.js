@@ -14,6 +14,8 @@ const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
 
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
+
 function startMusicOnce() {
   if (!bgMusic) return;
   bgMusic.volume = 0.35;
@@ -44,7 +46,7 @@ function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
 
-  fetch("http://localhost:8080/api/game/saveScore", {
+  fetch(`${BASE_URL}/api/game/saveScore`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -285,4 +287,5 @@ function svg(tag, attrs) {
   const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
   for (let k in attrs) el.setAttribute(k, attrs[k]);
   return el;
+
 }
