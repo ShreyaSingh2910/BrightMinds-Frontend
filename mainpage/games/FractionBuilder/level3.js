@@ -1,6 +1,7 @@
 const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 function startBgMusic() {
   if (!bgMusic) return;
@@ -33,7 +34,7 @@ function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
 
-  fetch("http://localhost:8080/api/game/saveScore", {
+  fetch(`${BASE_URL}/api/game/saveScore`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -208,3 +209,4 @@ backBtn.addEventListener("click", () => {
 function goBack() {
   window.location.href="fraction.html";
 }
+
