@@ -1,4 +1,5 @@
 let selectedAvatar = null;
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     const res = await fetch(
-      `http://localhost:8080/api/game/profileStatus?email=${user.email}`
+      `${BASE_URL}/api/game/profileStatus?email=${user.email}`
     );
 
     const profileCreated = await res.json();
@@ -50,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         avatar: selectedAvatar
       };
 
-      await fetch("http://localhost:8080/api/game/updateProfile", {
+      await fetch(`${BASE_URL}/api/game/updateProfile`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -60,4 +61,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
 
