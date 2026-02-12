@@ -180,7 +180,7 @@ async function loadLeaderboard() {
   const profile = await profileRes.json();
   const loggedUserName = profile.name;
   try {
-    const res = await fetch("http://localhost:8080/api/game/leaderboard");
+    const res = await fetch(`${BASE_URL}/api/game/leaderboard`);
     if (!res.ok) return;
 
     const data = await res.json(); 
@@ -221,6 +221,7 @@ window.addEventListener("DOMContentLoaded", loadLeaderboard);
 
 </body>
 </html>
+
 
 
 
