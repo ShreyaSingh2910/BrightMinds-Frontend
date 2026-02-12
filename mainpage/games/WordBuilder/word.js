@@ -1,6 +1,7 @@
 import { questionBank } from "./questions.js";
 
 const TOTAL_QUESTIONS = 10;
+const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 let gameIndex = 0;
 let skillLevel = 1;
@@ -33,7 +34,7 @@ function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
 
-  fetch("http://localhost:8080/api/game/saveScore", {
+  fetch(`${BASE_URL}/api/game/saveScore`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -239,4 +240,5 @@ window.restartGame = function () {
 window.goBack = function () {
   window.location.href = "index.html";
 };
+
 loadQuestion();
