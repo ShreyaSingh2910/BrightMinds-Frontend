@@ -75,6 +75,17 @@ document.querySelectorAll(".item").forEach(item => {
   });
 });
 
+// 🔥 iPhone touch support
+document.querySelectorAll(".item").forEach(item => {
+
+  item.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    dragged = item;
+  }, { passive: false });
+
+});
+
+
 document.querySelectorAll(".bin").forEach(bin => {
 
   bin.addEventListener("dragover", e => e.preventDefault());
@@ -143,5 +154,6 @@ function toggleLearn() {
 function goBack() {
   window.location.href = "topic.html";
 }
+
 
 
