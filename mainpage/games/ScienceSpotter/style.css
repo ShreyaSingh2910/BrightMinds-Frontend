@@ -60,12 +60,13 @@ body {
 @media (max-width: 768px) {
 
   #lottie-bg {
-    transform: scale(3.45);
+    transform: scale(3.5);
     transform-origin: center center;
   }
 
 
 }
+
 
 
 
