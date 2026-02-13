@@ -5,8 +5,10 @@ font-family: 'Fredoka', sans-serif;
 
 body {
   margin: 0;
-  height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
+    padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 #lottie-bg {
   position: fixed;
@@ -17,12 +19,18 @@ body {
 }
 
 .ui-content {
-  position: absolute;
-  bottom: 4%;
-  width: 100%;
-  text-align: center;
+  position: relative;
   z-index: 2;
+
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding-bottom: 40px;
 }
+
 
 .ui-content h1 {
   font-size: clamp(28px, 6vw, 46px);
@@ -52,9 +60,10 @@ body {
 @media (max-width: 768px) {
 
   #lottie-bg {
-    transform: scale(4);   /* zoom animation */
+    transform: scale(3);
     transform-origin: center center;
   }
+
 
 }
 
