@@ -4,7 +4,7 @@ const allLetters = [
   { img: "C.jpg", match: "cake.png" }, { img: "D.jpg", match: "dolphine.png" },
   { img: "E.jpg", match: "elephant.jpg" }, { img: "F.jpg", match: "fox.avif" },
   { img: "G.jpg", match: "giraffe.webp" }, { img: "H.jpg", match: "home.avif" },
-  { img: "I.jpg", match: "icecream.avif" }, { img: "J.jpg", match: "jelly_fish.avif" },
+  { img: "I.jpg", match: "icecream.jpg" }, { img: "J.jpg", match: "jelly_fish.avif" },
   { img: "K.jpg", match: "kite.avif" }, { img: "L.jpg", match: "lemon.avif" },
   { img: "M.jpg", match: "monkey.avif" }, { img: "N.jpg", match: "nest.png" },
   { img: "O.jpg", match: "owl.jpg" }, { img: "P.jpg", match: "pizza.avif" },
@@ -129,3 +129,4 @@ function showWinMessage() {
   });
 
 }
+
