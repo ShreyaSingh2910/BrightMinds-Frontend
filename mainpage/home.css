@@ -48,8 +48,11 @@ body {
    HEADER
 ========================= */
 .header {
-  padding: 50px 20px 10px;
   color: #2d2a32;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
 }
 
 .header h1 {
@@ -67,7 +70,8 @@ body {
    PROFILE
 ========================= */
 .profile-wrapper {
-  position: absolute;
+  position:static;
+  margin: 10px auto 0;
   top: 40px;
   right: 40px;
   display: flex;
@@ -514,3 +518,4 @@ body {
 .carousel-item {
   flex-shrink: 0;
 }
+
