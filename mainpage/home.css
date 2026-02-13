@@ -53,7 +53,7 @@ body {
 }
 
 .header h1 {
-  font-size: 40px;
+  font-size: 30px;
   margin: 0;
 }
 
@@ -78,8 +78,8 @@ body {
 }
 
 .profile-wrapper img {
-  width: 72px;
-  height: 72px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   object-fit: cover;
   background: #fff;
@@ -514,5 +514,6 @@ body {
 .carousel-item {
   flex-shrink: 0;
 }
+
 
 
