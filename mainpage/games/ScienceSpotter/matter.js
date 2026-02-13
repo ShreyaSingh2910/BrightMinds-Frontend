@@ -89,6 +89,24 @@ document.querySelectorAll(".item").forEach(item => {
 document.querySelectorAll(".bin").forEach(bin => {
 
   bin.addEventListener("dragover", e => e.preventDefault());
+  // 🔥 iPhone touch drop detection
+bin.addEventListener("touchend", function(e) {
+  if (!dragged) return;
+
+  const binRect = bin.getBoundingClientRect();
+  const touch = e.changedTouches[0];
+
+  if (
+    touch.clientX >= binRect.left &&
+    touch.clientX <= binRect.right &&
+    touch.clientY >= binRect.top &&
+    touch.clientY <= binRect.bottom
+  ) {
+    bin.dispatchEvent(new Event("drop"));
+  }
+
+});
+
 
   bin.addEventListener("drop", () => {
     if (!dragged) return;
