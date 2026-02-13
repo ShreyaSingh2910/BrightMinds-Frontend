@@ -371,6 +371,42 @@ body {
   .games {
     grid-template-columns: 1fr;
   }
+  @media (max-width: 640px) {
+
+  /* Reduce header padding */
+  .header {
+    padding: 35px 10px 10px;
+  }
+
+  /* Smaller title */
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .header p {
+    font-size: 13px;
+  }
+
+  /* Bring profile closer */
+  .profile-wrapper {
+    top: 20px;
+    right: 15px;
+    gap: 4px;
+  }
+
+  /* Smaller avatar */
+  .profile-wrapper img {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Smaller profile text */
+  .profile-text {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}
+
 }
 /* ==========================
    CAROUSEL CONTAINER
@@ -514,6 +550,7 @@ body {
 .carousel-item {
   flex-shrink: 0;
 }
+
 
 
 
