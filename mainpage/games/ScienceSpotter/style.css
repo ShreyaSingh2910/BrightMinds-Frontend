@@ -81,7 +81,7 @@ body {
   }
 
   .ui-content {
-    bottom: 6.5vh;   /* push slightly higher on mobile */
+    bottom: 8vh;   /* push slightly higher on mobile */
   }
 
   .ui-content h1 {
@@ -102,14 +102,10 @@ body {
   }
 
 }
+
 @supports (-webkit-touch-callout: none) {
    .ui-content {
     bottom: 3vh;   /* push slightly higher on mobile */
   }
 
 }
-
-
-
-
-
