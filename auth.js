@@ -25,8 +25,7 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) {
-    window.location.href = "index.html";
-    return;
+    return; // Stay on login page
   }
 
   try {
@@ -36,21 +35,16 @@ auth.onAuthStateChanged(async (user) => {
 
     const profileCreated = await response.json();
 
-    if (!profileCreated) {
-      // If profile does not exist in backend
+    if (profileCreated) {
+      window.location.replace("mainpage/index.html");
+    } else {
       window.location.replace("mainpage/Dashboard/avtar.html");
-      return;
     }
-
-    window.location.replace("mainpage/index.html");
 
   } catch (error) {
     console.error("Profile check failed", error);
-    await auth.signOut(); // Force logout
-    window.location.href = "index.html";
   }
 });
-
 
 document.getElementById("startGuest").addEventListener("click", () => {
   window.location.href="mainpage/guest.html";
@@ -90,7 +84,3 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
-
-
-
-
