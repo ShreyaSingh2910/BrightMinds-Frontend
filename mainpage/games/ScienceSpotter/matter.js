@@ -1,4 +1,5 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
+
 function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
@@ -13,6 +14,7 @@ function saveGameScore(gameName, score) {
     })
   }).catch(err => console.error("Score save failed", err));
 }
+
 let dragged = null;
 let placedCount = 0;
 const TOTAL_ITEMS = 6;
@@ -63,67 +65,120 @@ const itemsContainer = document.querySelector(".items");
 randomSix.forEach(obj => {
   const div = document.createElement("div");
   div.className = "item";
-  div.draggable = true;
+  div.draggable = true; // keep desktop drag
   div.dataset.type = obj.type;
   div.textContent = obj.name;
   itemsContainer.appendChild(div);
 });
 
-document.querySelectorAll(".item").forEach(item => {
+const items = document.querySelectorAll(".item");
+const bins = document.querySelectorAll(".bin");
+
+/* ---------------- DESKTOP DRAG ---------------- */
+
+items.forEach(item => {
   item.addEventListener("dragstart", () => {
     dragged = item;
   });
 });
 
-
-
-document.querySelectorAll(".bin").forEach(bin => {
+bins.forEach(bin => {
 
   bin.addEventListener("dragover", e => e.preventDefault());
- 
+
   bin.addEventListener("drop", () => {
     if (!dragged) return;
-
-    const binType = bin.dataset.type;
-
-    if (dragged.dataset.type === binType) {
-
-      correctSound.currentTime = 0;
-correctSound.play();
-
-      const li = document.createElement("li");
-      li.textContent = dragged.textContent;
-      bin.querySelector(".list").appendChild(li);
-
-      bin.classList.add("hit");
-      setTimeout(() => bin.classList.remove("hit"), 400);
-
-      dragged.remove();
-      placedCount++;
-      if (placedCount === TOTAL_ITEMS) {
-        setTimeout(showWinMessage, 600);
-      }
-    }
-    else {
-      wrongSound.currentTime = 0;
-wrongSound.play();
-
-      dragged.animate(
-        [
-          { transform: "translateX(0)" },
-          { transform: "translateX(-10px)" },
-          { transform: "translateX(10px)" },
-          { transform: "translateX(0)" }
-        ],
-        { duration: 300 }
-      );
-    }
-
+    handleDrop(dragged, bin);
     dragged = null;
   });
+
 });
+
+/* ---------------- MOBILE TOUCH DRAG ---------------- */
+
+items.forEach(item => {
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  item.addEventListener("touchstart", e => {
+    const touch = e.touches[0];
+    const rect = item.getBoundingClientRect();
+
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
+
+    item.style.position = "absolute";
+    item.style.zIndex = "1000";
+  });
+
+  item.addEventListener("touchmove", e => {
+    e.preventDefault();
+    const touch = e.touches[0];
+
+    item.style.left = (touch.clientX - offsetX) + "px";
+    item.style.top = (touch.clientY - offsetY) + "px";
+  }, { passive: false });
+
+  item.addEventListener("touchend", () => {
+
+    const itemRect = item.getBoundingClientRect();
+
+    bins.forEach(bin => {
+      const binRect = bin.getBoundingClientRect();
+
+      if (
+        itemRect.left < binRect.right &&
+        itemRect.right > binRect.left &&
+        itemRect.top < binRect.bottom &&
+        itemRect.bottom > binRect.top
+      ) {
+        handleDrop(item, bin);
+      }
+    });
+
+  });
+
+});
+
+/* ---------------- SHARED DROP LOGIC ---------------- */
+
+function handleDrop(item, bin) {
+
+  const binType = bin.dataset.type;
+
+  if (item.dataset.type === binType) {
+
+    correctSound.currentTime = 0;
+    correctSound.play();
+
+    const li = document.createElement("li");
+    li.textContent = item.textContent;
+    bin.querySelector(".list").appendChild(li);
+
+    item.remove();
+    placedCount++;
+
+    if (placedCount === TOTAL_ITEMS) {
+      setTimeout(showWinMessage, 600);
+    }
+
+  } else {
+
+    wrongSound.currentTime = 0;
+    wrongSound.play();
+
+    item.style.position = "static";
+    item.style.left = "";
+    item.style.top = "";
+  }
+}
+
+/* ---------------- WIN + OTHER FUNCTIONS ---------------- */
+
 function showWinMessage() {
   saveGameScore("ScienceSpotter-StatesOfMatter", 10);
+
   const overlay = document.getElementById("win-overlay");
   overlay.style.display = "flex";
 
@@ -145,7 +200,3 @@ function toggleLearn() {
 function goBack() {
   window.location.href = "topic.html";
 }
-
-
-
-
