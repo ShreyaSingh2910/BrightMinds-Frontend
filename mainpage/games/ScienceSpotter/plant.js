@@ -38,35 +38,118 @@ window.addEventListener(
 let dragged = null;
 const userAnswers = {};
 
-document.querySelectorAll(".label").forEach(label => {
+const labels = document.querySelectorAll(".label");
+const dropZones = document.querySelectorAll(".drop-zone");
+
+/* ================= DESKTOP DRAG ================= */
+
+labels.forEach(label => {
   label.addEventListener("dragstart", () => {
     dragged = label;
   });
 });
 
-document.querySelectorAll(".drop-zone").forEach(zone => {
+dropZones.forEach(zone => {
   zone.addEventListener("dragover", e => e.preventDefault());
 
   zone.addEventListener("drop", () => {
     if (!dragged) return;
-    if (zone.dataset.locked === "true") return;
-
-    const zoneId = zone.dataset.id;
-
-    if (userAnswers[zoneId]) {
-      const prev = document.querySelector(
-        `.label[data-name="${userAnswers[zoneId]}"]`
-      );
-      if (prev) prev.style.visibility = "visible";
-    }
-
-    zone.textContent = dragged.textContent;
-    userAnswers[zoneId] = dragged.dataset.name;
-
-    dragged.style.visibility = "hidden";
+    handleDrop(dragged, zone);
     dragged = null;
   });
 });
+
+
+/* ================= MOBILE TOUCH DRAG ================= */
+
+labels.forEach(label => {
+
+  let offsetX = 0;
+  let offsetY = 0;
+  let droppedSuccessfully = false;
+
+  label.addEventListener("touchstart", e => {
+
+    const touch = e.touches[0];
+    const rect = label.getBoundingClientRect();
+
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
+
+    label.style.position = "fixed";
+    label.style.left = rect.left + "px";
+    label.style.top = rect.top + "px";
+    label.style.zIndex = "1000";
+
+    droppedSuccessfully = false;
+  });
+
+  label.addEventListener("touchmove", e => {
+    e.preventDefault();
+    const touch = e.touches[0];
+
+    label.style.left = (touch.clientX - offsetX) + "px";
+    label.style.top = (touch.clientY - offsetY) + "px";
+  }, { passive: false });
+
+  label.addEventListener("touchend", () => {
+
+    const labelRect = label.getBoundingClientRect();
+
+    dropZones.forEach(zone => {
+      const zoneRect = zone.getBoundingClientRect();
+
+      if (
+        labelRect.left < zoneRect.right &&
+        labelRect.right > zoneRect.left &&
+        labelRect.top < zoneRect.bottom &&
+        labelRect.bottom > zoneRect.top
+      ) {
+        handleDrop(label, zone);
+        droppedSuccessfully = true;
+      }
+    });
+
+    // snap back if not dropped
+    if (!droppedSuccessfully) {
+      label.style.position = "";
+      label.style.left = "";
+      label.style.top = "";
+      label.style.zIndex = "";
+    }
+
+  });
+
+});
+
+
+/* ================= SHARED DROP LOGIC ================= */
+
+function handleDrop(label, zone) {
+
+  if (zone.dataset.locked === "true") return;
+
+  const zoneId = zone.dataset.id;
+
+  if (userAnswers[zoneId]) {
+    const prev = document.querySelector(
+      `.label[data-name="${userAnswers[zoneId]}"]`
+    );
+    if (prev) prev.style.visibility = "visible";
+  }
+
+  zone.textContent = label.textContent;
+  userAnswers[zoneId] = label.dataset.name;
+
+  label.style.visibility = "hidden";
+
+  // reset mobile styles
+  label.style.position = "";
+  label.style.left = "";
+  label.style.top = "";
+  label.style.zIndex = "";
+}
+
 
 function checkAnswers() {
   let allCorrect = true;
