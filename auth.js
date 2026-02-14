@@ -22,17 +22,14 @@ guestTab.addEventListener("click", () => {
 });
 
 /* ---------------- AUTH STATE LISTENER ---------------- */
-
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) {
-    return; // Stay on login page
+    return; // stay on login page
   }
 
-  // ✅ Store email safely
-  if (user.email) {
-    localStorage.setItem("userEmail", user.email);
-  }
+  // Save email
+  localStorage.setItem("userEmail", user.email);
 
   try {
     const response = await fetch(
@@ -40,13 +37,12 @@ auth.onAuthStateChanged(async (user) => {
     );
 
     const profileCreated = await response.json();
-    const currentPage = window.location.pathname;
 
-    // ✅ Prevent redirect loop
-    if (profileCreated && !currentPage.includes("index.html")) {
+    if (profileCreated) {
+      // Existing user → go directly to game page
       window.location.replace("mainpage/index.html");
-    } 
-    else if (!profileCreated && !currentPage.includes("avtar.html")) {
+    } else {
+      // First time user → go to avatar page
       window.location.replace("mainpage/Dashboard/avtar.html");
     }
 
@@ -54,6 +50,7 @@ auth.onAuthStateChanged(async (user) => {
     console.error("Profile check failed", error);
   }
 });
+
 
 /* ---------------- GUEST LOGIN ---------------- */
 
@@ -105,3 +102,4 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
