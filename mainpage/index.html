@@ -11,7 +11,7 @@
 <a href="Dashboard/profile.html" class="profile-wrapper">
   <img
           id="profileAvatar"
-          src="Dashboard/assets/avatars/fox.jpeg"
+          src="Leaderboard/avatars/fox.jpeg"
           alt="Profile"
   />
   <span class="profile-text">Profile</span>
@@ -22,7 +22,7 @@
 <div class="bubble b3"></div>
 
 <header class="header">
-  <h1>Fun Learning Games</h1>
+  <h1>🎮 Fun Learning Games</h1>
   <p>Learn by Playing • Made for Kids</p>
 </header>
 <div class="main-content">
@@ -106,31 +106,38 @@
   return `Dashboard/assets/avatars/${avatarName}.jpeg`;
 }
 
-async function loadProfileAvatar() {
-  const email = localStorage.getItem("userEmail");
-  if (!email) return;
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (!user) return;
+
+  const email = user.email;
 
   try {
     const res = await fetch(
-      `${BASE_URL}/api/game/avatar?email=${email}`
+      `${BASE_URL}/api/game/avatar?email=${encodeURIComponent(email)}`
     );
-
 
     if (!res.ok) return;
 
     const avatarName = (await res.text()).trim();
-    console.log(avatarName);
+    console.log("Avatar from backend:", avatarName);
+
     const avatarImg = document.getElementById("profileAvatar");
-    avatarImg.src = getAvatarImage(avatarName);
+
+    if (avatarName) {
+      avatarImg.src = `Dashboard/assets/avatars/${avatarName}.jpeg?t=${new Date().getTime()}`;
+    } else {
+      avatarImg.src = "Dashboard/assets/avatars/fox.jpeg";
+    }
 
     avatarImg.onerror = function () {
-  this.src = "Dashboard/assets/avatars/fox.jpeg";
-};
+      this.src = "Dashboard/assets/avatars/fox.jpeg";
+    };
 
   } catch (err) {
     console.error("Avatar load failed", err);
   }
-}
+});
+
 
   const items = document.querySelectorAll('.carousel-item');
   const track = document.querySelector('.carousel-track');
@@ -161,7 +168,7 @@ async function loadProfileAvatar() {
     updateCarousel();
   }
   window.addEventListener("DOMContentLoaded", () => {
-  loadProfileAvatar();
+  
   loadLeaderboard();
 });
 
@@ -208,8 +215,6 @@ async function loadLeaderboard() {
   }
 }
 
-window.addEventListener("DOMContentLoaded", loadLeaderboard);
-
 </script>
 
 <footer class="footer">
@@ -221,8 +226,6 @@ window.addEventListener("DOMContentLoaded", loadLeaderboard);
 
 </body>
 </html>
-
-
 
 
 
