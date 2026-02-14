@@ -102,6 +102,7 @@
 <script>
   const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
+  // FIX: Added 'Dashboard/' prefix because index.html is in the root folder
   function getAvatarImage(avatarName) {
     if (!avatarName) return "Dashboard/assets/avatars/fox.jpeg";
     return `Dashboard/assets/avatars/${avatarName}.jpeg`;
@@ -110,20 +111,16 @@
   /* ---------------- AVATAR ---------------- */
 
   async function loadProfileAvatar(email) {
-    
     if (!email) return;
 
     try {
-      const res = await fetch(
-        `${BASE_URL}/api/game/avatar?email=${email}`
-      );
-
+      const res = await fetch(`${BASE_URL}/api/game/avatar?email=${email}`);
       if (!res.ok) return;
 
       const avatarName = (await res.text()).trim();
-      console.log("avtar name:",avatarName);
-
       const avatarImg = document.getElementById("profileAvatar");
+      
+      // Update the source using the correct path
       avatarImg.src = getAvatarImage(avatarName);
 
       avatarImg.onerror = function () {
@@ -136,33 +133,24 @@
   }
 
   /* ---------------- CAROUSEL ---------------- */
-
   const items = document.querySelectorAll('.carousel-item');
   const track = document.querySelector('.carousel-track');
-
   let currentIndex = 0;
-  const itemWidth = 300; // card + gap
+  const itemWidth = 300; 
 
   function updateCarousel() {
     items.forEach((item, index) => {
       item.classList.toggle('active', index === currentIndex);
     });
-
-    const centerOffset =
-      (track.offsetWidth / 2) - (itemWidth / 2);
-
-    const moveX =
-      centerOffset - (currentIndex * itemWidth);
-
+    const centerOffset = (track.offsetWidth / 2) - (itemWidth / 2);
+    const moveX = centerOffset - (currentIndex * itemWidth);
     track.style.transform = `translateX(${moveX}px)`;
   }
 
   function moveSlide(direction) {
     currentIndex += direction;
-
     if (currentIndex < 0) currentIndex = items.length - 1;
     if (currentIndex >= items.length) currentIndex = 0;
-
     updateCarousel();
   }
 
@@ -172,39 +160,26 @@
   /* ---------------- LEADERBOARD ---------------- */
 
   async function loadLeaderboard(email) {
-    if (!email) return;
-
-    const profileRes = await fetch(
-      `${BASE_URL}/api/game/profileData?email=${email}&gameName=all`
-    );
-    const profile = await profileRes.json();
-    const loggedUserName = profile.name;
-
     try {
       const res = await fetch(`${BASE_URL}/api/game/leaderboard`);
       if (!res.ok) return;
 
       const data = await res.json();
       const list = document.getElementById("leaderboardList");
-
       list.innerHTML = "";
 
       data.slice(0, 10).forEach(entry => {
         const li = document.createElement("li");
-
         if (entry.email === email) {
           li.classList.add("current-user");
         }
-
         li.innerHTML = `
           <span>${entry.rank}</span>
           ${entry.name}
           <em>${entry.score.toLocaleString()}</em>
         `;
-
         list.appendChild(li);
       });
-
     } catch (err) {
       console.error("Leaderboard load failed", err);
     }
@@ -213,17 +188,17 @@
   /* ---------------- FIREBASE AUTH LISTENER ---------------- */
 
   firebase.auth().onAuthStateChanged(function(user) {
-    if (!user) {
+    if (user) {
+      // Safety: Update localStorage in case it was cleared
+      localStorage.setItem("userEmail", user.email);
+      
+      // Use the email directly from the Firebase user object
+      loadProfileAvatar(user.email);
+      loadLeaderboard(user.email);
+    } else {
       console.log("User not logged in");
-      return;
     }
-
-    const email = localStorage.getItem("userEmail");
-
-    loadProfileAvatar(email);
-    loadLeaderboard(email);
   });
-
 </script>
 
 
@@ -236,6 +211,7 @@
 
 </body>
 </html>
+
 
 
 
