@@ -98,38 +98,43 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="firebase-init.js"></script>
+
 <script>
   const BASE_URL = "https://brightminds-backend-3.onrender.com";
+
   function getAvatarImage(avatarName) {
-  if (!avatarName) return "Dashboard/assets/avatars/fox.jpeg";
-  return `Dashboard/assets/avatars/${avatarName}.jpeg`;
-}
-
-async function loadProfileAvatar() {
-  const email = localStorage.getItem("userEmail");
-  if (!email) return;
-
-  try {
-    const res = await fetch(
-      `${BASE_URL}/api/game/avatar?email=${email}`
-    );
-
-
-    if (!res.ok) return;
-
-    const avatarName = (await res.text()).trim();
-    console.log(avatarName);
-    const avatarImg = document.getElementById("profileAvatar");
-    avatarImg.src = getAvatarImage(avatarName);
-
-    avatarImg.onerror = function () {
-  this.src = "Dashboard/assets/avatars/fox.jpeg";
-};
-
-  } catch (err) {
-    console.error("Avatar load failed", err);
+    if (!avatarName) return "Dashboard/assets/avatars/fox.jpeg";
+    return `Dashboard/assets/avatars/${avatarName}.jpeg`;
   }
-}
+
+  /* ---------------- AVATAR ---------------- */
+
+  async function loadProfileAvatar(email) {
+    if (!email) return;
+
+    try {
+      const res = await fetch(
+        `${BASE_URL}/api/game/avatar?email=${email}`
+      );
+
+      if (!res.ok) return;
+
+      const avatarName = (await res.text()).trim();
+      console.log(avatarName);
+
+      const avatarImg = document.getElementById("profileAvatar");
+      avatarImg.src = getAvatarImage(avatarName);
+
+      avatarImg.onerror = function () {
+        this.src = "Dashboard/assets/avatars/fox.jpeg";
+      };
+
+    } catch (err) {
+      console.error("Avatar load failed", err);
+    }
+  }
+
+  /* ---------------- CAROUSEL ---------------- */
 
   const items = document.querySelectorAll('.carousel-item');
   const track = document.querySelector('.carousel-track');
@@ -159,57 +164,67 @@ async function loadProfileAvatar() {
 
     updateCarousel();
   }
-  window.addEventListener("DOMContentLoaded", () => {
-  loadProfileAvatar();
-  loadLeaderboard();
-});
 
   window.addEventListener("load", updateCarousel);
   window.addEventListener("resize", updateCarousel);
 
+  /* ---------------- LEADERBOARD ---------------- */
 
-async function loadLeaderboard() {
+  async function loadLeaderboard(email) {
+    if (!email) return;
 
-  const email = localStorage.getItem("userEmail");
-  if (!email) return;
-  
-  const profileRes = await fetch(
-    `${BASE_URL}/api/game/profileData?email=${email}&gameName=all`
-  );
-  const profile = await profileRes.json();
-  const loggedUserName = profile.name;
-  try {
-    const res = await fetch(`${BASE_URL}/api/game/leaderboard`);
-    if (!res.ok) return;
+    const profileRes = await fetch(
+      `${BASE_URL}/api/game/profileData?email=${email}&gameName=all`
+    );
+    const profile = await profileRes.json();
+    const loggedUserName = profile.name;
 
-    const data = await res.json(); 
-    const list = document.getElementById("leaderboardList");
+    try {
+      const res = await fetch(`${BASE_URL}/api/game/leaderboard`);
+      if (!res.ok) return;
 
-    list.innerHTML = "";
+      const data = await res.json();
+      const list = document.getElementById("leaderboardList");
 
-    data.slice(0, 10).forEach(entry => {
-      const li = document.createElement("li");
+      list.innerHTML = "";
 
- if (entry.email === email) {
-    li.classList.add("current-user");
+      data.slice(0, 10).forEach(entry => {
+        const li = document.createElement("li");
+
+        if (entry.email === email) {
+          li.classList.add("current-user");
+        }
+
+        li.innerHTML = `
+          <span>${entry.rank}</span>
+          ${entry.name}
+          <em>${entry.score.toLocaleString()}</em>
+        `;
+
+        list.appendChild(li);
+      });
+
+    } catch (err) {
+      console.error("Leaderboard load failed", err);
+    }
   }
-      li.innerHTML = `
-        <span>${entry.rank}</span>
-        ${entry.name}
-        <em>${entry.score.toLocaleString()}</em>
-      `;
 
-      list.appendChild(li);
-    });
+  /* ---------------- FIREBASE AUTH LISTENER ---------------- */
 
-  } catch (err) {
-    console.error("Leaderboard load failed", err);
-  }
-}
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (!user) {
+      console.log("User not logged in");
+      return;
+    }
 
-window.addEventListener("DOMContentLoaded", loadLeaderboard);
+    const email = user.email;
+
+    loadProfileAvatar(email);
+    loadLeaderboard(email);
+  });
 
 </script>
+
 
 <footer class="footer">
   <br>
@@ -220,5 +235,6 @@ window.addEventListener("DOMContentLoaded", loadLeaderboard);
 
 </body>
 </html>
+
 
 
