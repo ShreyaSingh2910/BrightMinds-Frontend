@@ -1,7 +1,5 @@
-const API_BASE = "http://localhost:8080/api/game";
-const currentUserEmail = localStorage.getItem("userEmail");
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
-
+let currentUserEmail = null;
 const data = {
   physics: {
     title: "Science Profile",
@@ -76,9 +74,10 @@ async function loadGame(gameKey, event) {
     console.log("Avtar p.avtar:",p.avatar);
     avatarImg.src = getAvatarImage(p.avatar);
 
-    avatarImg.onerror = function () {
-      this.src =getAvatarImage(data.avatar);
-    };
+  avatarImg.onerror = function () {
+  this.src = "assets/avatars/fox.jpeg";
+};
+
 
     const recentRes = await fetch(
       `${BASE_URL}/api/game/recentGame?email=${currentUserEmail}`
@@ -98,10 +97,39 @@ function goBack() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadGame("physics", {
-    target: document.querySelector(".menu.active")
+
+  firebase.auth().onAuthStateChanged(function(user) {
+
+    if (!user) {
+      // Not logged in → go to login page
+      window.location.replace("../index.html");
+      return;
+    }
+
+    // Logged in
+    currentUserEmail = user.email;
+    localStorage.setItem("userEmail", user.email);
+
+    // Load default tab
+    loadGame("physics", {
+      target: document.querySelector(".menu.active")
+    });
+
   });
+
 });
+document.querySelector(".logout-btn")?.addEventListener("click", async () => {
+
+  try {
+    await firebase.auth().signOut();   // End session
+    localStorage.clear();              // Clear stored data
+    window.location.replace("../index.html"); // Go to login page
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+
+});
+
 
 
 
