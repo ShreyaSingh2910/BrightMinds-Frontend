@@ -6,23 +6,40 @@ font-family: 'Fredoka', sans-serif;
 body {
   margin: 0;
   height: 100vh;
+  min-height: 100dvh; /* mobile safe */
   overflow: hidden;
+   background: linear-gradient(
+    180deg,
+    #633D95 0%,
+    #4C2A7A 50%,
+    #3F1F6E 100%
+  );
 }
+
 #lottie-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
 
-  transform: translateY(-6%);
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  overflow: hidden;
+}
+#lottie-bg svg {
+  width: auto;
+  height: 100vh;
+  max-width: 100vw;
+}
 .ui-content {
   position: absolute;
-  bottom: 4%;
+  bottom: 2vh;
   width: 100%;
   text-align: center;
   z-index: 2;
 }
+
 
 .ui-content h1 {
   font-size: clamp(28px, 6vw, 46px);
@@ -49,10 +66,38 @@ body {
   transform: translateY(4px);
   box-shadow: 0 5px 0 #e68a00;
 }
+
+/* ================= MOBILE FIX ================= */
+
 @media (max-width: 768px) {
 
-  #lottie-bg {
-    transform: scale(4);   /* zoom animation */
+  body {
+    height: 100dvh;
+  }
+
+  #lottie-bg svg {
+    height: 100%;
+    width: auto;
+  }
+
+  .ui-content {
+    bottom: 10vh;   /* push slightly higher on mobile */
+  }
+
+  .ui-content h1 {
+    font-size: 28px;
+  }
+
+  .ui-content button {
+    padding: 14px 40px;
+    font-size: 18px;
+  }
+    #lottie-bg svg {
+    height: 115vh;
+  }
+   #lottie-bg {
+    margin-top:0px;
+    transform: scale(3.2);   /* zoom animation */
     transform-origin: center center;
   }
 
