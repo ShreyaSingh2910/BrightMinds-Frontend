@@ -121,7 +121,7 @@
       if (!res.ok) return;
 
       const avatarName = (await res.text()).trim();
-      console.log(avatarName);
+      console.log("avtar name:",avatarName);
 
       const avatarImg = document.getElementById("profileAvatar");
       avatarImg.src = getAvatarImage(avatarName);
@@ -236,6 +236,7 @@
 
 </body>
 </html>
+
 
 
 
