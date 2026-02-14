@@ -106,8 +106,8 @@
 }
 
 async function loadProfileAvatar() {
-  const email = localStorage.getItem("userEmail");
-  if (!email) return;
+//  const email = localStorage.getItem("userEmail");
+  // if (!email) return;
 
   try {
     const res = await fetch(
@@ -220,3 +220,4 @@ window.addEventListener("DOMContentLoaded", loadLeaderboard);
 
 </body>
 </html>
+
