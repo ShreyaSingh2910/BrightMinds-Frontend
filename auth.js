@@ -25,12 +25,8 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) {
-    localStorage.removeItem("userEmail");
-    return;
+    return; // Stay on login page
   }
-
-  localStorage.setItem("loginMode", "google");
-  localStorage.setItem("userEmail", user.email);
 
   try {
     const response = await fetch(
@@ -44,16 +40,16 @@ auth.onAuthStateChanged(async (user) => {
     } else {
       window.location.replace("mainpage/Dashboard/avtar.html");
     }
+
   } catch (error) {
     console.error("Profile check failed", error);
   }
 });
 
 document.getElementById("startGuest").addEventListener("click", () => {
-localStorage.setItem("loginMode","guest");
- localStorage.removeItem("userEmail");
   window.location.href="mainpage/guest.html";
 });
+
 
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
@@ -67,8 +63,7 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
 });
 
 document.getElementById("manualLoginBtn")?.addEventListener("click", async () => {
-localStorage.removeItem("loginMode");
-localStorage.setItem("loginMode","google");
+
   const email = document.getElementById("email")?.value.trim();
   const password = document.getElementById("password")?.value.trim();
 
@@ -78,6 +73,7 @@ localStorage.setItem("loginMode","google");
   }
 
   try {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     await auth.signInWithEmailAndPassword(email, password);
   } catch {
     try {
@@ -88,7 +84,6 @@ localStorage.setItem("loginMode","google");
     }
   }
 });
-
 
 
 
