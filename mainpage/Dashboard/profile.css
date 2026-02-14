@@ -11,9 +11,10 @@ body {
 
 .dashboard {
   display: flex;
-  padding: 20px;
   gap: 20px;
-  min-height: 100vh;
+  height: 100vh;   /* Full screen height */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .side-panel {
@@ -196,10 +197,14 @@ body {
   border-radius: 24px;
   text-align: center;
   box-shadow: 0 16px 30px rgba(0,0,0,0.15);
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  height: 100%;       /* Take full dashboard height */
 }
+
 
 .profile-name {
   color: #5b2d8b;
@@ -208,6 +213,7 @@ body {
 
 .avatar {
   width: 120px;
+  height: 120px;
   border-radius: 50%;
   margin-bottom: 12px;
   border: 4px solid #ff6a1a;
@@ -218,6 +224,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  margin-bottom: 20px;
 }
 
 .profile-card-item {
@@ -270,3 +277,42 @@ body {
   min-height: 220px;
 }
 
+
+
+.logout-btn {
+    margin-top: auto; /* Pushes the button to the very bottom of the sidebar */
+    width: 100%;
+    padding: 12px;
+    background-color: #ffeded; /* Light red background */
+    color: #e74c3c; /* Alert red text */
+    border: 2px solid #ffcfcf;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.logout-btn:hover {
+    background-color: #e74c3c;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+}
+
+aside.profile {
+    background: white;
+    border-radius: 30px; /* Matching your UI design */
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* FIX: Force it to stretch from top to bottom */
+    height: 100%; 
+    min-height: 80vh; /* Ensures it looks good on different screens */
+    box-sizing: border-box; 
+}
