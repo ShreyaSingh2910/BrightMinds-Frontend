@@ -5,6 +5,7 @@ const loginSection = document.getElementById("loginSection");
 const guestSection = document.getElementById("guestSection");
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
+/* ---------------- TAB SWITCHING ---------------- */
 
 loginTab.addEventListener("click", () => {
   loginTab.classList.add("active");
@@ -20,12 +21,17 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+/* ---------------- AUTH STATE LISTENER ---------------- */
 
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) {
     return; // Stay on login page
+  }
+
+  // ✅ Store email safely
+  if (user.email) {
+    localStorage.setItem("userEmail", user.email);
   }
 
   try {
@@ -34,10 +40,13 @@ auth.onAuthStateChanged(async (user) => {
     );
 
     const profileCreated = await response.json();
+    const currentPage = window.location.pathname;
 
-    if (profileCreated) {
+    // ✅ Prevent redirect loop
+    if (profileCreated && !currentPage.includes("index.html")) {
       window.location.replace("mainpage/index.html");
-    } else {
+    } 
+    else if (!profileCreated && !currentPage.includes("avtar.html")) {
       window.location.replace("mainpage/Dashboard/avtar.html");
     }
 
@@ -46,21 +55,30 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-document.getElementById("startGuest").addEventListener("click", () => {
-  window.location.href="mainpage/guest.html";
+/* ---------------- GUEST LOGIN ---------------- */
+
+document.getElementById("startGuest")?.addEventListener("click", () => {
+  window.location.href = "mainpage/guest.html";
 });
 
+/* ---------------- GOOGLE LOGIN ---------------- */
 
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
-    localStorage.setItem("loginMode", "google"); 
+    localStorage.setItem("loginMode", "google");
+
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
     const provider = new firebase.auth.GoogleAuthProvider();
     await auth.signInWithPopup(provider);
+
   } catch (error) {
     console.error(error);
     alert("Google sign-in failed");
   }
 });
+
+/* ---------------- MANUAL LOGIN / REGISTER ---------------- */
 
 document.getElementById("manualLoginBtn")?.addEventListener("click", async () => {
 
@@ -73,8 +91,11 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
   }
 
   try {
+    localStorage.setItem("loginMode", "manual");
+
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     await auth.signInWithEmailAndPassword(email, password);
+
   } catch {
     try {
       await auth.createUserWithEmailAndPassword(email, password);
