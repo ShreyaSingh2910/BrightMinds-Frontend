@@ -24,11 +24,8 @@ guestTab.addEventListener("click", () => {
 /* ---------------- AUTH STATE LISTENER ---------------- */
 auth.onAuthStateChanged(async (user) => {
 
-  if (!user) {
-    return; // stay on login page
-  }
+  if (!user) return;
 
-  // Save email
   localStorage.setItem("userEmail", user.email);
 
   try {
@@ -39,10 +36,8 @@ auth.onAuthStateChanged(async (user) => {
     const profileCreated = await response.json();
 
     if (profileCreated) {
-      // Existing user → go directly to game page
       window.location.replace("mainpage/index.html");
     } else {
-      // First time user → go to avatar page
       window.location.replace("mainpage/Dashboard/avtar.html");
     }
 
@@ -50,6 +45,7 @@ auth.onAuthStateChanged(async (user) => {
     console.error("Profile check failed", error);
   }
 });
+
 
 
 /* ---------------- GUEST LOGIN ---------------- */
@@ -102,4 +98,5 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
