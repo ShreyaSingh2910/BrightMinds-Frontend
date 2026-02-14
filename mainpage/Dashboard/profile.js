@@ -31,6 +31,7 @@ const data = {
 };
 
 function getAvatarImage(avatarName) {
+  console.log("Avtar:",avatarName);
   if (!avatarName) return "assets/avatars/fox.jpeg";
   return `assets/avatars/${avatarName}.jpeg`;
 }
@@ -100,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     target: document.querySelector(".menu.active")
   });
 });
+
 
 
 
