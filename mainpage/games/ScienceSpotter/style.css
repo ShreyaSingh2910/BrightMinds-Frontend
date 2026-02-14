@@ -81,7 +81,7 @@ body {
   }
 
   .ui-content {
-    bottom: 8vh;   /* push slightly higher on mobile */
+    bottom: 6vh;   /* push slightly higher on mobile */
   }
 
   .ui-content h1 {
@@ -102,4 +102,5 @@ body {
   }
 
 }
+
 
