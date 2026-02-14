@@ -95,21 +95,32 @@ bins.forEach(bin => {
 });
 
 /* ---------------- MOBILE TOUCH DRAG ---------------- */
+/* ---------------- MOBILE TOUCH DRAG ---------------- */
 
 items.forEach(item => {
 
   let offsetX = 0;
   let offsetY = 0;
+  let startX = 0;
+  let startY = 0;
+  let droppedSuccessfully = false;
 
   item.addEventListener("touchstart", e => {
     const touch = e.touches[0];
     const rect = item.getBoundingClientRect();
 
+    startX = rect.left;
+    startY = rect.top;
+
     offsetX = touch.clientX - rect.left;
     offsetY = touch.clientY - rect.top;
 
-    item.style.position = "absolute";
+    item.style.position = "fixed";
+    item.style.left = rect.left + "px";
+    item.style.top = rect.top + "px";
     item.style.zIndex = "1000";
+
+    droppedSuccessfully = false;
   });
 
   item.addEventListener("touchmove", e => {
@@ -134,12 +145,22 @@ items.forEach(item => {
         itemRect.bottom > binRect.top
       ) {
         handleDrop(item, bin);
+        droppedSuccessfully = true;
       }
     });
+
+    // ✅ If NOT dropped in bin → snap back
+    if (!droppedSuccessfully) {
+      item.style.position = "static";
+      item.style.left = "";
+      item.style.top = "";
+      item.style.zIndex = "";
+    }
 
   });
 
 });
+
 
 /* ---------------- SHARED DROP LOGIC ---------------- */
 
