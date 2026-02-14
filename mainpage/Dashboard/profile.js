@@ -73,6 +73,7 @@ async function loadGame(gameKey, event) {
       : "-";
 
     const avatarImg = document.querySelector(".avatar");
+    console.log("Avtar p.avtar:",p.avatar);
     avatarImg.src = getAvatarImage(p.avatar);
 
     avatarImg.onerror = function () {
@@ -101,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     target: document.querySelector(".menu.active")
   });
 });
+
 
 
 
