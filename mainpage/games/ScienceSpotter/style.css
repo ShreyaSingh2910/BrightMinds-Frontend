@@ -104,10 +104,11 @@ body {
 }
 @supports (-webkit-touch-callout: none) {
    .ui-content {
-    bottom: 5vh;   /* push slightly higher on mobile */
+    bottom: 3vh;   /* push slightly higher on mobile */
   }
 
 }
+
 
 
 
