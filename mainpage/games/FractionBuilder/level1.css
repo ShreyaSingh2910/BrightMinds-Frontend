@@ -170,85 +170,6 @@ button {
   box-shadow: 0 3px 0 #4527a0;
 }
 
-@media (max-width: 480px) {
- body {
-    align-items: flex-start;
-  }
-
-  .game-card {
-    width: 100vw;
-    min-height: 100vh;
-    border-radius: 0;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-
-  .instruction {
-    font-size: 14px;
-    margin-bottom: 16px;
-  }
-
-   .whole-area {
-    width: 240px;
-    height: 240px;
-  }
-
-  .parts-area {
-    gap: 8px;
-    padding: 10px;
-    margin: 20px 0 12px;
-  }
-
-  .part-item {
-    width: 58px;
-    height: 58px;
-  }
-
-  .part-item::before {
-    width: 52px;
-    height: 52px;
-  }
-
-  .square-part::before {
-    width: 48px;
-    height: 48px;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 11px;
-  }
-
-  .result {
-    font-size: 16px;
-  }
-
-  .success-card {
-    width: 90%;
-    max-width: 320px;
-    padding: 22px;
-  }
-
-  .lottie-box {
-    width: 140px;
-    height: 140px;
-  }
-
-  .success-card h2 {
-    font-size: 20px;
-  }
-
-  .success-card p {
-    font-size: 14px;
-  }
-
-  .success-actions button {
-    font-size: 14px;
-    padding: 10px;
-  }
-}
 .back-btn-small {
   position: fixed;
   top: 14px;
@@ -288,77 +209,74 @@ button {
   background: linear-gradient(135deg,#7c4dff, #5e35b1);
 }
 
-@media (max-width: 480px) {
-  .back-btn-small {
-    height: 32px;
-    width: 40px;
-    font-size: 1rem;
-    top: 10px;
-    left: 10px;
-  }
-}
+/* ===============================
+   📱 MOBILE RESPONSIVE (LEVEL 1)
+   Same style as Level 2 & 3
+   =============================== */
 
 @media (max-width: 480px) {
 
   body {
-    align-items: flex-start;
-    padding: 30px 0;
+    padding: 18px;
+    align-items: center;
   }
 
   .game-card {
-    width: 96vw;            /* almost full width */
-    max-width: 500px;
-    padding: 32px 24px;
-    border-radius: 30px;
+    width: 92%;
+    max-width: 380px;
+    padding: 20px;
+    border-radius: 24px;
   }
 
   h1 {
-    font-size: 30px;        /* bigger title */
+    font-size: 22px;
   }
 
   .instruction {
-    font-size: 18px;
-    margin-bottom: 22px;
+    font-size: 14px;
+    margin-bottom: 16px;
   }
 
+  /* ✅ Smaller Circle */
   .whole-area {
-    width: 300px;           /* BIG circle */
-    height: 300px;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
   }
 
+  /* Parts area */
   .parts-area {
-    gap: 16px;
-    padding: 16px;
-    margin: 28px 0 18px;
+    gap: 8px;
+    padding: 12px;
+    margin: 20px 0 14px;
   }
 
   .part-item {
-    width: 85px;            /* bigger pieces */
-    height: 85px;
+    width: 56px;
+    height: 56px;
   }
 
   .part-item::before {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
   }
 
   button {
-    font-size: 20px;
-    padding: 16px;
-    border-radius: 18px;
+    font-size: 16px;
+    padding: 12px;
   }
 
   .result {
-    font-size: 20px;
+    font-size: 16px;
   }
 
-  /* BIG Back Arrow */
+  /* Back button */
   .back-btn-small {
-    height: 52px;
-    width: 64px;
-    font-size: 1.6rem;
-    top: 18px;
-    left: 18px;
+    height: 34px;
+    width: 42px;
+    font-size: 1rem;
+    top: 12px;
+    left: 12px;
   }
 
 }
