@@ -1,4 +1,6 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
+let attempts = 0;
+
 function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
@@ -152,6 +154,8 @@ function handleDrop(label, zone) {
 
 
 function checkAnswers() {
+  attempts++;
+
   let allCorrect = true;
   let hasWrong = false;
 
@@ -234,7 +238,24 @@ function playCorrectSoundForWhile() {
 }
 
 function showCelebration() {
-  saveGameScore("ScienceSpotter-PartsOfPlants", 10);
+  let finalScore;
+
+if (attempts === 1) {
+  finalScore = 10;
+} else if (attempts === 2) {
+  finalScore = 9;
+} else if (attempts === 3) {
+  finalScore = 8;
+} else if (attempts === 4) {
+  finalScore = 7;
+} else {
+  finalScore = 6; // 5th attempt or more
+}
+
+saveGameScore("ScienceSpotter-PartsOfPlants", finalScore);
+document.getElementById("scoreMessage").innerHTML =
+    "You named all parts of the plant! <br><br> 🌟 Your Score: <b>" + finalScore + " / 10</b>";
+    
   const celebration = document.getElementById("celebration");
   celebration.classList.remove("hidden");
 
