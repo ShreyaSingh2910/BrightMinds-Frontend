@@ -1,4 +1,5 @@
 import { questionBank } from "./questions.js";
+const progressFill = document.getElementById("progress-fill");
 
 const TOTAL_QUESTIONS = 10;
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
@@ -84,7 +85,15 @@ function loadQuestion() {
   });
 
   updateScoreDisplay();
+  updateProgress();
+
 }
+
+function updateProgress() {
+  progressFill.style.width =
+    `${(gameIndex / TOTAL_QUESTIONS) * 100}%`;
+}
+
 
 function handleAnswer(selected, btn) {
   const buttons = document.querySelectorAll(".options button");
@@ -154,6 +163,7 @@ function getTip(topic) {
 
 window.restartGame = function () {
   popup.style.display = "none";
+  progressFill.style.width = "0%";
   gameIndex = 0;
   skillLevel = 1;
   score = 10;
