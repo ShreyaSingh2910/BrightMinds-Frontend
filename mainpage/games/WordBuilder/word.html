@@ -39,7 +39,8 @@
                     Skill: <span id="skill-level">Easy</span>
                 </div>
 
-                <span id="progress-text">1 / 10</span>
+                <span id="score-display">10/10</span>
+
             </div>
 
             <div class="question-card">
@@ -54,15 +55,17 @@
 <button class="back-btn" onclick="goBack()">⬅</button>
 
 <div class="popup" id="popup">
-    <div class="popup-card">
-        <h1>🎉 Well Done! 🎉</h1>
-        <p>You completed the Word Builder game!</p>
+   <div class="popup-card">
+    <h1>🎉 Well Done! 🎉</h1>
+    <p>You completed the Word Builder game!</p>
+    <p id="final-score"></p>
 
-        <div class="popup-buttons">
-            <button onclick="restartGame()">Replay</button>
-            <button onclick="goBack()">Back</button>
-        </div>
+    <div class="popup-buttons">
+        <button onclick="restartGame()">Replay</button>
+        <button onclick="goBack()">Back</button>
     </div>
+</div>
+
 </div>
 
 <div class="bg-animations">
