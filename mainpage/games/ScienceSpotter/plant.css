@@ -456,3 +456,8 @@ body {
   box-shadow: 0 2px 0 #75bc7a;
 
 }
+#scoreMessage b {
+  font-size: 22px;
+  color: #2e7d32;
+}
+
