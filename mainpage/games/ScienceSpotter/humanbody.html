@@ -17,20 +17,47 @@
     Drag and drop the organs to their correct positions in the human body.
 </p>
 
+
+
 <div class="diagram-area">
     <div class="image-container">
         <img src="assets/body.jpeg" class="body-img" />
 
-        <div class="label-wrapper" id="pos-1"><div class="drop-zone" data-target="brain">?</div></div>
-        <div class="label-wrapper" id="pos-2"><div class="drop-zone" data-target="lungs">?</div></div>
-        <div class="label-wrapper" id="pos-3"><div class="drop-zone" data-target="heart">?</div></div>
-        <div class="label-wrapper" id="pos-4"><div class="drop-zone" data-target="liver">?</div></div>
-        <div class="label-wrapper" id="pos-5"><div class="drop-zone" data-target="stomach">?</div></div>
-        <div class="label-wrapper" id="pos-6"><div class="drop-zone" data-target="kidneys">?</div></div>
-        <div class="label-wrapper" id="pos-7"><div class="drop-zone" data-target="large-intestine">?</div></div>
-        <div class="label-wrapper" id="pos-8"><div class="drop-zone" data-target="small-intestine">?</div></div>
+        <div class="label-wrapper" id="pos-1">
+            <div class="drop-zone" data-target="brain">?</div>
+        </div>
+
+        <div class="label-wrapper" id="pos-2">
+            <div class="drop-zone" data-target="lungs">?</div>
+        </div>
+
+        <div class="label-wrapper" id="pos-3">
+            <div class="drop-zone" data-target="heart">?</div>
+        </div>
+
+        <div class="label-wrapper" id="pos-4">
+            <div class="drop-zone" data-target="liver">?</div>
+        </div>
+
+        <div class="label-wrapper" id="pos-5">
+            <div class="drop-zone" data-target="stomach">?</div>
+        </div>
+
+        <div class="label-wrapper" id="pos-6">
+            <div class="drop-zone" data-target="kidneys">?</div>
+        </div>
+
+        <div class="label-wrapper" id="pos-7">
+            <div class="drop-zone" data-target="large-intestine">?</div>
+        </div>
+
+        <div class="label-wrapper" id="pos-8">
+            <div class="drop-zone" data-target="small-intestine">?</div>
+        </div>
+
     </div>
 </div>
+
 
 <div class="parts-bin">
     <div class="draggable" draggable="true" id="brain">Brain</div>
@@ -48,12 +75,12 @@
 <div id="lottie-left" class="corner-lottie left-lottie"></div>
 <div id="lottie-right" class="corner-lottie right-lottie"></div>
 
-
 <div id="congrats-modal" class="modal hidden">
     <div class="modal-card">
         <div id="lottie-success" class="success-lottie"></div>
         <h2>🎉 Amazing!</h2>
         <p>You placed all organs correctly!</p>
+        <p id="final-score" style="font-weight:bold; font-size:18px;"></p>
         <div class="modal-buttons">
             <button onclick="restartGame()">Replay</button>
             <button onclick="goBack()">Back</button>
@@ -61,170 +88,123 @@
     </div>
 </div>
 
-
 <script>
 
+function saveGameScore(gameName, score) {
+  const email = localStorage.getItem("userEmail");
+  if (!email) return;
 
+  fetch("http://localhost:8080/api/game/saveScore", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+      gameName: gameName,
+      score: score
+    })
+  }).catch(err => console.error("Score save failed", err));
+}
 
-    function saveGameScore(gameName, score) {
-      const email = localStorage.getItem("userEmail");
-      if (!email) return;
+let attemptCount = 0;
 
-      fetch("http://localhost:8080/api/game/saveScore", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          gameName: gameName,
-          score: score
-        })
-      }).catch(err => console.error("Score save failed", err));
+const draggables = document.querySelectorAll('.draggable');
+const dropZones  = document.querySelectorAll('.drop-zone');
+const checkBtn   = document.getElementById('check-btn');
+const totalZones = dropZones.length;
+
+draggables.forEach(item => {
+  item.addEventListener('dragstart', () => item.classList.add('dragging'));
+  item.addEventListener('dragend', () => item.classList.remove('dragging'));
+});
+
+dropZones.forEach(zone => {
+  zone.addEventListener('dragover', e => e.preventDefault());
+
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    const dragged = document.querySelector('.dragging');
+    if (!dragged) return;
+    if (zone.classList.contains('filled')) return;
+
+    zone.innerText = dragged.innerText;
+    zone.dataset.placed = dragged.id;
+    dragged.style.display = 'none';
+  });
+});
+
+checkBtn.addEventListener('click', () => {
+
+  attemptCount++;
+
+  let hasWrong = false;
+  let correctCount = 0;
+
+  dropZones.forEach(zone => {
+    const placed = zone.dataset.placed;
+    const correct = zone.dataset.target;
+    if (!placed) return;
+    if (placed !== correct) hasWrong = true;
+  });
+
+  dropZones.forEach(zone => {
+    const placed = zone.dataset.placed;
+    const correct = zone.dataset.target;
+    if (!placed) return;
+
+    if (placed === correct) {
+      zone.classList.add('filled');
+      zone.classList.remove('wrong');
+      correctCount++;
+    } else {
+      zone.classList.add('wrong');
     }
+  });
 
-        lottie.loadAnimation({
-          container: document.getElementById('lottie-left'),
-          renderer: 'svg',
-          loop: true,
-          autoplay: true,
-          path: 'lottie/student.json'
-        });
+  if (hasWrong) {
+    setTimeout(resetWrongAnswers, 1500);
+  } else if (correctCount === totalZones) {
+    setTimeout(showCongrats, 800);
+  }
+});
 
-        lottie.loadAnimation({
-          container: document.getElementById('lottie-right'),
-          renderer: 'svg',
-          loop: true,
-          autoplay: true,
-          path: 'lottie/Funnybrain.json'
-        });
+function resetWrongAnswers() {
+  dropZones.forEach(zone => {
+    if (zone.classList.contains('wrong')) {
+      const option = document.getElementById(zone.dataset.placed);
+      if (option) option.style.display = 'inline-block';
+      zone.innerText = '?';
+      zone.classList.remove('wrong');
+      delete zone.dataset.placed;
+    }
+  });
+}
 
-        const successAnim = lottie.loadAnimation({
-          container: document.getElementById('lottie-success'),
-          renderer: 'svg',
-          loop: false,
-          autoplay: false,
-          path: 'lottie/anim1.json'
-        });
+function showCongrats() {
 
-        const bgSound = new Audio('assets/sounds/background.mp3');
-        const correctSound = new Audio('assets/sounds/correctans.mp3');
-        const wrongSound = new Audio('assets/sounds/wrongans.mp3');
+  let finalScore;
 
-        bgSound.loop = true;
-        bgSound.volume = 0.3;
-        correctSound.volume = 1;
-        wrongSound.volume = 1;
+  if (attemptCount === 1) finalScore = 10;
+  else if (attemptCount === 2) finalScore = 9;
+  else if (attemptCount === 3) finalScore = 8;
+  else if (attemptCount === 4) finalScore = 7;
+  else finalScore = 6;
 
-        document.addEventListener('pointerdown', () => {
-          if (bgSound.paused) bgSound.play().catch(()=>{});
-        }, { once: true });
+  saveGameScore("ScienceSpotter-HumanBody", finalScore);
 
-        const draggables = document.querySelectorAll('.draggable');
-        const dropZones  = document.querySelectorAll('.drop-zone');
-        const checkBtn   = document.getElementById('check-btn');
-        const totalZones = dropZones.length;
+  document.getElementById("final-score").innerText =
+    "Score: " + finalScore + "/10";
 
-        draggables.forEach(item => {
-          item.addEventListener('dragstart', () => item.classList.add('dragging'));
-          item.addEventListener('dragend', () => item.classList.remove('dragging'));
-        });
+  document.getElementById('congrats-modal').classList.remove('hidden');
+}
 
-        dropZones.forEach(zone => {
-          zone.addEventListener('dragover', e => e.preventDefault());
+function restartGame() {
+  location.reload();
+}
 
-          zone.addEventListener('drop', e => {
-            e.preventDefault();
-            const dragged = document.querySelector('.dragging');
-            if (!dragged) return;
+function goBack() {
+  window.location.href = "topic.html";
+}
 
-            if (zone.classList.contains('filled')) return;
-
-            if (zone.dataset.placed) {
-              const old = document.getElementById(zone.dataset.placed);
-              if (old) old.style.display = 'inline-block';
-            }
-
-            zone.innerText = dragged.innerText;
-            zone.dataset.placed = dragged.id;
-            dragged.style.display = 'none';
-          });
-        });
-
-        checkBtn.addEventListener('click', () => {
-
-          let hasWrong = false;
-          let correctCount = 0;
-
-          dropZones.forEach(zone => {
-            const placed = zone.dataset.placed;
-            const correct = zone.dataset.target;
-
-            if (!placed) return;
-
-            if (placed !== correct) {
-              hasWrong = true;
-            }
-          });
-
-          dropZones.forEach(zone => {
-            const placed = zone.dataset.placed;
-            const correct = zone.dataset.target;
-
-            if (!placed) return;
-
-            if (placed === correct) {
-              zone.classList.add('filled');
-              zone.classList.remove('wrong');
-              correctCount++;
-            } else {
-              zone.classList.add('wrong');
-            }
-          });
-
-          if (hasWrong) {
-            wrongSound.currentTime = 0;
-            wrongSound.play();
-
-            setTimeout(resetWrongAnswers, 1500);
-
-          } else if (correctCount === totalZones) {
-            correctSound.currentTime = 0;
-            correctSound.play();
-
-            setTimeout(() => {
-              showCongrats();
-              bgSound.pause();
-            }, 800);
-          }
-        });
-
-        function resetWrongAnswers() {
-          dropZones.forEach(zone => {
-            if (zone.classList.contains('wrong')) {
-              const option = document.getElementById(zone.dataset.placed);
-              if (option) option.style.display = 'inline-block';
-
-              zone.innerText = '?';
-              zone.classList.remove('wrong');
-              delete zone.dataset.placed;
-            }
-          });
-        }
-
-        function showCongrats() {
-          saveGameScore("ScienceSpotter-HumanBody", 10);
-          document.getElementById('congrats-modal').classList.remove('hidden');
-          successAnim.play();
-        }
-        function restartGame() {
-          bgSound.pause();
-          bgSound.currentTime = 0;
-          location.reload();
-        }
-
-        function goBack() {
-          bgSound.pause();
-          window.location.href = "topic.html";
-        }
 </script>
 </body>
 </html>
