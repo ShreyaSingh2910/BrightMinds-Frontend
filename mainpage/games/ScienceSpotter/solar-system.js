@@ -1,4 +1,7 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
+let totalScore = 0;
+let planetAttempts = 0;   // attempts for current planet
+
 function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
@@ -62,12 +65,12 @@ let solved = 0;
 
 const data = {
   Mercury: {
-    options: ["Mercury", "Venus", "Earth", "Mars"],
+    options: ["Venus", "Earth", "Mars","Mercury"],
     answer: "Mercury",
     hints: ["Closest to Sun", "Smallest planet", "No atmosphere"]
   },
   Venus: {
-    options: ["Venus", "Earth", "Mars", "Mercury"],
+    options: ["Earth", "Mars","Venus", "Mercury"],
     answer: "Venus",
     hints: ["Hottest planet", "2nd from Sun", "Thick clouds"]
   },
@@ -82,17 +85,17 @@ const data = {
     hints: ["Earth’s natural satellite", "No atmosphere", "Seen at night"]
   },
   Mars: {
-    options: ["Earth", "Mars", "Venus", "Mercury"],
+    options: ["Earth",  "Venus", "Mercury","Mars"],
     answer: "Mars",
     hints: ["Red planet", "4th from Sun", "Robots explored me"]
   },
   Jupiter: {
-    options: ["Jupiter", "Saturn", "Neptune", "Mars"],
+    options: [ "Saturn", "Neptune","Jupiter", "Mars"],
     answer: "Jupiter",
     hints: ["Largest planet", "Big red spot", "Gas giant"]
   },
   Saturn: {
-    options: ["Saturn", "Jupiter", "Uranus", "Neptune"],
+    options: [ "Jupiter","Saturn", "Uranus", "Neptune"],
     answer: "Saturn",
     hints: ["Has rings", "Gas giant", "6th planet"]
   },
@@ -102,7 +105,7 @@ const data = {
     hints: ["Rotates sideways", "Ice giant", "Blue-green"]
   },
   Neptune: {
-    options: ["Neptune", "Uranus", "Saturn", "Jupiter"],
+    options: [ "Uranus", "Saturn", "Jupiter","Neptune"],
     answer: "Neptune",
     hints: ["Farthest planet", "Very windy", "Blue"]
   }
@@ -120,6 +123,7 @@ startMessage?.classList.add("hide");
     const name = planet.dataset.name;
     current = data[name];
     hintIndex = 0;
+    planetAttempts = 0;   // reset attempts for this planet
 
     message.textContent = "";
     hintText.textContent = "";
@@ -135,7 +139,9 @@ startMessage?.classList.add("hide");
 
 options.forEach(btn => {
   btn.addEventListener("click", () => {
+  
     if (!current) return;
+    planetAttempts++;
 
     if (btn.textContent === current.answer) {
       btn.classList.add("correct");
@@ -148,13 +154,38 @@ options.forEach(btn => {
         .querySelector(`.planet[data-name="${current.answer}"]`)
         .classList.add("locked");
 
-      solved++;
-      current = null;
+      // Calculate score for this planet
+let planetScore;
 
-      if (solved === Object.keys(data).length) {
-        saveGameScore("ScienceSpotter-SolarSystem", 10);
-        final.classList.remove("hidden");
-      }
+if (planetAttempts === 1) {
+  planetScore = 3;
+} else if (planetAttempts === 2) {
+  planetScore = 2;
+} else if (planetAttempts === 3) {
+  planetScore = 1;
+} else {
+  planetScore = 0;
+}
+
+totalScore += planetScore;
+
+solved++;
+current = null;
+if (solved === Object.keys(data).length) {
+
+  saveGameScore("ScienceSpotter-SolarSystem", totalScore);
+
+  const finalMessage = document.getElementById("finalMessage");
+
+  finalMessage.innerHTML = `
+    ⭐ You explored all planets! ⭐ <br><br>
+    🌟 Your Score: <b>${totalScore} / 27</b>
+  `;
+showFinal();
+
+}
+
+display 
     } else {
       btn.classList.add("wrong");
       message.textContent = "❌ Not quite, try again";
@@ -176,3 +207,14 @@ hintBtn.addEventListener("click", () => {
 
 });
 
+function showFinal() {
+
+  // Hide everything except popup
+  document.querySelector(".solar-wrapper").style.display = "none";
+  document.querySelector(".panel").style.display = "none";
+  document.querySelector(".start-message").style.display = "none";
+  document.querySelector(".title").style.display = "none";
+
+  // Show popup
+  document.getElementById("final").classList.remove("hidden");
+}
