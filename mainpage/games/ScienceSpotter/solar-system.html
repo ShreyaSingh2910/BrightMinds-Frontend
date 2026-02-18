@@ -65,6 +65,7 @@
         </div>
 
     </div>
+   
 </div>
 <div class="rotate-overlay" id="rotateOverlay">
     <div class="rotate-box">
@@ -89,11 +90,11 @@
 
     <button id="hintBtn">💡 Hint</button>
     <p id="hintText"></p>
+   
 </div>
 
-<div id="final" class="hidden">
-    ⭐ You know the Solar System! ⭐
-</div>
+
+
 
 <audio id="bgMusic" preload="auto" loop>
     <source src="assets/sounds/background.mp3" type="audio/mpeg">
@@ -107,6 +108,17 @@
     <source src="assets/sounds/wrongans.mp3" type="audio/mpeg">
 </audio>
 
+      <div id="final" class="celebration hidden">
+  <div class="celebration-box">
+    <h2>🚀 Mission Complete!</h2>
+    <p id="finalMessage"></p>
+
+    <div class="celebration-buttons">
+      <button onclick="location.reload()">🔄 Replay</button>
+      <button onclick="window.location.href='topic.html'">⬅ Back</button>
+    </div>
+  </div>
+</div>
 <script src="solar-system.js"></script>
 </body>
 
