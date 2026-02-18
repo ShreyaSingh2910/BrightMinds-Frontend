@@ -297,6 +297,7 @@ function nextLevel() {
   levelIndex++;
 
   if (levelIndex >= levels.length) {
+    saveGameScore("FractionBuilder-level2", 5);
     showCelebration();
     return;
   }
@@ -314,4 +315,5 @@ backBtn.addEventListener("click", () => {
    window.location.href = "fraction.html";
 
 });
+
 
