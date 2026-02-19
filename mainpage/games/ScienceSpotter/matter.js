@@ -163,42 +163,33 @@ items.forEach(item => {
 
 
 /* ---------------- SHARED DROP LOGIC ---------------- */
-
 function handleDrop(item, bin) {
 
-  const binType = bin.dataset.type;
+  const li = document.createElement("li");
+  li.textContent = item.textContent;
+  li.dataset.type = item.dataset.type;
 
-  if (item.dataset.type === binType) {
+  bin.querySelector(".list").appendChild(li);
 
-    correctSound.currentTime = 0;
-    correctSound.play();
+  item.remove();
+  placedCount++;
 
-    const li = document.createElement("li");
-    li.textContent = item.textContent;
-    bin.querySelector(".list").appendChild(li);
-
-    item.remove();
-    placedCount++;
-
-    if (placedCount === TOTAL_ITEMS) {
-      setTimeout(showWinMessage, 600);
-    }
-
-  } else {
-
-    wrongSound.currentTime = 0;
-    wrongSound.play();
-
-    item.style.position = "static";
-    item.style.left = "";
-    item.style.top = "";
+  // 🎯 When all items are placed → auto check
+  if (placedCount === TOTAL_ITEMS) {
+    setTimeout(evaluateGame, 500);
   }
 }
 
+
+
 /* ---------------- WIN + OTHER FUNCTIONS ---------------- */
 
-function showWinMessage() {
-  saveGameScore("ScienceSpotter-StatesOfMatter", 10);
+function showWinMessage(score) {
+
+  saveGameScore("ScienceSpotter-StatesOfMatter", score);
+
+  document.getElementById("final-score").innerText =
+    "Your Score: " + score + "/6";
 
   const overlay = document.getElementById("win-overlay");
   overlay.style.display = "flex";
@@ -212,6 +203,8 @@ function showWinMessage() {
   });
 }
 
+
+
 function toggleLearn() {
   const overlay = document.getElementById("learn-overlay");
   overlay.style.display =
@@ -221,3 +214,57 @@ function toggleLearn() {
 function goBack() {
   window.location.href = "topic.html";
 }
+
+document.getElementById("submit-btn").addEventListener("click", () => {
+
+  if (placedCount !== TOTAL_ITEMS) {
+    alert("Place all items before submitting!");
+    return;
+  }
+
+  let score = TOTAL_ITEMS; // start from 6
+
+  document.querySelectorAll(".bin").forEach(bin => {
+    const binType = bin.dataset.type;
+
+    bin.querySelectorAll("li").forEach(li => {
+
+      if (li.dataset.type !== binType) {
+        score--;
+        li.style.color = "red";
+      } else {
+        li.style.color = "green";
+      }
+
+    });
+  });
+
+  showWinMessage(score);
+});
+
+function evaluateGame() {
+
+  let score = TOTAL_ITEMS; // start full score
+
+  document.querySelectorAll(".bin").forEach(bin => {
+    const binType = bin.dataset.type;
+
+    bin.querySelectorAll("li").forEach(li => {
+
+      if (li.dataset.type !== binType) {
+        score--;
+        li.style.color = "red";
+        document.getElementById("wrong-sound").play();
+      } else {
+        li.style.color = "green";
+        document.getElementById("correct-sound").play();
+      }
+
+    });
+  });
+
+  setTimeout(() => {
+    showWinMessage(score);
+  }, 800);
+}
+
