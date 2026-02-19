@@ -90,6 +90,8 @@
 
 <script>
 
+
+
 function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
@@ -105,12 +107,26 @@ function saveGameScore(gameName, score) {
   }).catch(err => console.error("Score save failed", err));
 }
 
+function shuffleOptions() {
+  const partsBin = document.querySelector('.parts-bin');
+  const items = Array.from(partsBin.children);
+
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+
+  items.forEach(item => partsBin.appendChild(item));
+}
+
+
 let attemptCount = 0;
 
 const draggables = document.querySelectorAll('.draggable');
 const dropZones  = document.querySelectorAll('.drop-zone');
 const checkBtn   = document.getElementById('check-btn');
 const totalZones = dropZones.length;
+shuffleOptions();
 
 draggables.forEach(item => {
   item.addEventListener('dragstart', () => item.classList.add('dragging'));
