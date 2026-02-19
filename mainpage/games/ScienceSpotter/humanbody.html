@@ -90,6 +90,13 @@
 
 <script>
 
+let successAnim = lottie.loadAnimation({
+  container: document.getElementById("lottie-success"),
+  renderer: "svg",
+  loop: false,
+  autoplay: false,
+  path: "assets/celebration2.json"   // adjust path if needed
+});
 
 
 function saveGameScore(gameName, score) {
@@ -211,6 +218,7 @@ function showCongrats() {
     "Score: " + finalScore + "/10";
 
   document.getElementById('congrats-modal').classList.remove('hidden');
+  successAnim.goToAndPlay(0, true); 
 }
 
 function restartGame() {
