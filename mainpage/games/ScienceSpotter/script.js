@@ -10,4 +10,9 @@ document.getElementById("startBtn").addEventListener("click", () => {
   window.location.href = "topic.html";
 });
 
+function goHome() {
+    window.location.href = "/index.html"; 
+}
+
+
 
