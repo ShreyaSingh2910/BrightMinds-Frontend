@@ -110,4 +110,59 @@ body {
 
 }
 
+.top-buttons {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 35px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.nav-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 18px;   /* soft rounded square */
+  border: 2px solid rgba(255,255,255,0.2);
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+
+  /* Purple glass style */
+  background: linear-gradient(
+    145deg,
+    #5E3A9E,
+    #3F1F6E
+  );
+
+  color: #ffffff;
+
+
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.nav-btn:hover {
+  transform: translateY(4px);
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.5),
+    inset 0 1px 2px rgba(255,255,255,0.1);
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .nav-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
+
+
 
