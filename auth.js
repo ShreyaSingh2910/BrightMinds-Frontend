@@ -22,30 +22,44 @@ guestTab.addEventListener("click", () => {
 });
 
 /* ---------------- AUTH STATE LISTENER ---------------- */
+ 
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) return;
 
   localStorage.setItem("userEmail", user.email);
 
-  try {
-    const response = await fetch(
-      `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
-    );
+  let attempts = 0;
+  const maxAttempts = 5;
 
-    const profileCreated = await response.json();
+  while (attempts < maxAttempts) {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
+      );
 
-    if (profileCreated) {
-      window.location.replace("mainpage/index.html");
-    } else {
-      window.location.replace("mainpage/Dashboard/avtar.html");
+      if (!response.ok) throw new Error("Server not ready");
+
+      const profileCreated = await response.json();
+
+      if (profileCreated) {
+        window.location.replace("mainpage/index.html");
+      } else {
+        window.location.replace("mainpage/Dashboard/avtar.html");
+      }
+
+      return; // success → exit loop
+
+    } catch (error) {
+      attempts++;
+      console.log("Retrying... Attempt:", attempts);
+
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
-
-  } catch (error) {
-    console.error("Profile check failed", error);
   }
-});
 
+  alert("Server is waking up. Please wait and try again.");
+});
 
 
 /* ---------------- GUEST LOGIN ---------------- */
@@ -98,5 +112,6 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
