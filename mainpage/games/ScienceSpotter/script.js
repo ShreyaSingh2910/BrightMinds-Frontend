@@ -11,8 +11,9 @@ document.getElementById("startBtn").addEventListener("click", () => {
 });
 
 function goHome() {
-    window.location.href = "mainpage/index.html"; 
+    window.location.href = "../index.html"; 
 }
+
 
 
 
