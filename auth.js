@@ -22,15 +22,6 @@ guestTab.addEventListener("click", () => {
 });
 
 /* ---------------- AUTH STATE LISTENER ---------------- */
-auth.getRedirectResult()
-  .then((result) => {
-    if (result.user) {
-      console.log("Redirect success:", result.user.email);
-    }
-  })
-  .catch((error) => {
-    console.error("Redirect error:", error);
-  });
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) return;
@@ -82,19 +73,13 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
     const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({
-      prompt: "select_account"
-    });
-
-    // ✅ Use redirect (mobile safe)
-    await auth.signInWithRedirect(provider);
+    await auth.signInWithPopup(provider);
 
   } catch (error) {
-    console.error("Google Sign-in Error:", error);
-    alert(error.message || "Google sign-in failed");
+    console.error(error);
+    alert("Google sign-in failed");
   }
 });
-
 
 /* ---------------- MANUAL LOGIN / REGISTER ---------------- */
 
@@ -123,9 +108,3 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
-
-
-
-
-
-
