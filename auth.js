@@ -22,6 +22,15 @@ guestTab.addEventListener("click", () => {
 });
 
 /* ---------------- AUTH STATE LISTENER ---------------- */
+auth.getRedirectResult()
+  .then((result) => {
+    if (result.user) {
+      console.log("Redirect success:", result.user.email);
+    }
+  })
+  .catch((error) => {
+    console.error("Redirect error:", error);
+  });
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) return;
@@ -114,6 +123,7 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
 
