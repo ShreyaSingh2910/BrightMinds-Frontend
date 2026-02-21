@@ -22,43 +22,39 @@ guestTab.addEventListener("click", () => {
 });
 
 /* ---------------- AUTH STATE LISTENER ---------------- */
- 
 auth.onAuthStateChanged(async (user) => {
 
   if (!user) return;
 
   localStorage.setItem("userEmail", user.email);
 
-  let attempts = 0;
-  const maxAttempts = 5;
+  let alertShown = false;
 
-  while (attempts < maxAttempts) {
-    try {
-      const response = await fetch(
-        `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
-      );
+  // ⏳ Show alert if backend takes more than 4 seconds
+  const delayTimer = setTimeout(() => {
+    alertShown = true;
+    alert("Server is waking up. Please wait, this may take a few seconds...");
+  }, 6000); // change time if needed
 
-      if (!response.ok) throw new Error("Server not ready");
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
+    );
 
-      const profileCreated = await response.json();
+    clearTimeout(delayTimer); // stop timer if response came
 
-      if (profileCreated) {
-        window.location.replace("mainpage/index.html");
-      } else {
-        window.location.replace("mainpage/Dashboard/avtar.html");
-      }
+    const profileCreated = await response.json();
 
-      return; // success → exit loop
-
-    } catch (error) {
-      attempts++;
-      console.log("Retrying... Attempt:", attempts);
-
-      await new Promise(resolve => setTimeout(resolve, 3000));
+    if (profileCreated) {
+      window.location.replace("mainpage/index.html");
+    } else {
+      window.location.replace("mainpage/Dashboard/avtar.html");
     }
-  }
 
-  alert("Server is waking up. Please wait and try again.");
+  } catch (error) {
+    clearTimeout(delayTimer);
+    console.error("Profile check failed", error);
+  }
 });
 
 
@@ -112,6 +108,7 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
 
