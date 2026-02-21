@@ -73,13 +73,19 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
     const provider = new firebase.auth.GoogleAuthProvider();
-    await auth.signInWithPopup(provider);
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
+
+    // ✅ Use redirect (mobile safe)
+    await auth.signInWithRedirect(provider);
 
   } catch (error) {
-    console.error(error);
-    alert("Google sign-in failed");
+    console.error("Google Sign-in Error:", error);
+    alert(error.message || "Google sign-in failed");
   }
 });
+
 
 /* ---------------- MANUAL LOGIN / REGISTER ---------------- */
 
@@ -108,6 +114,7 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
 
