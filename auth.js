@@ -1,6 +1,4 @@
-const auth = firebase.auth();   // ✅ ONLY ONCE
-auth.useDeviceLanguage();
-
+const auth = firebase.auth();
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 const loginSection = document.getElementById("loginSection");
@@ -9,14 +7,14 @@ const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 /* ---------------- TAB SWITCHING ---------------- */
 
-loginTab?.addEventListener("click", () => {
+loginTab.addEventListener("click", () => {
   loginTab.classList.add("active");
   guestTab.classList.remove("active");
   loginSection.classList.remove("hidden");
   guestSection.classList.add("hidden");
 });
 
-guestTab?.addEventListener("click", () => {
+guestTab.addEventListener("click", () => {
   guestTab.classList.add("active");
   loginTab.classList.remove("active");
   guestSection.classList.remove("hidden");
@@ -24,18 +22,31 @@ guestTab?.addEventListener("click", () => {
 });
 
 
-/* AUTH LISTENER */
+// Handle redirect result (for iPhone only)
+auth.getRedirectResult().catch((error) => {
+  console.error("Redirect result error:", error);
+});
+/* ---------------- AUTH STATE LISTENER ---------------- */
 auth.onAuthStateChanged(async (user) => {
+
   if (!user) return;
 
-  console.log("Logged in user:", user.email);
-
   localStorage.setItem("userEmail", user.email);
+
+  let alertShown = false;
+
+  // ⏳ Show alert if backend takes more than 4 seconds
+  const delayTimer = setTimeout(() => {
+    alertShown = true;
+    alert("Server is waking up. Please wait, this may take a few seconds...");
+  }, 6000); // change time if needed
 
   try {
     const response = await fetch(
       `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
     );
+
+    clearTimeout(delayTimer); // stop timer if response came
 
     const profileCreated = await response.json();
 
@@ -46,29 +57,46 @@ auth.onAuthStateChanged(async (user) => {
     }
 
   } catch (error) {
+    clearTimeout(delayTimer);
     console.error("Profile check failed", error);
   }
 });
 
-/* GOOGLE LOGIN */
-document.getElementById("googleBtn")?.addEventListener("click", async () => {
-  try {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await auth.signInWithRedirect(provider);
-  } catch (error) {
-    console.error("Google login failed:", error);
-    alert(error.message);
-  }
-});
+
 /* ---------------- GUEST LOGIN ---------------- */
 
 document.getElementById("startGuest")?.addEventListener("click", () => {
   window.location.href = "mainpage/guest.html";
 });
 
-/* ---------------- MANUAL LOGIN ---------------- */
+/* ---------------- GOOGLE LOGIN ---------------- */
+
+document.getElementById("googleBtn")?.addEventListener("click", async () => {
+  try {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+    if (isIOS) {
+      // iPhone → use redirect
+      await auth.signInWithRedirect(provider);
+    } else {
+      // Desktop & Android → use popup (your old working method)
+      await auth.signInWithPopup(provider);
+    }
+
+  } catch (error) {
+    console.error("Google Sign-in Error:", error);
+    alert(error.message || "Google sign-in failed");
+  }
+});
+
+/* ---------------- MANUAL LOGIN / REGISTER ---------------- */
 
 document.getElementById("manualLoginBtn")?.addEventListener("click", async () => {
+
   const email = document.getElementById("email")?.value.trim();
   const password = document.getElementById("password")?.value.trim();
 
@@ -78,8 +106,11 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
   }
 
   try {
+    localStorage.setItem("loginMode", "manual");
+
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     await auth.signInWithEmailAndPassword(email, password);
+
   } catch {
     try {
       await auth.createUserWithEmailAndPassword(email, password);
@@ -89,4 +120,3 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
-
