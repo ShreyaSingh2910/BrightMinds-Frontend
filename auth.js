@@ -21,6 +21,17 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
+// Handle redirect result (IMPORTANT for mobile)
+auth.getRedirectResult()
+  .then((result) => {
+    if (result.user) {
+      console.log("Redirect login success");
+    }
+  })
+  .catch((error) => {
+    console.error("Redirect error:", error);
+  });
+
 /* ---------------- AUTH STATE LISTENER ---------------- */
 auth.onAuthStateChanged(async (user) => {
 
@@ -57,16 +68,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Handle redirect result (IMPORTANT for mobile)
-auth.getRedirectResult()
-  .then((result) => {
-    if (result.user) {
-      console.log("Redirect login success");
-    }
-  })
-  .catch((error) => {
-    console.error("Redirect error:", error);
-  });
+
 
 /* ---------------- GUEST LOGIN ---------------- */
 
@@ -118,5 +120,6 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
