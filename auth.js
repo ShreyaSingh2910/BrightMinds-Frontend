@@ -1,4 +1,6 @@
-const auth = firebase.auth();
+const auth = firebase.auth();   // ✅ ONLY ONCE
+auth.useDeviceLanguage();
+
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 const loginSection = document.getElementById("loginSection");
@@ -7,24 +9,22 @@ const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 /* ---------------- TAB SWITCHING ---------------- */
 
-loginTab.addEventListener("click", () => {
+loginTab?.addEventListener("click", () => {
   loginTab.classList.add("active");
   guestTab.classList.remove("active");
   loginSection.classList.remove("hidden");
   guestSection.classList.add("hidden");
 });
 
-guestTab.addEventListener("click", () => {
+guestTab?.addEventListener("click", () => {
   guestTab.classList.add("active");
   loginTab.classList.remove("active");
   guestSection.classList.remove("hidden");
   loginSection.classList.add("hidden");
 });
 
-const auth = firebase.auth();
-auth.useDeviceLanguage();
+/* ---------------- HANDLE REDIRECT RESULT ---------------- */
 
-// Handle redirect result FIRST
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
@@ -35,7 +35,8 @@ auth.getRedirectResult()
     console.error("Redirect error:", error);
   });
 
-// Auth state listener
+/* ---------------- AUTH STATE LISTENER ---------------- */
+
 auth.onAuthStateChanged(async (user) => {
   if (!user) return;
 
@@ -61,15 +62,13 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Google Login
+/* ---------------- GOOGLE LOGIN ---------------- */
+
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
     const provider = new firebase.auth.GoogleAuthProvider();
-
     await auth.signInWithRedirect(provider);
-
   } catch (error) {
     console.error("Google Sign-in Error:", error);
     alert(error.message);
@@ -82,11 +81,9 @@ document.getElementById("startGuest")?.addEventListener("click", () => {
   window.location.href = "mainpage/guest.html";
 });
 
-
-/* ---------------- MANUAL LOGIN / REGISTER ---------------- */
+/* ---------------- MANUAL LOGIN ---------------- */
 
 document.getElementById("manualLoginBtn")?.addEventListener("click", async () => {
-
   const email = document.getElementById("email")?.value.trim();
   const password = document.getElementById("password")?.value.trim();
 
@@ -96,11 +93,8 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
   }
 
   try {
-    localStorage.setItem("loginMode", "manual");
-
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     await auth.signInWithEmailAndPassword(email, password);
-
   } catch {
     try {
       await auth.createUserWithEmailAndPassword(email, password);
@@ -110,7 +104,3 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
-
-
-
-
