@@ -1,6 +1,6 @@
 const firebaseConfig = {
   apiKey: "AIzaSyBmz23pK8TQ8iE5_EjRbOo0qCazLOBmcBw",
-  authDomain: "bright-minds-lilac.vercel.app",
+  authDomain: "brightminds-52de2.firebaseapp.com",
   projectId: "brightminds-52de2",
   storageBucket: "brightminds-52de2.appspot.com",
   messagingSenderId: "855958185432",
@@ -9,5 +9,6 @@ const firebaseConfig = {
 
 if(!firebase.apps.length)
 firebase.initializeApp(firebaseConfig);
+
 
 
