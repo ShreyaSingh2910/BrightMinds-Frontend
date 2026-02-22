@@ -1,4 +1,5 @@
 const auth = firebase.auth();
+firebase.auth().useDeviceLanguage();
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 const loginSection = document.getElementById("loginSection");
@@ -120,4 +121,5 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
