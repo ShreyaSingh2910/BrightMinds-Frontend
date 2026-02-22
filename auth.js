@@ -75,7 +75,6 @@ document.getElementById("startGuest")?.addEventListener("click", () => {
 });
 
 /* ---------------- GOOGLE LOGIN ---------------- */
-
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
     localStorage.setItem("loginMode", "google");
@@ -84,16 +83,8 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
 
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    // Detect iPhone / iPad / Safari
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      // Use redirect for mobile devices
-      await auth.signInWithRedirect(provider);
-    } else {
-      // Use popup for desktop
-      await auth.signInWithPopup(provider);
-    }
+    // Use redirect for ALL devices
+    await auth.signInWithRedirect(provider);
 
   } catch (error) {
     console.error("Google Sign-in Error:", error);
@@ -127,4 +118,5 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
