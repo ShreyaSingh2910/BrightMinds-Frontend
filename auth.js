@@ -39,7 +39,7 @@ auth.onAuthStateChanged(async (user) => {
   const delayTimer = setTimeout(() => {
     alertShown = true;
     alert("Server is waking up. Please wait, this may take a few seconds...");
-  }, 6000); // change time if needed
+  }, 3000); // change time if needed
 
   try {
     const response = await fetch(
@@ -120,3 +120,4 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
