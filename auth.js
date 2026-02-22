@@ -23,24 +23,12 @@ guestTab?.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-/* ---------------- HANDLE REDIRECT RESULT ---------------- */
 
-auth.getRedirectResult()
-  .then((result) => {
-    if (result.user) {
-      console.log("Redirect login success");
-    }
-  })
-  .catch((error) => {
-    console.error("Redirect error:", error);
-  });
-
-/* ---------------- AUTH STATE LISTENER ---------------- */
-
+/* AUTH LISTENER */
 auth.onAuthStateChanged(async (user) => {
   if (!user) return;
 
-  console.log("User detected:", user.email);
+  console.log("Logged in user:", user.email);
 
   localStorage.setItem("userEmail", user.email);
 
@@ -62,19 +50,16 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-/* ---------------- GOOGLE LOGIN ---------------- */
-
+/* GOOGLE LOGIN */
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     const provider = new firebase.auth.GoogleAuthProvider();
     await auth.signInWithRedirect(provider);
   } catch (error) {
-    console.error("Google Sign-in Error:", error);
+    console.error("Google login failed:", error);
     alert(error.message);
   }
 });
-
 /* ---------------- GUEST LOGIN ---------------- */
 
 document.getElementById("startGuest")?.addEventListener("click", () => {
@@ -104,3 +89,4 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
