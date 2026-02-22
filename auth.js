@@ -134,5 +134,20 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
 
 
 
+window.addEventListener("load", () => {
+  auth.getRedirectResult()
+    .then((result) => {
+      if (result.user) {
+        document.getElementById("debugBox").innerText =
+          "Login Success: " + result.user.email;
+      }
+    })
+    .catch((error) => {
+      document.getElementById("debugBox").innerText =
+        "Error: " + error.code + " - " + error.message;
+    });
+});
+
+
 
 
