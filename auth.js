@@ -85,6 +85,9 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
 
    const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    provider.setCustomParameters({
+  prompt: "select_account"
+});
 
     if (isIOS) {
       // iPhone → use redirect
@@ -128,6 +131,7 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
 
