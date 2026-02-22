@@ -21,7 +21,10 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-// Handle redirect result (IMPORTANT for mobile)
+const auth = firebase.auth();
+auth.useDeviceLanguage();
+
+// Handle redirect result FIRST
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
@@ -32,27 +35,18 @@ auth.getRedirectResult()
     console.error("Redirect error:", error);
   });
 
-/* ---------------- AUTH STATE LISTENER ---------------- */
+// Auth state listener
 auth.onAuthStateChanged(async (user) => {
-
   if (!user) return;
 
+  console.log("User detected:", user.email);
+
   localStorage.setItem("userEmail", user.email);
-
-  let alertShown = false;
-
-  // ⏳ Show alert if backend takes more than 4 seconds
-  const delayTimer = setTimeout(() => {
-    alertShown = true;
-    alert("Server is waking up. Please wait, this may take a few seconds...");
-  }, 6000); // change time if needed
 
   try {
     const response = await fetch(
       `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
     );
-
-    clearTimeout(delayTimer); // stop timer if response came
 
     const profileCreated = await response.json();
 
@@ -63,12 +57,24 @@ auth.onAuthStateChanged(async (user) => {
     }
 
   } catch (error) {
-    clearTimeout(delayTimer);
     console.error("Profile check failed", error);
   }
 });
 
+// Google Login
+document.getElementById("googleBtn")?.addEventListener("click", async () => {
+  try {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    await auth.signInWithRedirect(provider);
+
+  } catch (error) {
+    console.error("Google Sign-in Error:", error);
+    alert(error.message);
+  }
+});
 
 /* ---------------- GUEST LOGIN ---------------- */
 
@@ -76,23 +82,7 @@ document.getElementById("startGuest")?.addEventListener("click", () => {
   window.location.href = "mainpage/guest.html";
 });
 
-/* ---------------- GOOGLE LOGIN ---------------- */
-document.getElementById("googleBtn")?.addEventListener("click", async () => {
-  try {
-    localStorage.setItem("loginMode", "google");
 
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-    const provider = new firebase.auth.GoogleAuthProvider();
-
-    // Use redirect for ALL devices
-    await auth.signInWithRedirect(provider);
-
-  } catch (error) {
-    console.error("Google Sign-in Error:", error);
-    alert(error.message || "Google sign-in failed");
-  }
-});
 /* ---------------- MANUAL LOGIN / REGISTER ---------------- */
 
 document.getElementById("manualLoginBtn")?.addEventListener("click", async () => {
@@ -120,6 +110,7 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
 
