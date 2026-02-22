@@ -83,10 +83,12 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
 
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
       // iPhone → use redirect
+      await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
       await auth.signInWithRedirect(provider);
     } else {
       // Desktop & Android → use popup (your old working method)
@@ -126,6 +128,7 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
 
