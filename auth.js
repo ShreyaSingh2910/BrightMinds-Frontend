@@ -22,16 +22,11 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-auth.getRedirectResult()
-  .then((result) => {
-    if (result.user) {
-      console.log("Redirect login success:", result.user.email);
-      localStorage.setItem("userEmail", result.user.email);
-    }
-  })
-  .catch((error) => {
-    console.error("Redirect result error:", error);
-  });
+
+// Handle redirect result (for iPhone only)
+auth.getRedirectResult().catch((error) => {
+  console.error("Redirect result error:", error);
+});
 /* ---------------- AUTH STATE LISTENER ---------------- */
 auth.onAuthStateChanged(async (user) => {
 
@@ -83,15 +78,10 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
 
     const provider = new firebase.auth.GoogleAuthProvider();
 
-   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
-              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    provider.setCustomParameters({
-  prompt: "select_account"
-});
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
     if (isIOS) {
       // iPhone → use redirect
-      await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
       await auth.signInWithRedirect(provider);
     } else {
       // Desktop & Android → use popup (your old working method)
@@ -131,23 +121,3 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
-
-
-
-window.addEventListener("load", () => {
-  auth.getRedirectResult()
-    .then((result) => {
-      if (result.user) {
-        document.getElementById("debugBox").innerText =
-          "Login Success: " + result.user.email;
-      }
-    })
-    .catch((error) => {
-      document.getElementById("debugBox").innerText =
-        "Error: " + error.code + " - " + error.message;
-    });
-});
-
-
-
-
