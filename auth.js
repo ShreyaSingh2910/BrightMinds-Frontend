@@ -79,7 +79,7 @@ auth.onAuthStateChanged(async (user) => {
   console.error("Profile check failed:", error);
   alert("Server is taking too long. Please try again.");
 }
-
+});
 
 /* ---------------- GUEST LOGIN ---------------- */
 
@@ -139,4 +139,5 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
