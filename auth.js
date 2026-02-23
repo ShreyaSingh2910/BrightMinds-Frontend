@@ -22,13 +22,19 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-
-// Handle redirect result (for iPhone only)
-auth.getRedirectResult().catch((error) => {
-  console.error("Redirect result error:", error);
-});
+auth.getRedirectResult()
+  .then((result) => {
+    if (result.user) {
+      console.log("Redirect success:", result.user.email);
+    }
+  })
+  .catch((error) => {
+    console.error("Redirect result error:", error);
+    alert(error.message);
+  });
 /* ---------------- AUTH STATE LISTENER ---------------- */
 auth.onAuthStateChanged(async (user) => {
+  console.log("Auth state changed:", user);
 
   if (!user) return;
 
@@ -43,25 +49,36 @@ auth.onAuthStateChanged(async (user) => {
   }, 3000); // change time if needed
 
   try {
-    const response = await fetch(
-      `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
-    );
 
-    clearTimeout(delayTimer); // stop timer if response came
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
 
-    const profileCreated = await response.json();
+  const response = await fetch(
+    `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`,
+    { signal: controller.signal }
+  );
 
-    if (profileCreated) {
-      window.location.replace("mainpage/index.html");
-    } else {
-      window.location.replace("mainpage/Dashboard/avtar.html");
-    }
+  clearTimeout(timeout);
+  clearTimeout(delayTimer);
 
-  } catch (error) {
-    clearTimeout(delayTimer);
-    console.error("Profile check failed", error);
+  if (!response.ok) {
+    throw new Error("Backend error");
   }
-});
+
+  const data = await response.json();
+  const profileCreated = data.profileCreated ?? data;
+
+  if (profileCreated === true) {
+    window.location.replace("mainpage/index.html");
+  } else {
+    window.location.replace("mainpage/Dashboard/avtar.html");
+  }
+
+} catch (error) {
+  clearTimeout(delayTimer);
+  console.error("Profile check failed:", error);
+  alert("Server is taking too long. Please try again.");
+}
 
 
 /* ---------------- GUEST LOGIN ---------------- */
@@ -78,7 +95,8 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
 
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
       // iPhone → use redirect
@@ -121,3 +139,4 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
