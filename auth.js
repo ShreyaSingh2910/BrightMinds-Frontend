@@ -94,15 +94,13 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
 
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-    if (isIOS) {
-      // iPhone → use redirect
+    if (isSafari) {
       await auth.signInWithRedirect(provider);
     } else {
-      // Desktop & Android → use popup (your old working method)
       await auth.signInWithPopup(provider);
     }
 
@@ -139,5 +137,6 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
 
