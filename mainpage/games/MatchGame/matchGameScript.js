@@ -493,3 +493,8 @@ async function fetchAllProgress(email) {
   console.log("Player Progress:", allScores);
 
 }
+
+function goBack() {
+  window.location.href = "../../index.html";
+}
+
