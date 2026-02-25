@@ -116,10 +116,6 @@
   color: white;
   cursor: pointer;
 
-  box-shadow:
-    0 6px 0 #1864ab,
-    0 14px 25px rgba(0, 0, 0, 0.35);
-
   transition: all 0.25s ease;
   z-index: 1000;
 }
@@ -134,4 +130,5 @@
     0 3px 0 #1864ab,
     0 8px 15px rgba(0, 0, 0, 0.35);
 }
+
 
