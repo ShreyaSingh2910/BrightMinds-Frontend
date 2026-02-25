@@ -8,14 +8,15 @@
 </head>
 <body>
 
+<button class="back-btn" onclick="goBack()">←</button>
 
 <div class="start-container">
 
   <div id="lottie-left" class="lottie"></div>
 
   <div class="center-box">
-    <img src="assets/logo-icon.png" class="logo">
-    <h1>Memory Magic</h1>
+    <img src="assets/logo.png" class="logo">
+    <h1>Memory Match</h1>
     <p>Match letters with correct images!</p>
     <button onclick="startGame()">START</button>
   </div>
@@ -45,8 +46,11 @@
 
     window.location.href = "game.html";
   }
+
+  function goBack() {
+  window.location.href = "../../index.html";
+}
 </script>
 
 </body>
-
 </html>
