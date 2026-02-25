@@ -4,7 +4,7 @@ const rightWhole = document.getElementById("rightWhole");
 const rightFraction = document.getElementById("rightFraction");
 const leftFractionText = document.getElementById("leftFraction");
 const dropZone = document.getElementById("dropZone");
-const checkBtn = document.getElementById("checkBtn");
+const submitBtn = document.getElementById("submitBtn");
 const resultMsg = document.getElementById("resultMsg");
 const celebration = document.getElementById("celebration");
 const replayBtn = document.getElementById("replayBtn");
@@ -14,6 +14,8 @@ const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
+let totalScore = 0;
+const MAX_SCORE_PER_QUESTION = 2;
 
 function startBgMusic() {
   if (!bgMusic) return;
@@ -216,27 +218,42 @@ function updateRightFraction() {
       : `${occupiedSlices.size} / ${d}`;
 }
 
-checkBtn.addEventListener("click", () => {
+submitBtn.addEventListener("click", () => {
+
+  submitBtn.disabled = true;
+
   const current = levels[levelIndex];
 
   if (occupiedSlices.size === current.right.n) {
-    correctSound && correctSound.play();
+
+    playCorrectSound();
+
     resultMsg.textContent =
       `${current.left.n}/${current.left.d} = ${current.right.n}/${current.right.d}`;
+
     resultMsg.style.color = "green";
-    setTimeout(nextLevel, 1500);
+
+    totalScore += MAX_SCORE_PER_QUESTION;
+
   } else {
-    wrongSound && wrongSound.play();
-    resultMsg.textContent = "Try adjusting the pieces 😊";
-    resultMsg.style.color = "orange";
+
+    playWrongSound();
+
+    resultMsg.textContent = "❌ Wrong!";
+    resultMsg.style.color = "red";
   }
+
+  setTimeout(() => {
+    nextLevel();
+    submitBtn.disabled = false;
+  }, 1500);
 });
 
 function nextLevel() {
   levelIndex++;
 
   if (levelIndex >= levels.length) {
-    saveGameScore("FractionBuilder-level2", 5);
+    saveGameScore("FractionBuilder-level2", totalScore);
     showCelebration();
     return;
   }
@@ -276,11 +293,11 @@ function svg(tag, attrs) {
   return el;
 }
 
-function goBack() {
-  window.location.href = "fraction.html";
-}
-
 function showCelebration() {
+
+  document.querySelector(".celebration-card p").innerText =
+    `Your Score: ${totalScore} / 10`;
+
   celebration.classList.remove("hidden");
 
   if (!celebrationAnimation) {
@@ -293,27 +310,18 @@ function showCelebration() {
     });
   }
 }
-function nextLevel() {
-  levelIndex++;
 
-  if (levelIndex >= levels.length) {
-    saveGameScore("FractionBuilder-level2", 5);
-    showCelebration();
-    return;
-  }
-
-  initLevel();
-}
 replayBtn.addEventListener("click", () => {
   celebration.classList.add("hidden");
   levelIndex = 0;
-  placedIndexes = [];
+  totalScore = 0;
+  occupiedSlices.clear();
   initLevel();
 });
+
 backBtn.addEventListener("click", () => {
   window.history.back();
    window.location.href = "fraction.html";
 
 });
-
 
