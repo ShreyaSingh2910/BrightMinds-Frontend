@@ -139,16 +139,15 @@ body {
   }
 }
 
-/* Top Navigation Buttons */
 .top-buttons {
-  position: absolute;
-  top: 18px;
+  position: absolute; 
+  top: 15px;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
-  z-index: 10;
+  padding: 0 18px;
+  z-index: 1000;
 }
 
 .nav-btn {
@@ -178,15 +177,20 @@ body {
   transform: scale(0.95);
 }
 
-/* Mobile Responsive */
 @media (max-width: 480px) {
+
+  body {
+    padding: 80px 12px 25px;
+  }
+
+  .level-screen {
+    padding: 20px 15px 30px;
+    border-radius: 22px;
+  }
+
   .nav-btn {
-    padding: 8px 16px;
+    padding: 8px 14px;
     font-size: 0.85rem;
   }
 
-  .top-buttons {
-    top: 12px;
-    padding: 0 12px;
-  }
 }
