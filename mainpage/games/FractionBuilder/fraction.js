@@ -12,7 +12,6 @@ function startLevel(level) {
   }
 
 }
-
 function goBack() {
     window.history.back();
 }
@@ -20,3 +19,4 @@ function goBack() {
 function goHome() {
     window.location.href = "../../index.html"; 
 }
+
