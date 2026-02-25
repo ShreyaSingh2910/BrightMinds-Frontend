@@ -22,15 +22,16 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
+/* ---------------- HANDLE REDIRECT RESULT ---------------- */
+
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
-      console.log("Redirect success:", result.user.email);
+      console.log("Redirect login success:", result.user.email);
     }
   })
   .catch((error) => {
     console.error("Redirect result error:", error);
-    alert(error.message);
   });
 /* ---------------- AUTH STATE LISTENER ---------------- */
 auth.onAuthStateChanged(async (user) => {
@@ -94,15 +95,12 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
     const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
 
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-    if (isSafari) {
-      await auth.signInWithRedirect(provider);
-    } else {
-      await auth.signInWithPopup(provider);
-    }
+    // Always use redirect (best for iPhone & Safari)
+    await auth.signInWithRedirect(provider);
 
   } catch (error) {
     console.error("Google Sign-in Error:", error);
@@ -137,3 +135,4 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
