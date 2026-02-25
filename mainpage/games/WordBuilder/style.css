@@ -1,10 +1,101 @@
+* {
+  margin: 0;
+   padding: 0;
+    box-sizing: border-box;
+     font-family: 'Fredoka', sans-serif; }
+     
+     body {
+       min-height: 100vh;
+        display: flex;
+         justify-content: center;
+          align-items: center; 
+          background: radial-gradient(circle at center, rgba(255,255,255,0.35), transparent 55%),
+           radial-gradient(circle at top left, #b6ccff, transparent 45%),
+            radial-gradient(circle at bottom right, #30afef, transparent 40%),
+             linear-gradient(180deg, #3b5bdb, #1c2fa3); overflow: hidden; }
+              
+             .home-wrapper { 
+              width: 100%;
+               display: flex;
+                justify-content: space-between;
+                 align-items: center;
+                  padding: 30px 50px; } 
+                  
+                  .lottie { 
+                    width: 220px;
+                     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+                     }
+                     
+                     .lottie lottie-player
+                      { width: 100%; } 
+                      
+                      .logo-area {
+                         display: flex;
+                    flex-direction: column;
+                     align-items: center;
+                      gap: 18px; 
+                      padding: 46px 50px; 
+                      background: linear-gradient( 180deg, #3c54eb, #3249db ); 
+                      border-radius: 28px; 
+                      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35),
+                       inset 0 0 0 3px rgba(255, 255, 255, 0.08);
+                        animation: fadeIn 1.2s ease; 
+                      }
+                      
+                      .game-logo {
+                         width: 180px; 
+                         max-width: 70vw;
+                          filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35)); 
+                        } 
+                        
+                        .start-btn {
+                           padding: 10px 26px; 
+                           font-size: 1.1rem; 
+                           border: none;
+                            border-radius: 36px; 
+                            background: linear-gradient( 180deg, #4dabf7, #1e90ff );
+                             color: #ffffff; cursor: pointer;
+                              box-shadow: 0 6px 0 #1864ab, 0 14px 25px rgba(0, 0, 0, 0.35);
+                               transition: all 0.25s ease; 
+                              } 
+                              
+                              .start-btn:hover {
+                                 transform: scale(1.05); } 
+                                 
+                                 .start-btn:active { 
+                                  transform: translateY(3px);
+                                   box-shadow: 0 3px 0 #1864ab,
+                                    0 8px 15px rgba(0, 0, 0, 0.35); 
+                                  } 
+                                  
+                                  .start-btn:hover { transform: scale(1.07); } 
+                                  
+                                  .start-btn:active { transform: translateY(4px); 
+                                    box-shadow: 0 4px 0 #cc6f12; } 
+                                    
+                                    @keyframes popIn {
+                                       from { opacity: 0; transform: scale(0.85);
+                                       }
+                                        to { opacity: 1; transform: scale(1); } } 
+                                        
+                                        
+                                        @media (max-width: 768px) 
+                                        { 
+                                       .home-wrapper { flex-direction: column; gap: 25px; } 
+                                       
+                                       .lottie { width: 160px; } .game-logo { width: 150px; }
+                                        }
+
+                                        /* =========================
+   BACK BUTTON
+========================= */
 .back-btn {
   position: absolute;
   top: 25px;
   left: 25px;
 
-  width: 52px;
-  height: 52px;
+  width: 45px;
+  height: 45px;
   padding: 0;
   border-radius: 50%;
   border: none;
@@ -24,6 +115,10 @@
 
   color: white;
   cursor: pointer;
+
+  box-shadow:
+    0 6px 0 #1864ab,
+    0 14px 25px rgba(0, 0, 0, 0.35);
 
   transition: all 0.25s ease;
   z-index: 1000;
