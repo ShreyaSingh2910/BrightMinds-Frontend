@@ -1,9 +1,11 @@
 const auth = firebase.auth();
 firebase.auth().useDeviceLanguage();
+
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 const loginSection = document.getElementById("loginSection");
 const guestSection = document.getElementById("guestSection");
+
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 /* ---------------- TAB SWITCHING ---------------- */
@@ -22,6 +24,8 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
+/* ---------------- HANDLE GOOGLE REDIRECT RESULT ---------------- */
+
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
@@ -29,10 +33,11 @@ auth.getRedirectResult()
     }
   })
   .catch((error) => {
-    console.error("Redirect result error:", error);
-    alert(error.message);
+    console.error("Redirect error:", error);
   });
+
 /* ---------------- AUTH STATE LISTENER ---------------- */
+
 auth.onAuthStateChanged(async (user) => {
   console.log("Auth state changed:", user);
 
@@ -40,45 +45,40 @@ auth.onAuthStateChanged(async (user) => {
 
   localStorage.setItem("userEmail", user.email);
 
-  let alertShown = false;
-
-  // ⏳ Show alert if backend takes more than 4 seconds
-  const delayTimer = setTimeout(() => {
-    alertShown = true;
+  let delayTimer = setTimeout(() => {
     alert("Server is waking up. Please wait, this may take a few seconds...");
-  }, 3000); // change time if needed
+  }, 3000);
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
+    const response = await fetch(
+      `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`,
+      { signal: controller.signal }
+    );
 
-  const response = await fetch(
-    `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`,
-    { signal: controller.signal }
-  );
+    clearTimeout(timeout);
+    clearTimeout(delayTimer);
 
-  clearTimeout(timeout);
-  clearTimeout(delayTimer);
+    if (!response.ok) {
+      throw new Error("Backend error");
+    }
 
-  if (!response.ok) {
-    throw new Error("Backend error");
+    const data = await response.json();
+    const profileCreated = data.profileCreated ?? data;
+
+    if (profileCreated === true) {
+      window.location.replace("mainpage/index.html");
+    } else {
+      window.location.replace("mainpage/Dashboard/avtar.html");
+    }
+
+  } catch (error) {
+    clearTimeout(delayTimer);
+    console.error("Profile check failed:", error);
+    alert("Server is taking too long. Please try again.");
   }
-
-  const data = await response.json();
-  const profileCreated = data.profileCreated ?? data;
-
-  if (profileCreated === true) {
-    window.location.replace("mainpage/index.html");
-  } else {
-    window.location.replace("mainpage/Dashboard/avtar.html");
-  }
-
-} catch (error) {
-  clearTimeout(delayTimer);
-  console.error("Profile check failed:", error);
-  alert("Server is taking too long. Please try again.");
-}
 });
 
 /* ---------------- GUEST LOGIN ---------------- */
@@ -87,24 +87,17 @@ document.getElementById("startGuest")?.addEventListener("click", () => {
   window.location.href = "mainpage/guest.html";
 });
 
-/* ---------------- GOOGLE LOGIN ---------------- */
+/* ---------------- GOOGLE LOGIN (iPhone SAFE VERSION) ---------------- */
 
-document.getElementById("googleBtn")?.addEventListener("click", async () => {
-  try {
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+document.getElementById("googleBtn")?.addEventListener("click", function (e) {
+  e.preventDefault();
 
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
 
-    const result = await auth.signInWithPopup(provider);
-
-    console.log("Google login success:", result.user.email);
-
-  } catch (error) {
-    console.error("Google Sign-in Error:", error);
-    alert(error.message || "Google sign-in failed");
-  }
-});;
+  // 🔥 DO NOT use popup on iPhone
+  auth.signInWithRedirect(provider);
+});
 
 /* ---------------- MANUAL LOGIN / REGISTER ---------------- */
 
@@ -119,11 +112,7 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
   }
 
   try {
-    localStorage.setItem("loginMode", "manual");
-
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     await auth.signInWithEmailAndPassword(email, password);
-
   } catch {
     try {
       await auth.createUserWithEmailAndPassword(email, password);
@@ -133,4 +122,3 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
-
