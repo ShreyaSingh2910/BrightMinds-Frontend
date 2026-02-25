@@ -10,4 +10,13 @@ function startLevel(level) {
   if (level === 3) {
      window.location.href = "level3.html";
   }
+
+}
+
+function goBack() {
+    window.history.back();
+}
+
+function goHome() {
+    window.location.href = "../../index.html"; 
 }
