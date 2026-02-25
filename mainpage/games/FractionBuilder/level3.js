@@ -77,6 +77,9 @@ const allData = [
 const data = allData.sort(() => Math.random() - 0.5).slice(0, 5);
 
 let index = 0;
+let totalScore = 0;
+const MAX_SCORE_PER_QUESTION = 2;
+
 
 const leftSVG = document.getElementById("leftSVG");
 const rightSVG = document.getElementById("rightSVG");
@@ -139,6 +142,7 @@ document.querySelectorAll(".options button").forEach(btn => {
 });
 
 function check(symbol) {
+
   const q = data[index];
 
   let correctSymbol = "=";
@@ -148,43 +152,62 @@ function check(symbol) {
   symbolBox.textContent = symbol;
   symbolBox.style.transform = "scale(1.2)";
 
+  // Disable buttons (no second chance)
+  document.querySelectorAll(".options button").forEach(btn => {
+    btn.disabled = true;
+  });
+
   if (symbol === correctSymbol) {
+
     playCorrectSound();
 
-    resultMsg.textContent = "🎉 Correct!";
+    resultMsg.textContent = "✅ Correct!";
     resultMsg.style.color = "green";
 
-    setTimeout(() => {
-      symbolBox.style.transform = "scale(1)";
-      index++;
-
-      if (index >= data.length) {
-      saveGameScore("FractionBuilder-level3", 5);
-        showCelebration();
-      } else {
-        load();
-      }
-    }, 1200);
+    totalScore += MAX_SCORE_PER_QUESTION;
 
   } else {
+
     playWrongSound();
 
-    resultMsg.textContent = "Try again 😊";
-    resultMsg.style.color = "orange";
-
-    setTimeout(() => {
-      symbolBox.textContent = "VS";
-      symbolBox.style.transform = "scale(1)";
-    }, 900);
+    resultMsg.textContent = "❌ Wrong!";
+    resultMsg.style.color = "red";
   }
+
+  setTimeout(() => {
+
+    symbolBox.style.transform = "scale(1)";
+    index++;
+
+    if (index >= data.length) {
+
+      saveGameScore("FractionBuilder-level3", totalScore);
+      showCelebration();
+
+    } else {
+
+      // Re-enable buttons
+      document.querySelectorAll(".options button").forEach(btn => {
+        btn.disabled = false;
+      });
+
+      load();
+    }
+
+  }, 1500);
 }
+
 
 let celebrationAnim = null;
 
 function showCelebration() {
+
+  document.querySelector(".celebration-card p").innerText =
+    `Your Score: ${totalScore} / 10`;
+
   celebration.classList.remove("hidden");
 
-  if (celebrationAnim) return; // prevent reloading animation
+  if (celebrationAnim) return;
 
   celebrationAnim = lottie.loadAnimation({
     container: document.getElementById("lottieCelebration"),
@@ -194,12 +217,23 @@ function showCelebration() {
     path: "lottie/celebration2.json"
   });
 }
+
+ 
 const replayBtn = document.getElementById("replayBtn");
 const backBtn = document.getElementById("backBtn");
 
 replayBtn.addEventListener("click", () => {
-  window.location.reload();
+  celebration.classList.add("hidden");
+  index = 0;
+  totalScore = 0;
+
+  document.querySelectorAll(".options button").forEach(btn => {
+    btn.disabled = false;
+  });
+
+  load();
 });
+
 
 backBtn.addEventListener("click", () => {
   window.history.back();
