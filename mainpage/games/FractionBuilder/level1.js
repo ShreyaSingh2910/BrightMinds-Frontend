@@ -2,7 +2,7 @@ const partsArea = document.querySelector(".parts-area");
 const dropZone = document.getElementById("dropZone");
 const filledSVG = document.getElementById("filledSVG");
 const wholeSVG = document.getElementById("wholeSVG");
-const checkBtn = document.getElementById("checkBtn");
+const submitBtn = document.getElementById("submitBtn");
 const resultMsg = document.getElementById("resultMsg");
 const instruction = document.querySelector(".instruction");
 
@@ -13,6 +13,9 @@ const backBtn = document.getElementById("backBtn");
 const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
+let totalScore = 0;
+const MAX_SCORE_PER_QUESTION = 2;
+
 
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
@@ -245,30 +248,49 @@ function enableTapToRemove(el) {
   });
 }
 
-checkBtn.addEventListener("click", () => {
+submitBtn.addEventListener("click", () => {
+
+  // Disable submit button to prevent multiple clicks
+  submitBtn.disabled = true;
+
   if (placed === currentFraction.numerator) {
+
     playCorrectSound();
-    resultMsg.textContent = "🎉 Correct!";
+
+    resultMsg.textContent = "✅ Correct!";
     resultMsg.style.color = "green";
-    setTimeout(nextRound, 1200);
+
+    totalScore += MAX_SCORE_PER_QUESTION;
+
   } else {
+
     playWrongSound();
-    resultMsg.textContent = "Tap a piece to remove 😊";
-    resultMsg.style.color = "orange";
+
+    resultMsg.textContent = "❌ Wrong!";
+    resultMsg.style.color = "red";
   }
+
+  // Show result for 1.5 seconds
+  setTimeout(() => {
+    nextRound();
+    submitBtn.disabled = false;
+  }, 1500);
 });
+
 
 function nextRound() {
   currentIndex++;
   if (currentIndex >= fractions.length) {
-  saveGameScore("FractionBuilder-level1", 5);
+  saveGameScore("FractionBuilder-level1", totalScore);
     showSuccessScreen();
     return;
   }
   initRound();
 }
-
 function showSuccessScreen() {
+  document.querySelector(".success-card p").innerText =
+    `Your Score: ${totalScore} / 10`;
+
   successOverlay.classList.add("show");
 
   lottie.loadAnimation({
@@ -287,8 +309,9 @@ function svg(tag, attrs) {
   const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
   for (let k in attrs) el.setAttribute(k, attrs[k]);
   return el;
+
 }
+
 function goBack() {
   window.location.href = "fraction.html";
 }
-
