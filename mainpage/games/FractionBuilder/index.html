@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <button class="back-btn" onclick="goBack()">←</button>
 
 <lottie-player
         class="side-lottie left"
@@ -40,6 +41,9 @@
     function startGame() {
       window.location.href = "fraction.html"; // change later
     }
+    function goBack() {
+  window.history.back();
+}
 </script>
 
 </body>
