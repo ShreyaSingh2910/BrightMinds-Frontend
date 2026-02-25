@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body>
-
+<button class="back-btn" onclick="goBack()">←</button>
 <div class="home-wrapper">
 
     <div class="lottie left">
@@ -47,8 +47,11 @@
     function startGame() {
   window.location.href = "word.html";
 }
-
+function goBack() {
+  window.location.href = "../../index.html";
+}
 </script>
 </body>
 
 </html>
+
