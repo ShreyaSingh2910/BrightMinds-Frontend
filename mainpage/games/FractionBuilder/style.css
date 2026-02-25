@@ -113,3 +113,34 @@ body {
     font-size: 1.1rem;
   }
 }
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+  padding: 10px 22px;
+  font-size: 1rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.2);
+
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.back-btn:hover {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.back-btn:active {
+  transform: translateY(2px);
+}
