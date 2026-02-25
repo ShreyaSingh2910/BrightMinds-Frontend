@@ -90,6 +90,8 @@ document.getElementById("startGuest")?.addEventListener("click", () => {
 
 /* ---------------- GOOGLE LOGIN ---------------- */
 
+/* ---------------- GOOGLE LOGIN ---------------- */
+
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
@@ -99,12 +101,22 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
       prompt: "select_account"
     });
 
-    // Always use redirect (best for iPhone & Safari)
-    await auth.signInWithRedirect(provider);
+    // Use popup normally
+    await auth.signInWithPopup(provider);
 
   } catch (error) {
-    console.error("Google Sign-in Error:", error);
-    alert(error.message || "Google sign-in failed");
+
+    // If popup blocked (Safari / iOS), fallback to redirect
+    if (
+      error.code === "auth/popup-blocked" ||
+      error.code === "auth/popup-closed-by-user"
+    ) {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      await auth.signInWithRedirect(provider);
+    } else {
+      console.error("Google Sign-in Error:", error);
+      alert(error.message);
+    }
   }
 });
 
@@ -135,4 +147,5 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
+
 
