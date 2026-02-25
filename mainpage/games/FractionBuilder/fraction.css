@@ -138,3 +138,55 @@ body {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* Top Navigation Buttons */
+.top-buttons {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.nav-btn {
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  color: white;
+
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.25),
+    inset 0 0 0 1px rgba(255,255,255,0.25);
+
+  transition: all 0.25s ease;
+}
+
+.nav-btn:hover {
+  transform: scale(1.08);
+  background: rgba(255,255,255,0.35);
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+
+  .top-buttons {
+    top: 12px;
+    padding: 0 12px;
+  }
+}
