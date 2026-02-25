@@ -89,14 +89,25 @@ document.getElementById("startGuest")?.addEventListener("click", () => {
 
 /* ---------------- GOOGLE LOGIN ---------------- */
 
-document.getElementById("googleBtn")?.addEventListener("click", function (e) {
-  e.preventDefault(); // IMPORTANT if inside form
+document.getElementById("googleBtn")?.addEventListener("click", async () => {
+  try {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-  const provider = new firebase.auth.GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: "select_account" });
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
 
-  // 🔥 Direct call WITHOUT async/await
-  firebase.auth().signInWithRedirect(provider);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    if (isSafari) {
+      await auth.signInWithRedirect(provider);
+    } else {
+      await auth.signInWithPopup(provider);
+    }
+
+  } catch (error) {
+    console.error("Google Sign-in Error:", error);
+    alert(error.message || "Google sign-in failed");
+  }
 });
 
 /* ---------------- MANUAL LOGIN / REGISTER ---------------- */
