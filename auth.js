@@ -1,5 +1,4 @@
 const auth = firebase.auth();
-firebase.auth().useDeviceLanguage();
 const loginTab = document.getElementById("loginTab");
 const guestTab = document.getElementById("guestTab");
 const loginSection = document.getElementById("loginSection");
@@ -22,19 +21,8 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-auth.getRedirectResult()
-  .then((result) => {
-    if (result.user) {
-      console.log("Redirect success:", result.user.email);
-    }
-  })
-  .catch((error) => {
-    console.error("Redirect result error:", error);
-    alert(error.message);
-  });
 /* ---------------- AUTH STATE LISTENER ---------------- */
 auth.onAuthStateChanged(async (user) => {
-  console.log("Auth state changed:", user);
 
   if (!user) return;
 
@@ -46,40 +34,29 @@ auth.onAuthStateChanged(async (user) => {
   const delayTimer = setTimeout(() => {
     alertShown = true;
     alert("Server is waking up. Please wait, this may take a few seconds...");
-  }, 3000); // change time if needed
+  }, 6000); // change time if needed
 
   try {
+    const response = await fetch(
+      `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`
+    );
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
+    clearTimeout(delayTimer); // stop timer if response came
 
-  const response = await fetch(
-    `${BASE_URL}/api/game/profileStatus?email=${encodeURIComponent(user.email)}`,
-    { signal: controller.signal }
-  );
+    const profileCreated = await response.json();
 
-  clearTimeout(timeout);
-  clearTimeout(delayTimer);
+    if (profileCreated) {
+      window.location.replace("mainpage/index.html");
+    } else {
+      window.location.replace("mainpage/Dashboard/avtar.html");
+    }
 
-  if (!response.ok) {
-    throw new Error("Backend error");
+  } catch (error) {
+    clearTimeout(delayTimer);
+    console.error("Profile check failed", error);
   }
-
-  const data = await response.json();
-  const profileCreated = data.profileCreated ?? data;
-
-  if (profileCreated === true) {
-    window.location.replace("mainpage/index.html");
-  } else {
-    window.location.replace("mainpage/Dashboard/avtar.html");
-  }
-
-} catch (error) {
-  clearTimeout(delayTimer);
-  console.error("Profile check failed:", error);
-  alert("Server is taking too long. Please try again.");
-}
 });
+
 
 /* ---------------- GUEST LOGIN ---------------- */
 
@@ -91,22 +68,16 @@ document.getElementById("startGuest")?.addEventListener("click", () => {
 
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
+    localStorage.setItem("loginMode", "google");
+
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
     const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-    if (isSafari) {
-      await auth.signInWithRedirect(provider);
-    } else {
-      await auth.signInWithPopup(provider);
-    }
+    await auth.signInWithPopup(provider);
 
   } catch (error) {
-    console.error("Google Sign-in Error:", error);
-    alert(error.message || "Google sign-in failed");
+    console.error(error);
+    alert("Google sign-in failed");
   }
 });
 
@@ -137,6 +108,3 @@ document.getElementById("manualLoginBtn")?.addEventListener("click", async () =>
     }
   }
 });
-
-
-
