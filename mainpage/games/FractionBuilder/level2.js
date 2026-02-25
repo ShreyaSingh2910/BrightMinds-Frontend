@@ -324,4 +324,8 @@ backBtn.addEventListener("click", () => {
    window.location.href = "fraction.html";
 
 });
+function goBack() {
+  window.location.href = "fraction.html";
+}
+
 
