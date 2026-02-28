@@ -174,31 +174,48 @@
 
   /* ---------------- LEADERBOARD ---------------- */
 
-  async function loadLeaderboard(email) {
-    try {
-      const res = await fetch(`${BASE_URL}/api/game/leaderboard`);
-      if (!res.ok) return;
+async function loadLeaderboard(email) {
+  try {
+    const res = await fetch(`${BASE_URL}/api/game/leaderboard`);
+    if (!res.ok) return;
 
-      const data = await res.json();
-      const list = document.getElementById("leaderboardList");
-      list.innerHTML = "";
+    const data = await res.json();
+    const list = document.getElementById("leaderboardList");
+    list.innerHTML = "";
 
-      data.forEach(entry => {
-        const li = document.createElement("li");
-        if (entry.email === email) {
-          li.classList.add("current-user");
-        }
-        li.innerHTML = `
-          <span>${entry.rank}</span>
-          ${entry.name}
-          <em>${entry.score.toLocaleString()}</em>
-        `;
-        list.appendChild(li);
-      });
-    } catch (err) {
-      console.error("Leaderboard load failed", err);
+    let currentUserElement = null;
+
+    data.forEach(entry => {
+      const li = document.createElement("li");
+
+      if (entry.email === email) {
+        li.classList.add("current-user");
+        currentUserElement = li; // store reference
+      }
+
+      li.innerHTML = `
+        <span>${entry.rank}</span>
+        ${entry.name}
+        <em>${entry.score.toLocaleString()}</em>
+      `;
+
+      list.appendChild(li);
+    });
+
+    // ✅ Auto scroll to current user
+    if (currentUserElement) {
+      setTimeout(() => {
+        currentUserElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }, 200);
     }
+
+  } catch (err) {
+    console.error("Leaderboard load failed", err);
   }
+}
 
   /* ---------------- FIREBASE AUTH LISTENER ---------------- */
 
@@ -226,6 +243,7 @@
 
 </body>
 </html>
+
 
 
 
