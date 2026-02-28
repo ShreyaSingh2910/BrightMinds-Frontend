@@ -183,7 +183,7 @@
       const list = document.getElementById("leaderboardList");
       list.innerHTML = "";
 
-      data.slice(0, 10).forEach(entry => {
+      data.forEach(entry => {
         const li = document.createElement("li");
         if (entry.email === email) {
           li.classList.add("current-user");
@@ -226,6 +226,7 @@
 
 </body>
 </html>
+
 
 
 
