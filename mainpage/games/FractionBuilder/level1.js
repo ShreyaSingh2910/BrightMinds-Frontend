@@ -15,6 +15,12 @@ const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
 let totalScore = 0;
 const MAX_SCORE_PER_QUESTION = 2;
+// Disable HTML5 drag on touch devices
+if ('ontouchstart' in window) {
+  document.querySelectorAll('.part-item').forEach(el => {
+    el.removeAttribute('draggable');
+  });
+}
 
 
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
@@ -157,12 +163,77 @@ function buildParts(count, shape) {
     p.className = "part-item";
     if (shape === "square") p.classList.add("square-part");
     p.draggable = true;
-    p.dataset.index = i;
-    p.addEventListener("dragstart", () => activePart = p);
+p.dataset.index = i;
+
+p.addEventListener("dragstart", () => activePart = p);
+
+// enable touch support
+enableTouchDrag(p);
     partsArea.appendChild(p);
   }
 }
+/* ================= MOBILE TOUCH DRAG SUPPORT ================= */
 
+function enableTouchDrag(part) {
+
+  let offsetX = 0;
+  let offsetY = 0;
+  let startX = 0;
+  let startY = 0;
+
+  part.addEventListener("touchstart", e => {
+
+    const touch = e.touches[0];
+    const rect = part.getBoundingClientRect();
+
+    startX = rect.left;
+    startY = rect.top;
+
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
+
+    part.style.position = "fixed";
+    part.style.left = rect.left + "px";
+    part.style.top = rect.top + "px";
+    part.style.zIndex = "1000";
+    part.style.transition = "none";
+
+    activePart = part;
+  });
+
+  part.addEventListener("touchmove", e => {
+    e.preventDefault();
+
+    const touch = e.touches[0];
+
+    part.style.left = (touch.clientX - offsetX) + "px";
+    part.style.top = (touch.clientY - offsetY) + "px";
+
+  }, { passive: false });
+
+  part.addEventListener("touchend", e => {
+
+    const rect = dropZone.getBoundingClientRect();
+    const touch = e.changedTouches[0];
+
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    // Reset position styling
+    part.style.position = "";
+    part.style.left = "";
+    part.style.top = "";
+    part.style.zIndex = "";
+
+    if (!part.classList.contains("used")) {
+      getShapeType(currentFraction.denominator) === "circle"
+        ? placeCircleSlice(x, y)
+        : placeSquarePart(x, y);
+    }
+
+  });
+
+}
 dropZone.addEventListener("dragover", e => e.preventDefault());
 dropZone.addEventListener("drop", e => {
   e.preventDefault();
@@ -315,3 +386,4 @@ function svg(tag, attrs) {
 function goBack() {
   window.location.href = "fraction.html";
 }
+
