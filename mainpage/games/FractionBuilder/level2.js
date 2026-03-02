@@ -17,6 +17,13 @@ const BASE_URL = "https://brightminds-backend-3.onrender.com";
 let totalScore = 0;
 const MAX_SCORE_PER_QUESTION = 2;
 
+// Disable HTML5 drag on touch devices
+if ('ontouchstart' in window) {
+  document.querySelectorAll('.part').forEach(el => {
+    el.removeAttribute('draggable');
+  });
+}
+
 function startBgMusic() {
   if (!bgMusic) return;
 
@@ -146,16 +153,91 @@ function buildParts(count) {
   for (let i = 0; i < count; i++) {
     const part = document.createElement("div");
     part.className = "part";
-    part.draggable = true;
+ part.draggable = true;
 
-    part.addEventListener("dragstart", () => {
-      activePart = part;
-    });
+part.addEventListener("dragstart", () => {
+  activePart = part;
+});
+
+// enable mobile drag
+enableTouchDrag(part);
 
     partsArea.appendChild(part);
   }
 }
+/* ================= MOBILE TOUCH DRAG SUPPORT ================= */
 
+function enableTouchDrag(part) {
+
+  let offsetX = 0;
+  let offsetY = 0;
+  let startX = 0;
+  let startY = 0;
+
+  part.addEventListener("touchstart", e => {
+
+    const touch = e.touches[0];
+    const rect = part.getBoundingClientRect();
+
+    startX = rect.left;
+    startY = rect.top;
+
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
+
+    part.style.position = "fixed";
+    part.style.left = rect.left + "px";
+    part.style.top = rect.top + "px";
+    part.style.zIndex = "1000";
+    part.style.transition = "none";
+
+    activePart = part;
+  });
+
+  part.addEventListener("touchmove", e => {
+    e.preventDefault();
+
+    const touch = e.touches[0];
+
+    part.style.left = (touch.clientX - offsetX) + "px";
+    part.style.top = (touch.clientY - offsetY) + "px";
+
+  }, { passive: false });
+
+  part.addEventListener("touchend", e => {
+
+    const rect = dropZone.getBoundingClientRect();
+    const touch = e.changedTouches[0];
+
+    const x = touch.clientX - rect.left - 100;
+    const y = touch.clientY - rect.top - 100;
+
+    // Reset styles
+    part.style.position = "";
+    part.style.left = "";
+    part.style.top = "";
+    part.style.zIndex = "";
+
+    if (part.classList.contains("used")) return;
+    if (Math.hypot(x, y) > 100) return;
+
+    let angle = Math.atan2(y, x) * 180 / Math.PI;
+    if (angle < 0) angle += 360;
+
+    const d = levels[levelIndex].right.d;
+    const sliceAngle = 360 / d;
+    const sliceIndex = Math.floor(angle / sliceAngle);
+
+    if (occupiedSlices.has(sliceIndex)) return;
+
+    occupiedSlices.add(sliceIndex);
+    part.classList.add("used");
+
+    redrawFilledSlices();
+    updateRightFraction();
+  });
+
+}
 dropZone.addEventListener("dragover", e => e.preventDefault());
 
 dropZone.addEventListener("drop", e => {
@@ -327,5 +409,6 @@ backBtn.addEventListener("click", () => {
 function goBack() {
   window.location.href = "fraction.html";
 }
+
 
 
