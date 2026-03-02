@@ -89,6 +89,12 @@
 </div>
 
 <script>
+    // Disable native drag on touch devices
+if ('ontouchstart' in window) {
+  document.querySelectorAll('.draggable').forEach(el => {
+    el.removeAttribute('draggable');
+  });
+}
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
 function saveGameScore(gameName, score) {
@@ -140,18 +146,23 @@ draggables.forEach(item => {
   item.addEventListener('dragstart', () => item.classList.add('dragging'));
   item.addEventListener('dragend', () => item.classList.remove('dragging'));
 });
-/* ================= MOBILE TOUCH DRAG SUPPORT ================= */
+/* ================= MOBILE TOUCH DRAG SUPPORT (FIXED) ================= */
 
 draggables.forEach(item => {
 
   let offsetX = 0;
   let offsetY = 0;
+  let startX = 0;
+  let startY = 0;
   let droppedSuccessfully = false;
 
   item.addEventListener("touchstart", e => {
 
     const touch = e.touches[0];
     const rect = item.getBoundingClientRect();
+
+    startX = rect.left;
+    startY = rect.top;
 
     offsetX = touch.clientX - rect.left;
     offsetY = touch.clientY - rect.top;
@@ -160,12 +171,14 @@ draggables.forEach(item => {
     item.style.left = rect.left + "px";
     item.style.top = rect.top + "px";
     item.style.zIndex = "1000";
+    item.style.transition = "none";
 
     droppedSuccessfully = false;
   });
 
   item.addEventListener("touchmove", e => {
     e.preventDefault();
+
     const touch = e.touches[0];
 
     item.style.left = (touch.clientX - offsetX) + "px";
@@ -197,17 +210,24 @@ draggables.forEach(item => {
       }
     });
 
-    // snap back if not dropped
     if (!droppedSuccessfully) {
-      item.style.position = "";
-      item.style.left = "";
-      item.style.top = "";
-      item.style.zIndex = "";
-    }
+      // smooth snap back
+      item.style.transition = "all 0.3s ease";
+      item.style.left = startX + "px";
+      item.style.top = startY + "px";
 
+      setTimeout(() => {
+        item.style.position = "";
+        item.style.left = "";
+        item.style.top = "";
+        item.style.zIndex = "";
+        item.style.transition = "";
+      }, 300);
+    }
   });
 
 });
+
 dropZones.forEach(zone => {
   zone.addEventListener('dragover', e => e.preventDefault());
 
@@ -300,6 +320,7 @@ function goBack() {
 </script>
 </body>
 </html>
+
 
 
 
