@@ -140,7 +140,74 @@ draggables.forEach(item => {
   item.addEventListener('dragstart', () => item.classList.add('dragging'));
   item.addEventListener('dragend', () => item.classList.remove('dragging'));
 });
+/* ================= MOBILE TOUCH DRAG SUPPORT ================= */
 
+draggables.forEach(item => {
+
+  let offsetX = 0;
+  let offsetY = 0;
+  let droppedSuccessfully = false;
+
+  item.addEventListener("touchstart", e => {
+
+    const touch = e.touches[0];
+    const rect = item.getBoundingClientRect();
+
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
+
+    item.style.position = "fixed";
+    item.style.left = rect.left + "px";
+    item.style.top = rect.top + "px";
+    item.style.zIndex = "1000";
+
+    droppedSuccessfully = false;
+  });
+
+  item.addEventListener("touchmove", e => {
+    e.preventDefault();
+    const touch = e.touches[0];
+
+    item.style.left = (touch.clientX - offsetX) + "px";
+    item.style.top = (touch.clientY - offsetY) + "px";
+  }, { passive: false });
+
+  item.addEventListener("touchend", () => {
+
+    const itemRect = item.getBoundingClientRect();
+
+    dropZones.forEach(zone => {
+
+      if (zone.classList.contains('filled')) return;
+
+      const zoneRect = zone.getBoundingClientRect();
+
+      if (
+        itemRect.left < zoneRect.right &&
+        itemRect.right > zoneRect.left &&
+        itemRect.top < zoneRect.bottom &&
+        itemRect.bottom > zoneRect.top
+      ) {
+
+        zone.innerText = item.innerText;
+        zone.dataset.placed = item.id;
+
+        item.style.display = "none";
+        droppedSuccessfully = true;
+      }
+    });
+
+    // snap back if not dropped
+    if (!droppedSuccessfully) {
+      item.style.position = "";
+      item.style.left = "";
+      item.style.top = "";
+      item.style.zIndex = "";
+    }
+
+  });
+
+});
 dropZones.forEach(zone => {
   zone.addEventListener('dragover', e => e.preventDefault());
 
@@ -233,5 +300,6 @@ function goBack() {
 </script>
 </body>
 </html>
+
 
 
