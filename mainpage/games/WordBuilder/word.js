@@ -1,5 +1,6 @@
 import { questionBank } from "./questions.js";
 const progressFill = document.getElementById("progress-fill");
+let scoreSaved = false;
 
 const TOTAL_QUESTIONS = 10;
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
