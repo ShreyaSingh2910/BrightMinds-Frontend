@@ -243,7 +243,7 @@ function goBack() {
   window.location.href = "topic.html";
 }
 
-document.getElementById("submit-btn").addEventListener("click", () => {
+document.getElementById("submit-btn").addEventListener("click",async () => {
 
   if (placedCount !== TOTAL_ITEMS) {
     alert("Place all items before submitting!");
