@@ -212,10 +212,9 @@ function handleDrop(item, bin) {
 
 
 /* ---------------- WIN + OTHER FUNCTIONS ---------------- */
+async function showWinMessage(score) {
 
-function showWinMessage(score) {
-
-  saveGameScore("ScienceSpotter-StatesOfMatter", score);
+  await saveGameScore("ScienceSpotter-StatesOfMatter", score); // ✅ WAIT
 
   document.getElementById("final-score").innerText =
     "Your Score: " + score + "/6";
@@ -268,7 +267,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
     });
   });
 
-  showWinMessage(score);
+   await showWinMessage(score);
 });
 
 function evaluateGame() {
@@ -292,8 +291,8 @@ function evaluateGame() {
     });
   });
 
-  setTimeout(() => {
-    showWinMessage(score);
-  }, 800);
+ setTimeout(async () => {
+  await showWinMessage(score);
+}, 800);
 }
 
