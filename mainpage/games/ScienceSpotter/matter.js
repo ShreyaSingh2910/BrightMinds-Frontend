@@ -1,43 +1,33 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
-function waitForEmail(timeout = 5000) {
-  return new Promise((resolve, reject) => {
-    const interval = 200;
-    let waited = 0;
-
-    const check = () => {
-      const email = localStorage.getItem("userEmail");
-
-      if (email) {
-        resolve(email);
-      } else {
-        waited += interval;
-        if (waited >= timeout) {
-          reject("Email not found in time");
-        } else {
-          setTimeout(check, interval);
-        }
-      }
-    };
-
-    check();
-  });
-}
-
 async function saveGameScore(gameName, score) {
   try {
-    const email = await waitForEmail(); // ⏳ wait properly
+    const email = await waitForEmail();
 
-    const res = await fetch(`${BASE_URL}/api/game/saveScore`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, gameName, score })
+    const data = JSON.stringify({
+      email,
+      gameName,
+      score
     });
 
-    if (!res.ok) throw new Error("Server error");
+    const blob = new Blob([data], { type: "application/json" });
 
-    const data = await res.json();
-    console.log("✅ Score saved:", data);
+    const success = navigator.sendBeacon(
+      `${BASE_URL}/api/game/saveScore`,
+      blob
+    );
+
+    if (success) {
+      console.log("✅ Score sent via beacon");
+    } else {
+      console.warn("⚠️ Beacon failed, fallback to fetch");
+
+      await fetch(`${BASE_URL}/api/game/saveScore`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: data
+      });
+    }
 
   } catch (err) {
     console.error("❌ Failed to save score:", err);
@@ -212,9 +202,10 @@ function handleDrop(item, bin) {
 
 
 /* ---------------- WIN + OTHER FUNCTIONS ---------------- */
-async function showWinMessage(score) {
 
-  await saveGameScore("ScienceSpotter-StatesOfMatter", score); // ✅ WAIT
+function showWinMessage(score) {
+
+  saveGameScore("ScienceSpotter-StatesOfMatter", score);
 
   document.getElementById("final-score").innerText =
     "Your Score: " + score + "/6";
@@ -243,7 +234,7 @@ function goBack() {
   window.location.href = "topic.html";
 }
 
-document.getElementById("submit-btn").addEventListener("click",async () => {
+document.getElementById("submit-btn").addEventListener("click", () => {
 
   if (placedCount !== TOTAL_ITEMS) {
     alert("Place all items before submitting!");
@@ -267,7 +258,7 @@ document.getElementById("submit-btn").addEventListener("click",async () => {
     });
   });
 
-   await showWinMessage(score);
+  showWinMessage(score);
 });
 
 function evaluateGame() {
@@ -291,8 +282,7 @@ function evaluateGame() {
     });
   });
 
- setTimeout(async () => {
-  await showWinMessage(score);
-}, 800);
+  setTimeout(() => {
+    showWinMessage(score);
+  }, 800);
 }
-
