@@ -1,38 +1,47 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
-function saveGameScore(gameName, score, retryCount = 0) {
-  const email = localStorage.getItem("userEmail");
+function waitForEmail(timeout = 5000) {
+  return new Promise((resolve, reject) => {
+    const interval = 200;
+    let waited = 0;
 
-  // 🔁 Retry if email not ready (max 5 tries)
-  if (!email) {
-    if (retryCount < 5) {
-      console.warn(`Email not found, retrying... (${retryCount + 1})`);
-      setTimeout(() => {
-        saveGameScore(gameName, score, retryCount + 1);
-      }, 500); // wait 0.5 sec
-    } else {
-      console.error("❌ Email still not available. Score not saved.");
-    }
-    return;
-  }
+    const check = () => {
+      const email = localStorage.getItem("userEmail");
 
-  // ✅ Email found → save score
-  fetch(`${BASE_URL}/api/game/saveScore`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: email,
-      gameName: gameName,
-      score: score
-    })
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("✅ Score saved:", data);
-    })
-    .catch(err => {
-      console.error("❌ Score save failed", err);
+      if (email) {
+        resolve(email);
+      } else {
+        waited += interval;
+        if (waited >= timeout) {
+          reject("Email not found in time");
+        } else {
+          setTimeout(check, interval);
+        }
+      }
+    };
+
+    check();
+  });
+}
+
+async function saveGameScore(gameName, score) {
+  try {
+    const email = await waitForEmail(); // ⏳ wait properly
+
+    const res = await fetch(`${BASE_URL}/api/game/saveScore`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, gameName, score })
     });
+
+    if (!res.ok) throw new Error("Server error");
+
+    const data = await res.json();
+    console.log("✅ Score saved:", data);
+
+  } catch (err) {
+    console.error("❌ Failed to save score:", err);
+  }
 }
 
 let dragged = null;
