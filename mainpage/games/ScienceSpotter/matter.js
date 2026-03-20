@@ -1,9 +1,22 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
-function saveGameScore(gameName, score) {
+function saveGameScore(gameName, score, retryCount = 0) {
   const email = localStorage.getItem("userEmail");
-  if (!email) return;
 
+  // 🔁 Retry if email not ready (max 5 tries)
+  if (!email) {
+    if (retryCount < 5) {
+      console.warn(`Email not found, retrying... (${retryCount + 1})`);
+      setTimeout(() => {
+        saveGameScore(gameName, score, retryCount + 1);
+      }, 500); // wait 0.5 sec
+    } else {
+      console.error("❌ Email still not available. Score not saved.");
+    }
+    return;
+  }
+
+  // ✅ Email found → save score
   fetch(`${BASE_URL}/api/game/saveScore`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -12,7 +25,14 @@ function saveGameScore(gameName, score) {
       gameName: gameName,
       score: score
     })
-  }).catch(err => console.error("Score save failed", err));
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("✅ Score saved:", data);
+    })
+    .catch(err => {
+      console.error("❌ Score save failed", err);
+    });
 }
 
 let dragged = null;
