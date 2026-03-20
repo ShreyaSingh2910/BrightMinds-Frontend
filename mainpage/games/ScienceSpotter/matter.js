@@ -1,5 +1,29 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
+function waitForEmail(timeout = 5000) {
+  return new Promise((resolve, reject) => {
+    const interval = 200;
+    let waited = 0;
+
+    const check = () => {
+      const email = localStorage.getItem("userEmail");
+
+      if (email) {
+        resolve(email);
+      } else {
+        waited += interval;
+        if (waited >= timeout) {
+          reject("Email not found in time");
+        } else {
+          setTimeout(check, interval);
+        }
+      }
+    };
+
+    check();
+  });
+}
+
 async function saveGameScore(gameName, score) {
   try {
     const email = await waitForEmail();
@@ -202,10 +226,9 @@ function handleDrop(item, bin) {
 
 
 /* ---------------- WIN + OTHER FUNCTIONS ---------------- */
+async function showWinMessage(score) {
 
-function showWinMessage(score) {
-
-  saveGameScore("ScienceSpotter-StatesOfMatter", score);
+  await saveGameScore("ScienceSpotter-StatesOfMatter", score); // ✅ WAIT
 
   document.getElementById("final-score").innerText =
     "Your Score: " + score + "/6";
@@ -234,7 +257,7 @@ function goBack() {
   window.location.href = "topic.html";
 }
 
-document.getElementById("submit-btn").addEventListener("click", () => {
+document.getElementById("submit-btn").addEventListener("click",async () => {
 
   if (placedCount !== TOTAL_ITEMS) {
     alert("Place all items before submitting!");
@@ -258,7 +281,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
     });
   });
 
-  showWinMessage(score);
+   await showWinMessage(score);
 });
 
 function evaluateGame() {
@@ -282,7 +305,7 @@ function evaluateGame() {
     });
   });
 
-  setTimeout(() => {
-    showWinMessage(score);
-  }, 800);
+ setTimeout(async () => {
+  await showWinMessage(score);
+}, 800);
 }
