@@ -14,7 +14,6 @@ const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
 let totalScore = 0;
-let scoreSaved = false;
 const MAX_SCORE_PER_QUESTION = 2;
 // Disable HTML5 drag on touch devices
 if ('ontouchstart' in window) {
@@ -52,33 +51,19 @@ function playWrongSound() {
   setTimeout(() => bgMusic && (bgMusic.volume = 0.35), 500);
 }
 
-function saveGameScore(gameName, score, retry = 0) {
+function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
 
   fetch(`${BASE_URL}/api/game/saveScore`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, gameName, score })
-  })
-    .then(res => {
-      if (!res.ok) throw new Error("Server error");
-      return res.json();
+    body: JSON.stringify({
+      email: email,
+      gameName: gameName,
+      score: score
     })
-    .then(data => {
-      console.log("✅ Fraction score saved:", data);
-    })
-    .catch(err => {
-      console.warn("⚠️ Retry fraction save...", retry);
-
-      if (retry < 3) {
-        setTimeout(() => {
-          saveGameScore(gameName, score, retry + 1);
-        }, 1000);
-      } else {
-        console.error("❌ Fraction save failed:", err);
-      }
-    });
+  }).catch(err => console.error("Score save failed", err));
 }
 
 
@@ -336,8 +321,7 @@ function enableTapToRemove(el) {
 
 submitBtn.addEventListener("click", () => {
 
-  if (submitBtn.disabled) return; // 🔥 prevents double click
-
+  // Disable submit button to prevent multiple clicks
   submitBtn.disabled = true;
 
   if (placed === currentFraction.numerator) {
@@ -347,10 +331,7 @@ submitBtn.addEventListener("click", () => {
     resultMsg.textContent = "✅ Correct!";
     resultMsg.style.color = "green";
 
-  totalScore += MAX_SCORE_PER_QUESTION;
-
-// 🔥 prevent score going above 10
-if (totalScore > 10) totalScore = 10;
+    totalScore += MAX_SCORE_PER_QUESTION;
 
   } else {
 
@@ -370,20 +351,11 @@ if (totalScore > 10) totalScore = 10;
 
 function nextRound() {
   currentIndex++;
- if (currentIndex >= fractions.length) {
-
-if (!scoreSaved) {
-  scoreSaved = true;
-
-  const finalScoreToSend = Math.min(totalScore, 10); // safety
-
-  console.log("Saving FINAL score:", finalScoreToSend);
-
-  saveGameScore("FractionBuilder-level1", finalScoreToSend);
-}
-  showSuccessScreen();
-  return;
-}
+  if (currentIndex >= fractions.length) {
+  saveGameScore("FractionBuilder-level1", totalScore);
+    showSuccessScreen();
+    return;
+  }
   initRound();
 }
 function showSuccessScreen() {
@@ -401,12 +373,7 @@ function showSuccessScreen() {
   });
 }
 
-replayBtn.addEventListener("click", () => {
-  totalScore = 0;
-  scoreSaved = false;
-  currentIndex = 0;
-  window.location.reload();
-});
+replayBtn.addEventListener("click", () => window.location.reload());
 backBtn.addEventListener("click", () => window.history.back());
 
 function svg(tag, attrs) {
@@ -419,4 +386,3 @@ function svg(tag, attrs) {
 function goBack() {
   window.location.href = "fraction.html";
 }
-
