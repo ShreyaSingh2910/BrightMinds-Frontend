@@ -1,6 +1,5 @@
 import { questionBank } from "./questions.js";
 const progressFill = document.getElementById("progress-fill");
-let scoreSaved = false;
 
 const TOTAL_QUESTIONS = 10;
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
@@ -35,33 +34,19 @@ document.addEventListener(
   { once: true }
 );
 
-function saveGameScore(gameName, score, retry = 0) {
+function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
 
   fetch(`${BASE_URL}/api/game/saveScore`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, gameName, score }),
-  })
-    .then(res => {
-      if (!res.ok) throw new Error("Server error");
-      return res.json();
-    })
-    .then(data => {
-      console.log("✅ Score saved:", data);
-    })
-    .catch(err => {
-      console.warn("⚠️ Save failed, retrying...", retry);
-
-      if (retry < 3) {
-        setTimeout(() => {
-          saveGameScore(gameName, score, retry + 1);
-        }, 1000);
-      } else {
-        console.error("❌ Final failure:", err);
-      }
-    });
+    body: JSON.stringify({
+      email: email,
+      gameName: gameName,
+      score: score,
+    }),
+  }).catch((err) => console.error("Score save failed", err));
 }
 
 function getQuestion() {
@@ -76,18 +61,13 @@ function getQuestion() {
 }
 
 function loadQuestion() {
- if (gameIndex >= TOTAL_QUESTIONS) {
-  if (!scoreSaved) {
-    scoreSaved = true;
-
+  if (gameIndex >= TOTAL_QUESTIONS) {
     bgSound.pause();
     finalScore.innerText = `Score: ${score}/10`;
-
-    saveGameScore("WordBuilder", score); // ✅ only once
+    saveGameScore("WordBuilder", score);
     popup.style.display = "flex";
+    return;
   }
-  return;
-}
 
   currentQuestion = getQuestion();
 
