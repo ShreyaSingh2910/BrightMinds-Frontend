@@ -1,4 +1,6 @@
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
+let scoreSaved = false;
+
 const allLetters = [
   { img: "A.jpg", match: "apple.jpg" }, { img: "B.jpg", match: "Baloon.jpg" },
   { img: "C.jpg", match: "cake.png" }, { img: "D.jpg", match: "dolphine.png" },
@@ -26,17 +28,37 @@ window.addEventListener("load", () => {
   });
 });
 
-// Database Sync
-async function syncScoreToDb(scoreValue) {
-    const userEmail = localStorage.getItem("userEmail");
-    if (!userEmail) return;
-    try {
-        await fetch(`${BASE_URL}/api/game/saveScore`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: userEmail, gameName: "memoryGame", score: scoreValue })
-        });
-    } catch (e) { console.error("DB Sync Error", e); }
+function syncScoreToDb(scoreValue, retry = 0) {
+  const userEmail = localStorage.getItem("userEmail");
+  if (!userEmail) return;
+
+  fetch(`${BASE_URL}/api/game/saveScore`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: userEmail,
+      gameName: "memoryGame",
+      score: scoreValue
+    })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Server error");
+      return res.json();
+    })
+    .then(data => {
+      console.log("✅ Memory score saved:", data);
+    })
+    .catch(err => {
+      console.warn("⚠️ Retry memory save...", retry);
+
+      if (retry < 3) {
+        setTimeout(() => {
+          syncScoreToDb(scoreValue, retry + 1);
+        }, 1000);
+      } else {
+        console.error("❌ Memory save failed:", err);
+      }
+    });
 }
 
 function getRandomCards() {
@@ -120,14 +142,22 @@ function resetBoard() {
 }
 
 function showWinMessage() {
+
+  if (!scoreSaved) {
+    scoreSaved = true;
+
+    syncScoreToDb(10); // ✅ only once + reliable
+  }
+
   document.getElementById("win-overlay").style.display = "flex";
-  syncScoreToDb(10);
+
   lottie.loadAnimation({
     container: document.getElementById("lottie-win"),
-    renderer: "svg", loop: true, autoplay: true,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
     path: "lottie/celebration.json"
   });
-
 }
 
 function goBack() {
