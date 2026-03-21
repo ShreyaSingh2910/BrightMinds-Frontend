@@ -336,7 +336,8 @@ function enableTapToRemove(el) {
 
 submitBtn.addEventListener("click", () => {
 
-  // Disable submit button to prevent multiple clicks
+  if (submitBtn.disabled) return; // 🔥 prevents double click
+
   submitBtn.disabled = true;
 
   if (placed === currentFraction.numerator) {
@@ -346,7 +347,10 @@ submitBtn.addEventListener("click", () => {
     resultMsg.textContent = "✅ Correct!";
     resultMsg.style.color = "green";
 
-    totalScore += MAX_SCORE_PER_QUESTION;
+  totalScore += MAX_SCORE_PER_QUESTION;
+
+// 🔥 prevent score going above 10
+if (totalScore > 10) totalScore = 10;
 
   } else {
 
@@ -368,12 +372,15 @@ function nextRound() {
   currentIndex++;
  if (currentIndex >= fractions.length) {
 
-  if (!scoreSaved) {
-    scoreSaved = true;
+if (!scoreSaved) {
+  scoreSaved = true;
 
-    saveGameScore("FractionBuilder-level1", totalScore);
-  }
+  const finalScoreToSend = Math.min(totalScore, 10); // safety
 
+  console.log("Saving FINAL score:", finalScoreToSend);
+
+  saveGameScore("FractionBuilder-level1", finalScoreToSend);
+}
   showSuccessScreen();
   return;
 }
@@ -394,7 +401,12 @@ function showSuccessScreen() {
   });
 }
 
-replayBtn.addEventListener("click", () => window.location.reload());
+replayBtn.addEventListener("click", () => {
+  totalScore = 0;
+  scoreSaved = false;
+  currentIndex = 0;
+  window.location.reload();
+});
 backBtn.addEventListener("click", () => window.history.back());
 
 function svg(tag, attrs) {
