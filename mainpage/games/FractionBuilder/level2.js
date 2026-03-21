@@ -15,7 +15,6 @@ const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 let totalScore = 0;
-let scoreSaved = false;
 const MAX_SCORE_PER_QUESTION = 2;
 
 // Disable HTML5 drag on touch devices
@@ -69,34 +68,21 @@ function playWrongSound() {
 
 let celebrationAnimation = null;
 
-function saveGameScore(gameName, score, retry = 0) {
+function saveGameScore(gameName, score) {
   const email = localStorage.getItem("userEmail");
   if (!email) return;
 
   fetch(`${BASE_URL}/api/game/saveScore`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, gameName, score })
-  })
-    .then(res => {
-      if (!res.ok) throw new Error("Server error");
-      return res.json();
+    body: JSON.stringify({
+      email: email,
+      gameName: gameName,
+      score: score
     })
-    .then(data => {
-      console.log("✅ Fraction L2 score saved:", data);
-    })
-    .catch(err => {
-      console.warn("⚠️ Retry L2 save...", retry);
-
-      if (retry < 3) {
-        setTimeout(() => {
-          saveGameScore(gameName, score, retry + 1);
-        }, 1000);
-      } else {
-        console.error("❌ L2 save failed:", err);
-      }
-    });
+  }).catch(err => console.error("Score save failed", err));
 }
+
 
 const All_levels = [
   { left: { n: 1, d: 2 }, right: { n: 3, d: 6 } },
@@ -348,17 +334,11 @@ submitBtn.addEventListener("click", () => {
 function nextLevel() {
   levelIndex++;
 
-if (levelIndex >= levels.length) {
-
-  if (!scoreSaved) {
-    scoreSaved = true;
-
+  if (levelIndex >= levels.length) {
     saveGameScore("FractionBuilder-level2", totalScore);
+    showCelebration();
+    return;
   }
-
-  showCelebration();
-  return;
-}
 
   initLevel();
 }
@@ -429,6 +409,5 @@ backBtn.addEventListener("click", () => {
 function goBack() {
   window.location.href = "fraction.html";
 }
-
 
 
