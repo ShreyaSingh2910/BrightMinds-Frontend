@@ -1,16 +1,12 @@
 :root {
   --bg-main: linear-gradient(180deg, #7ee8fa, #eec0ff);
-
   --surface: #ffffff;
   --surface-soft: #f7f9ff;
-
   --text-main: #2d2a32;
   --text-muted: #6b7280;
-
   --cta: #ff9f1c;
   --cta-hover: #ffb703;
 }
-
 
 * {
   box-sizing: border-box;
