@@ -15,13 +15,11 @@ const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
 let totalScore = 0;
 const MAX_SCORE_PER_QUESTION = 2;
-// Disable HTML5 drag on touch devices
 if ('ontouchstart' in window) {
   document.querySelectorAll('.part-item').forEach(el => {
     el.removeAttribute('draggable');
   });
 }
-
 
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
@@ -65,7 +63,6 @@ function saveGameScore(gameName, score) {
     })
   }).catch(err => console.error("Score save failed", err));
 }
-
 
 const ALL_FRACTIONS = [
   { numerator: 1, denominator: 2 },
@@ -172,7 +169,6 @@ enableTouchDrag(p);
     partsArea.appendChild(p);
   }
 }
-/* ================= MOBILE TOUCH DRAG SUPPORT ================= */
 
 function enableTouchDrag(part) {
 
@@ -219,7 +215,6 @@ function enableTouchDrag(part) {
     const x = touch.clientX - rect.left;
     const y = touch.clientY - rect.top;
 
-    // Reset position styling
     part.style.position = "";
     part.style.left = "";
     part.style.top = "";
@@ -320,28 +315,20 @@ function enableTapToRemove(el) {
 }
 
 submitBtn.addEventListener("click", () => {
-
-  // Disable submit button to prevent multiple clicks
   submitBtn.disabled = true;
 
   if (placed === currentFraction.numerator) {
-
     playCorrectSound();
-
     resultMsg.textContent = "✅ Correct!";
     resultMsg.style.color = "green";
-
     totalScore += MAX_SCORE_PER_QUESTION;
 
   } else {
-
     playWrongSound();
-
     resultMsg.textContent = "❌ Wrong!";
     resultMsg.style.color = "red";
   }
-
-  // Show result for 1.5 seconds
+  
   setTimeout(() => {
     nextRound();
     submitBtn.disabled = false;
