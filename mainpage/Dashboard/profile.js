@@ -50,12 +50,9 @@ async function loadGame(gameKey, event) {
     );
 
     const p = await res.json();
-
     document.getElementById("username").innerText = p.name || "Player";
     document.querySelector(".profile-name").innerText = p.name || "Player";
-
     document.getElementById("scoreBig").innerText = p.totalScore ?? 0;
-
     document.getElementById("played").innerText = p.gamesPlayed ?? 0;
     document.getElementById("rank").innerText =
       p.rank > 0 ? `#${p.rank}` : "—";
@@ -77,7 +74,6 @@ async function loadGame(gameKey, event) {
   avatarImg.onerror = function () {
   this.src = "assets/avatars/fox.jpeg";
 };
-
 
     const recentRes = await fetch(
       `${BASE_URL}/api/game/recentGame?email=${currentUserEmail}`
@@ -101,16 +97,13 @@ document.addEventListener("DOMContentLoaded", () => {
   firebase.auth().onAuthStateChanged(function(user) {
 
     if (!user) {
-      // Not logged in → go to login page
       window.location.replace("../index.html");
       return;
     }
 
-    // Logged in
     currentUserEmail = user.email;
     localStorage.setItem("userEmail", user.email);
 
-    // Load default tab
     loadGame("physics", {
       target: document.querySelector(".menu.active")
     });
