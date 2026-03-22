@@ -16,8 +16,6 @@ function saveGameScore(gameName, score) {
   }).catch(err => console.error("Score save failed", err));
 }
 
-
-
 const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
@@ -43,8 +41,6 @@ const userAnswers = {};
 const labels = document.querySelectorAll(".label");
 const dropZones = document.querySelectorAll(".drop-zone");
 
-/* ================= DESKTOP DRAG ================= */
-
 labels.forEach(label => {
   label.addEventListener("dragstart", () => {
     dragged = label;
@@ -60,9 +56,6 @@ dropZones.forEach(zone => {
     dragged = null;
   });
 });
-
-
-/* ================= MOBILE TOUCH DRAG ================= */
 
 labels.forEach(label => {
 
@@ -112,7 +105,6 @@ labels.forEach(label => {
       }
     });
 
-    // snap back if not dropped
     if (!droppedSuccessfully) {
       label.style.position = "";
       label.style.left = "";
@@ -123,9 +115,6 @@ labels.forEach(label => {
   });
 
 });
-
-
-/* ================= SHARED DROP LOGIC ================= */
 
 function handleDrop(label, zone) {
 
@@ -145,13 +134,11 @@ function handleDrop(label, zone) {
 
   label.style.visibility = "hidden";
 
-  // reset mobile styles
   label.style.position = "";
   label.style.left = "";
   label.style.top = "";
   label.style.zIndex = "";
 }
-
 
 function checkAnswers() {
   attempts++;
@@ -249,7 +236,7 @@ if (attempts === 1) {
 } else if (attempts === 4) {
   finalScore = 7;
 } else {
-  finalScore = 6; // 5th attempt or more
+  finalScore = 6; 
 }
 
 saveGameScore("ScienceSpotter-PartsOfPlants", finalScore);
