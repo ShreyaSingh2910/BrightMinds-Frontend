@@ -40,7 +40,6 @@ body {
   z-index: 2;
 }
 
-
 .ui-content h1 {
   font-size: clamp(6vw, 46px);
   color: #4b2bb3;
@@ -67,8 +66,6 @@ body {
   box-shadow: 0 5px 0 #e68a00;
 }
 
-/* ================= MOBILE FIX ================= */
-
 @media (max-width: 768px) {
 
   body {
@@ -81,7 +78,7 @@ body {
   }
 
   .ui-content {
-    bottom: 8vh;   /* push slightly higher on mobile */
+    bottom: 8vh;   
   }
 
   .ui-content h1 {
@@ -97,7 +94,7 @@ body {
   }
    #lottie-bg {
     margin-top:0px;
-    transform: scale(3.2);   /* zoom animation */
+    transform: scale(3.2);   
     transform-origin: center center;
   }
 
@@ -105,7 +102,7 @@ body {
 
 @supports (-webkit-touch-callout: none) {
    .ui-content {
-    bottom: 3vh;   /* push slightly higher on mobile */
+    bottom: 3vh;   
   }
 
 }
@@ -124,27 +121,21 @@ body {
 .nav-btn {
   width: 55px;
   height: 55px;
-  border-radius: 18px;   /* soft rounded square */
+  border-radius: 18px; 
   border: 2px solid rgba(255,255,255,0.2);
   font-size: 24px;
   cursor: pointer;
   font-weight: bold;
-
-  /* Purple glass style */
   background: linear-gradient(
     145deg,
     #5E3A9E,
     #3F1F6E
   );
-
   color: #ffffff;
-
-
   backdrop-filter: blur(6px);
   transition: all 0.2s ease;
 }
 
-/* Hover effect */
 .nav-btn:hover {
   transform: translateY(4px);
   box-shadow:
@@ -163,6 +154,3 @@ body {
     font-size: 20px;
   }
 }
-
-
-
