@@ -41,7 +41,6 @@ window.addEventListener("load", () => {
   });
 });
 
-// Database Sync
 async function syncScoreToDb(scoreValue) {
   const userEmail = localStorage.getItem("userEmail");
   if (!userEmail) return;
@@ -84,7 +83,6 @@ let secondCard = null;
 let lockBoard = false;
 let matchedPairs = 0;
 
-// Render Grid
 cardsData.forEach(item => {
   const card = document.createElement("div");
   card.className = "card";
