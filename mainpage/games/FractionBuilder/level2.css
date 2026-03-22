@@ -53,7 +53,7 @@ h1 {
   position: relative;
   width: 100%;
   max-width: 170px;
-  aspect-ratio: 1 / 1;   /* 👈 THIS FIXES IT */
+  aspect-ratio: 1 / 1;  
 }
 
 .drop-zone svg {
@@ -238,20 +238,14 @@ svg path {
 .back-btn-small:active {
   transform: scale(0.92);
 }
-/* ===============================
-   📱 MOBILE PERFECT RESPONSIVE
-   =============================== */
-/* ✅ Same scaling logic as Level 3 */
 
 @media (max-width: 480px) {
-
-  
   body {
-    padding: 18px;   /* more outer space */
+    padding: 18px;  
   }
 
   .game-card {
-    width: 92%;      /* 👈 smaller than 100% */
+    width: 92%;    
     max-width: 380px; 
     padding: 20px;
     border-radius: 24px;
@@ -274,9 +268,6 @@ svg path {
     flex-direction: column;
     align-items: center;
   }
-
-
-
   .equal-sign {
     font-size: 28px;
   }
