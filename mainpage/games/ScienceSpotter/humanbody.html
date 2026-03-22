@@ -17,8 +17,6 @@
     Drag and drop the organs to their correct positions in the human body.
 </p>
 
-
-
 <div class="diagram-area">
     <div class="image-container">
         <img src="assets/body.jpeg" class="body-img" />
@@ -89,7 +87,7 @@
 </div>
 
 <script>
-    // Disable native drag on touch devices
+ 
 if ('ontouchstart' in window) {
   document.querySelectorAll('.draggable').forEach(el => {
     el.removeAttribute('draggable');
@@ -117,9 +115,8 @@ let successAnim = lottie.loadAnimation({
   renderer: "svg",
   loop: false,
   autoplay: false,
-  path: "lottie/celebration2.json"   // adjust path if needed
+  path: "lottie/celebration2.json"  
 });
-
 
 function shuffleOptions() {
   const partsBin = document.querySelector('.parts-bin');
@@ -133,9 +130,7 @@ function shuffleOptions() {
   items.forEach(item => partsBin.appendChild(item));
 }
 
-
 let attemptCount = 0;
-
 const draggables = document.querySelectorAll('.draggable');
 const dropZones  = document.querySelectorAll('.drop-zone');
 const checkBtn   = document.getElementById('check-btn');
@@ -146,7 +141,6 @@ draggables.forEach(item => {
   item.addEventListener('dragstart', () => item.classList.add('dragging'));
   item.addEventListener('dragend', () => item.classList.remove('dragging'));
 });
-/* ================= MOBILE TOUCH DRAG SUPPORT (FIXED) ================= */
 
 draggables.forEach(item => {
 
@@ -211,7 +205,6 @@ draggables.forEach(item => {
     });
 
     if (!droppedSuccessfully) {
-      // smooth snap back
       item.style.transition = "all 0.3s ease";
       item.style.left = startX + "px";
       item.style.top = startY + "px";
