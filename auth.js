@@ -6,8 +6,6 @@ const loginSection = document.getElementById("loginSection");
 const guestSection = document.getElementById("guestSection");
 const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
-/* ---------------- TAB SWITCHING ---------------- */
-
 loginTab.addEventListener("click", () => {
   loginTab.classList.add("active");
   guestTab.classList.remove("active");
@@ -22,8 +20,6 @@ guestTab.addEventListener("click", () => {
   loginSection.classList.add("hidden");
 });
 
-/* ---------------- HANDLE REDIRECT RESULT ---------------- */
-
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
@@ -33,7 +29,7 @@ auth.getRedirectResult()
   .catch((error) => {
     console.error("Redirect result error:", error);
   });
-/* ---------------- AUTH STATE LISTENER ---------------- */
+
 auth.onAuthStateChanged(async (user) => {
   console.log("Auth state changed:", user);
 
@@ -43,7 +39,6 @@ auth.onAuthStateChanged(async (user) => {
 
   let alertShown = false;
 
-  // ⏳ Show alert if backend takes more than 4 seconds
   const delayTimer = setTimeout(() => {
     alertShown = true;
     alert("Server is waking up. Please wait, this may take a few seconds...");
@@ -82,15 +77,10 @@ auth.onAuthStateChanged(async (user) => {
 }
 });
 
-/* ---------------- GUEST LOGIN ---------------- */
 
 document.getElementById("startGuest")?.addEventListener("click", () => {
   window.location.href = "mainpage/guest.html";
 });
-
-/* ---------------- GOOGLE LOGIN ---------------- */
-
-/* ---------------- GOOGLE LOGIN ---------------- */
 
 document.getElementById("googleBtn")?.addEventListener("click", async () => {
   try {
@@ -101,12 +91,9 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
       prompt: "select_account"
     });
 
-    // Use popup normally
     await auth.signInWithPopup(provider);
-
   } catch (error) {
 
-    // If popup blocked (Safari / iOS), fallback to redirect
     if (
       error.code === "auth/popup-blocked" ||
       error.code === "auth/popup-closed-by-user"
@@ -119,8 +106,6 @@ document.getElementById("googleBtn")?.addEventListener("click", async () => {
     }
   }
 });
-
-/* ---------------- MANUAL LOGIN / REGISTER ---------------- */
 
 document.getElementById("manualLoginBtn")?.addEventListener("click", async () => {
 
