@@ -5,7 +5,6 @@
   --inner-bg-1: #fff1f2;
   --inner-bg-2: #f8b2a0;
 }
-/* ================= RESET ================= */
 * {
   box-sizing: border-box;
 }
@@ -20,9 +19,8 @@ body {
   font-family: 'Fredoka', sans-serif;
 }
 
-/* ================= MAIN CARD (INCREASED SIZE) ================= */
 .profile-card {
-  width: 540px;          /* ⬅ increased */
+  width: 540px;         
   max-width: 96vw;
   padding: 26px;
   border-radius: 40px;
@@ -31,7 +29,6 @@ body {
     0 40px 70px rgba(0,0,0,0.18);
 }
 
-/* ================= INNER PANEL ================= */
 .profile-inner {
    background: linear-gradient(180deg, var(--inner-bg-1), var(--inner-bg-2));
   border-radius: 30px;
@@ -41,7 +38,6 @@ body {
   padding-right: 36px;
 }
 
-/* ================= TITLE ================= */
 .profile-inner h1 {
   margin: 0;
   font-size: 26px;
@@ -55,7 +51,6 @@ body {
   margin: 8px 0 26px;
 }
 
-/* ================= NAME SECTION ================= */
 .name-section {
   background: #ffffff;
   padding: 18px;
@@ -74,7 +69,7 @@ body {
 
 .name-section input {
   width: 100%;
-  height: 56px;       /* ⬅ bigger input */
+  height: 56px;       
   border-radius: 16px;
   border: none;
   outline: none;
@@ -89,7 +84,6 @@ body {
   color: #38bdf8;
 }
 
-/* ================= AVATARS ================= */
 .choose-text {
   font-weight: 800;
   font-size: 17px;
@@ -98,12 +92,12 @@ body {
 }
 .avatar-grid {
   display: flex;
-  justify-content: space-between; /* spread evenly */
+  justify-content: space-between;
   align-items: center;
   gap: 16px;
   margin-bottom: 34px;
   padding: 0 10px;
-  flex-wrap: nowrap; /* 🚫 NO wrapping */
+  flex-wrap: nowrap; 
 }
 
 .avatar-grid img {
@@ -113,7 +107,7 @@ body {
   background: white;
   padding: 10px;
   cursor: pointer;
-  flex-shrink: 0; /* 🚫 prevents shrinking */
+  flex-shrink: 0;
 }
 
 .avatar-grid img:hover {
@@ -128,10 +122,9 @@ body {
     0 0 26px #34d399;
 }
 
-/* ================= BUTTON ================= */
 button {
   width: 100%;
-  height: 60px;      /* ⬅ bigger button */
+  height: 60px;    
   border-radius: 26px;
   border: none;
   cursor: pointer;
@@ -155,7 +148,6 @@ button:active {
   transform: scale(0.96);
 }
 
-/* ================= MOBILE ================= */
 @media (max-width: 480px) {
   .profile-card {
     width: 94vw;
@@ -172,12 +164,11 @@ button:active {
   }
 }
 
-/* ================= FLOATING BACKGROUND ================= */
 .floating-bg {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  z-index: -1; /* stays behind everything */
+  z-index: -1; 
 }
 
 .floating-bg span {
@@ -191,7 +182,6 @@ button:active {
   bottom: -150px;
 }
 
-/* different sizes & positions */
 .floating-bg span:nth-child(1) {
   left: 10%;
   width: 80px;
@@ -239,7 +229,6 @@ button:active {
   animation-delay: 6s;
 }
 
-/* animation */
 @keyframes floatUp {
   0% {
     transform: translateY(0) scale(1);
@@ -296,16 +285,16 @@ button:active {
   }
 
   .avatar-grid {
-    flex-wrap: nowrap;        /* 🚫 no wrapping */
+    flex-wrap: nowrap;       
     justify-content: space-between;
-    gap: 6px;                 /* smaller gap */
+    gap: 6px;                
     padding: 0;
   }
 
   .avatar-grid img {
-    width: 52px;              /* smaller size */
+    width: 52px;            
     height: 52px;
-    padding: 6px;             /* reduce inner padding */
+    padding: 6px;            
   }
 
   button {
