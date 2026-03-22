@@ -45,8 +45,6 @@ function saveGameScore(gameName, score) {
   }).catch(err => console.error("Score save failed", err));
 }
 
-
-
 function playWrongSound() {
   if (!wrongSound) return;
 
@@ -79,7 +77,6 @@ const data = allData.sort(() => Math.random() - 0.5).slice(0, 5);
 let index = 0;
 let totalScore = 0;
 const MAX_SCORE_PER_QUESTION = 2;
-
 
 const leftSVG = document.getElementById("leftSVG");
 const rightSVG = document.getElementById("rightSVG");
@@ -152,7 +149,6 @@ function check(symbol) {
   symbolBox.textContent = symbol;
   symbolBox.style.transform = "scale(1.2)";
 
-  // Disable buttons (no second chance)
   document.querySelectorAll(".options button").forEach(btn => {
     btn.disabled = true;
   });
@@ -197,7 +193,6 @@ function check(symbol) {
   }, 1500);
 }
 
-
 let celebrationAnim = null;
 
 function showCelebration() {
@@ -218,7 +213,6 @@ function showCelebration() {
   });
 }
 
- 
 const replayBtn = document.getElementById("replayBtn");
 const backBtn = document.getElementById("backBtn");
 
