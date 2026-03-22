@@ -83,15 +83,10 @@
         </a>
 
       </div>
-
       <button class="carousel-btn right" onclick="moveSlide(1)">❯</button>
-
     </section>
-
   </div>
 </div>
-
-
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -114,7 +109,6 @@
 
 });
 
-
   const BASE_URL = "https://brightminds-backend-3.onrender.com";
 
   // FIX: Added 'Dashboard/' prefix because index.html is in the root folder
@@ -122,8 +116,6 @@
     if (!avatarName) return "Dashboard/assets/avatars/fox.jpeg";
     return `Dashboard/assets/avatars/${avatarName}.jpeg`;
   }
-
-  /* ---------------- AVATAR ---------------- */
 
   async function loadProfileAvatar(email) {
     if (!email) return;
@@ -134,8 +126,7 @@
 
       const avatarName = (await res.text()).trim();
       const avatarImg = document.getElementById("profileAvatar");
-      
-      // Update the source using the correct path
+    
       avatarImg.src = getAvatarImage(avatarName);
 
       avatarImg.onerror = function () {
@@ -147,7 +138,6 @@
     }
   }
 
-  /* ---------------- CAROUSEL ---------------- */
   const items = document.querySelectorAll('.carousel-item');
   const track = document.querySelector('.carousel-track');
   let currentIndex = 0;
@@ -171,8 +161,6 @@
 
   window.addEventListener("load", updateCarousel);
   window.addEventListener("resize", updateCarousel);
-
-  /* ---------------- LEADERBOARD ---------------- */
 
 async function loadLeaderboard(email) {
   try {
@@ -202,7 +190,6 @@ async function loadLeaderboard(email) {
       list.appendChild(li);
     });
 
-    // ✅ Auto scroll to current user
     if (currentUserElement) {
       setTimeout(() => {
         currentUserElement.scrollIntoView({
@@ -216,9 +203,6 @@ async function loadLeaderboard(email) {
     console.error("Leaderboard load failed", err);
   }
 }
-
-  /* ---------------- FIREBASE AUTH LISTENER ---------------- */
-
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // Safety: Update localStorage in case it was cleared
@@ -232,8 +216,7 @@ async function loadLeaderboard(email) {
     }
   });
 </script>
-
-
+  
 <footer class="footer">
   <br>
   <br>
