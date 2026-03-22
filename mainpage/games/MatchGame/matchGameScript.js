@@ -28,7 +28,7 @@ const levels = {
     ]
   }
 };
-let currentCategoryKey = ""; // Global variable to track the current game type
+let currentCategoryKey = ""; 
 const gameData = {
   seasonClothes: {
     left: "Season",
@@ -268,14 +268,12 @@ async function syncScoreToDb() {
   const userEmail = localStorage.getItem("userEmail");
   if (!userEmail) return;
 
-  // Merge Category and Level into one string
   const combinedGameName = `MatchCity-${currentLevel}`;
 
   const payload = {
     email: userEmail,
-    gameName: combinedGameName, // Now sends "stateFood-easy"
+    gameName: combinedGameName, 
     score: score
-    // Notice: no 'level' field sent here
   };
 
   try {
@@ -307,8 +305,6 @@ function unlockAudioOnce() {
 }
 
 document.addEventListener("click", unlockAudioOnce, { once: true });
-
-
 const leftAnim = lottie.loadAnimation({
   container: document.getElementById("leftLottie"),
   renderer: "svg",
@@ -362,7 +358,7 @@ function getSubset(obj, count) {
 
 
 function loadGame(type) {
-currentCategoryKey = type; // Store the type (e.g., 'stateFood', 'countryCapital')
+currentCategoryKey = type; 
 
   document.getElementById("categoryHint").style.display = "none";
 
@@ -373,7 +369,6 @@ currentCategoryKey = type; // Store the type (e.g., 'stateFood', 'countryCapital
   const cfg = levels[currentLevel];
   const full = gameData[type];
   const selected = getSubset(full.data, cfg.count);
-
   currentGame = { ...full, data: selected };
 
   leftTitle.innerText = currentGame.left;
