@@ -277,14 +277,12 @@ body {
   min-height: 220px;
 }
 
-
-
 .logout-btn {
-    margin-top: auto; /* Pushes the button to the very bottom of the sidebar */
+    margin-top: auto; 
     width: 100%;
     padding: 12px;
-    background-color: #ffeded; /* Light red background */
-    color: #e74c3c; /* Alert red text */
+    background-color: #ffeded; 
+    color: #e74c3c; 
     border: 2px solid #ffcfcf;
     border-radius: 12px;
     font-weight: bold;
@@ -306,13 +304,12 @@ body {
 
 aside.profile {
     background: white;
-    border-radius: 30px; /* Matching your UI design */
+    border-radius: 30px;
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* FIX: Force it to stretch from top to bottom */
     height: 100%; 
-    min-height: 80vh; /* Ensures it looks good on different screens */
+    min-height: 80vh; 
     box-sizing: border-box; 
 }
