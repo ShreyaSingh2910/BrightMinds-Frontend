@@ -11,7 +11,6 @@
   --cta-hover: #ffb703;
 }
 
-
 * {
   box-sizing: border-box;
   font-family: 'Fredoka', sans-serif;
@@ -25,9 +24,6 @@ body {
   text-align: center;
 }
 
-/* =========================
-   FLOATING BUBBLES (FUN)
-========================= */
 .bubble {
   position: absolute;
   border-radius: 50%;
@@ -44,9 +40,6 @@ body {
   to { transform: translateY(-35px); }
 }
 
-/* =========================
-   HEADER
-========================= */
 .header {
   padding: 50px 20px 10px;
   color: #2d2a32;
@@ -63,9 +56,6 @@ body {
   color: #4a4a4a;
 }
 
-/* =========================
-   PROFILE
-========================= */
 .profile-wrapper {
   position: absolute;
   top: 40px;
@@ -96,22 +86,11 @@ body {
   border-radius: 12px;
 }
 
-/* =========================
-   LAYOUT
-========================= */
 .content-wrapper {
   display: grid;
   grid-template-columns: 320px 1fr;
   align-items: start;
 }
-
-/* =========================
-   LEADERBOARD (FUN + CLEAN)
-========================= */
-/* =========================
-   LEADERBOARD – KID FRIENDLY
-========================= */
-
 .rank-board {
   margin: 40px 0 0 30px;
   padding: 20px 18px;
@@ -123,7 +102,6 @@ body {
   box-shadow: 0 14px 28px rgba(0,0,0,0.18);
 }
 
-/* Title */
 .rank-board h3 {
   margin: 0 0 14px;
   font-size: 18px;
@@ -131,7 +109,6 @@ body {
   text-align: center;
 }
 
-/* List container */
 .rank-list {
   list-style: none;
   padding: 0;
@@ -141,37 +118,29 @@ body {
   overflow-y: auto;
 }
 
-/* Individual row */
 .rank-list li {
   display: grid;
   grid-template-columns: 36px 1fr auto;
   align-items: center;
   gap: 10px;
-
   padding: 8px 10px;
   margin-bottom: 8px;
-
   background: rgba(255,255,255,0.22);
   border-radius: 14px;
-
   font-size: 14px;
   font-weight: 600;
-
   transition: transform 0.15s ease;
 }
 
-/* ⭐ CURRENT USER */
 .rank-list li.current-user {
   background: #ffd966;   /* yellow */
   font-weight: bold;
 }
 
-/* Small hover lift */
 .rank-list li:hover {
   transform: translateY(-2px);
 }
 
-/* Rank circle */
 .rank-list span {
   width: 28px;
   height: 28px;
@@ -185,14 +154,12 @@ body {
   font-weight: 700;
 }
 
-/* Score */
 .rank-list em {
   font-style: normal;
   font-weight: 700;
   color: #d75151;
 }
 
-/* TOP 3 – SOFT MEDAL STYLE */
 .rank-list .r1 {
   background: linear-gradient(135deg,  #ffd6a5, #e79393);
   color: #000;
@@ -208,7 +175,6 @@ body {
   color: #000;
 }
 
-/* Footer */
 .rank-footer {
   margin-top: 12px;
   padding: 8px 10px;
@@ -221,10 +187,6 @@ body {
   border-radius: 14px;
 }
 
-
-/* =========================
-   GAMES (KIDS GAME HUB)
-========================= */
 .games {
   display: grid;
   grid-template-columns: repeat(3, 300px);
@@ -233,7 +195,6 @@ body {
   padding: 40px 20px;
 }
 
-/* Game card */
 .game-card {
   background: linear-gradient(180deg, #ffffff, #f7f9ff);
   border-radius: 22px;
@@ -249,12 +210,10 @@ body {
   box-shadow: 0 18px 30px rgba(0,0,0,0.3);
 }
 
-/* Color coding */
 .game-card.memory   { border-top: 8px solid #ffbe0b; }
 .game-card.quiz     { border-top: 8px solid #3a86ff; }
 .game-card.fraction { border-top: 8px solid #ff006e; }
 
-/* Badge */
 .badge {
   position: absolute;
   top: -10px;
@@ -272,13 +231,11 @@ body {
   color: #fff;
 }
 
-/* Icon */
 .icon {
   font-size: 64px;
   margin-bottom: 12px;
 }
 
-/* Text */
 .game-card h2 {
   font-size: 24px;
   margin: 8px 0;
@@ -290,7 +247,6 @@ body {
   color: #555;
 }
 
-/* Button */
 .game-card button {
   border: none;
   padding: 12px 26px;
@@ -302,17 +258,9 @@ body {
   font-weight: bold;
 }
 
-/* ==========================
-   CARD LABEL (SUBJECT TAG)
-========================== */
-/* ==========================
-   PERFECT CARD TAB LABEL
-========================== */
 .card-label {
   position: absolute;
-
   border-radius: 16px 16px 10px 10px;
-
   box-shadow: 0 4px 8px rgba(0,0,0,0.18);
   top: -3px;
   right: -3px;
@@ -324,34 +272,23 @@ body {
   font-weight: bold;
 }
 
-/* Subject colors */
 .card-label.memory  { background: #ffbe0b; }
 .card-label.english { background: #3a86ff; color:#fff; }
 .card-label.ss      { background: #ff006e;; color:#fff; }
 .card-label.science { background: #ffbe0b; color:#fff; }
 .card-label.math    { background: #ff006e; color:#fff; }
 
-
-/* Ensure card allows absolute positioning */
 .carousel-item {
   position: relative;
   overflow: hidden;
 }
 
-
-
-/* =========================
-   FOOTER
-========================= */
 .footer {
   padding: 20px;
   font-size: 14px;
   color: #2d2a32;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 @media (max-width: 1024px) {
   .content-wrapper {
     grid-template-columns: 1fr;
@@ -373,12 +310,10 @@ body {
   }
   @media (max-width: 640px) {
 
-  /* Reduce header padding */
   .header {
     padding: 35px 10px 10px;
   }
 
-  /* Smaller title */
   .header h1 {
     font-size: 24px;
   }
@@ -387,20 +322,17 @@ body {
     font-size: 13px;
   }
 
-  /* Bring profile closer */
   .profile-wrapper {
     top: 20px;
     right: 15px;
     gap: 4px;
   }
 
-  /* Smaller avatar */
   .profile-wrapper img {
     width: 48px;
     height: 48px;
   }
-
-  /* Smaller profile text */
+    
   .profile-text {
     font-size: 11px;
     padding: 3px 8px;
@@ -408,9 +340,7 @@ body {
 }
 
 }
-/* ==========================
-   CAROUSEL CONTAINER
-========================== */
+
 .carousel-container {
   position: relative;
   width: 100%;
@@ -421,14 +351,12 @@ body {
   overflow: hidden;
 }
 
-/* Track */
 .carousel-track {
   display: flex;
   gap: 40px;
   transition: transform 0.5s ease;
 }
 
-/* Game item */
 .carousel-item {
   min-width: 260px;
   max-width: 260px;
@@ -447,33 +375,28 @@ body {
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
-/* Active item (CENTER) */
 .carousel-item.active {
   opacity: 1;
   transform: scale(1.05);
   box-shadow: 0 20px 35px rgba(0,0,0,0.3);
 }
 
-/* Icons */
 .carousel-item .icon {
   font-size: 70px;
   margin-bottom: 14px;
 }
 
-/* Title */
 .carousel-item h2 {
   font-size: 22px;
   margin: 10px 0;
 }
 
-/* Text */
 .carousel-item p {
   font-size: 14px;
   color: #666;
   margin-bottom: 22px;
 }
 
-/* Button */
 .carousel-item button {
   border: none;
   padding: 12px 26px;
@@ -488,12 +411,9 @@ body {
   background: var(--cta-hover);
 }
 
-/* Color themes */
 .carousel-item.memory   { border-top: 6px solid #ffbe0b; }
 .carousel-item.quiz     { border-top: 6px solid #3a86ff; }
 .carousel-item.fraction { border-top: 6px solid #ff006e; }
-
-/* Navigation buttons */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -514,11 +434,7 @@ body {
 .carousel-btn.right {
   right: 20px;
 }
-/* ==========================
-   FIX CAROUSEL vs GRID CONFLICT
-========================== */
 
-/* Disable grid ONLY when carousel is used */
 .games.carousel-container {
   display: flex;
   align-items: center;
@@ -526,7 +442,6 @@ body {
   padding: 40px 0;
 }
 
-/* Proper centering */
 .carousel-track {
   display: flex;
   align-items: center;
@@ -535,18 +450,15 @@ body {
   will-change: transform;
 }
 
-/* Prevent leaderboard overlap */
 .carousel-container {
   position: relative;
   overflow: hidden;
 }
 
-/* Buttons ABOVE cards, not inside layout flow */
 .carousel-btn {
   z-index: 5;
 }
 
-/* Prevent cards from shrinking */
 .carousel-item {
   flex-shrink: 0;
 }
