@@ -1,19 +1,13 @@
 :root {
   --bg-main: linear-gradient(180deg, #7ee8fa, #eec0ff);
-
   --surface: #ffffff;
   --surface-soft: #f7f9ff;
-
   --text-main: #2d2a32;
   --text-muted: #6b7280;
-
   --cta: #ff9f1c;
   --cta-hover: #ffb703;
 }
 
-/* =========================
-   BASE
-========================= */
 * {
   box-sizing: border-box;
   font-family: 'Fredoka', sans-serif;
@@ -26,9 +20,6 @@ body {
   overflow: hidden;
 }
 
-/* =========================
-   LAYOUT
-========================= */
 .start-container {
   height: 100vh;
   display: flex;
@@ -37,9 +28,6 @@ body {
   position: relative;
 }
 
-/* =========================
-   LOTTIE
-========================= */
 .lottie {
   width: 220px;
   animation: float 3s ease-in-out infinite;
@@ -51,9 +39,6 @@ body {
   100% { transform: translateY(0); }
 }
 
-/* =========================
-   CENTER CARD
-========================= */
 .center-box {
   background: linear-gradient(180deg, #ffffff, #f7f9ff);
   padding: 46px;
@@ -79,9 +64,6 @@ body {
   }
 }
 
-/* =========================
-   LOGO
-========================= */
 .logo {
   width: 190px;
   margin-bottom: 14px;
@@ -94,9 +76,6 @@ body {
   75% { transform: rotate(-4deg); }
 }
 
-/* =========================
-   TEXT
-========================= */
 h1 {
   color: var(--text-main);
   font-size: 42px;
@@ -109,9 +88,6 @@ p {
   margin-bottom: 32px;
 }
 
-/* =========================
-   BUTTON (MATCH GAME CARDS)
-========================= */
 button {
   padding: 14px 42px;
   font-size: 20px;
@@ -136,27 +112,20 @@ button:active {
   transform: scale(0.95);
 }
 
-/* =========================
-   BACK BUTTON (PERFECT CIRCLE)
-========================= */
 .back-btn {
   position: absolute;
   top: 25px;
   left: 25px;
-
   width: 48px;
   height: 48px;
-  padding: 0;              /* important */
+  padding: 0;              
   border-radius: 50%;
   border: none;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 20px;
   font-weight: bold;
-
   background: rgba(255,255,255,0.7);
   backdrop-filter: blur(10px);
 
