@@ -117,8 +117,6 @@ randomSix.forEach(obj => {
 const items = document.querySelectorAll(".item");
 const bins = document.querySelectorAll(".bin");
 
-/* ---------------- DESKTOP DRAG ---------------- */
-
 items.forEach(item => {
   item.addEventListener("dragstart", () => {
     dragged = item;
@@ -136,9 +134,6 @@ bins.forEach(bin => {
   });
 
 });
-
-/* ---------------- MOBILE TOUCH DRAG ---------------- */
-/* ---------------- MOBILE TOUCH DRAG ---------------- */
 
 items.forEach(item => {
 
@@ -192,7 +187,6 @@ items.forEach(item => {
       }
     });
 
-    // ✅ If NOT dropped in bin → snap back
     if (!droppedSuccessfully) {
       item.style.position = "static";
       item.style.left = "";
@@ -204,8 +198,6 @@ items.forEach(item => {
 
 });
 
-
-/* ---------------- SHARED DROP LOGIC ---------------- */
 function handleDrop(item, bin) {
 
   const li = document.createElement("li");
@@ -217,18 +209,13 @@ function handleDrop(item, bin) {
   item.remove();
   placedCount++;
 
-  // 🎯 When all items are placed → auto check
   if (placedCount === TOTAL_ITEMS) {
     setTimeout(evaluateGame, 500);
   }
 }
 
-
-
-/* ---------------- WIN + OTHER FUNCTIONS ---------------- */
 async function showWinMessage(score) {
-
-  await saveGameScore("ScienceSpotter-StatesOfMatter", score); // ✅ WAIT
+  await saveGameScore("ScienceSpotter-StatesOfMatter", score); 
 
   document.getElementById("final-score").innerText =
     "Your Score: " + score + "/6";
@@ -244,8 +231,6 @@ async function showWinMessage(score) {
     path: "lottie/celebration.json"
   });
 }
-
-
 
 function toggleLearn() {
   const overlay = document.getElementById("learn-overlay");
