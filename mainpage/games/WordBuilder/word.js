@@ -7,7 +7,7 @@ const BASE_URL = "https://brightminds-backend-3.onrender.com";
 let gameIndex = 0;
 let skillLevel = 1;
 let currentQuestion = null;
-let score = 10; // Start with full marks
+let score = 10; 
 
 const sentenceEl = document.getElementById("sentence");
 const optionsEl = document.getElementById("options");
@@ -108,7 +108,7 @@ function handleAnswer(selected, btn) {
     wrongSound.play();
     btn.classList.add("wrong");
 
-    score--; // deduct 1 mark
+    score--; 
     if (score < 0) score = 0;
 
     updateScoreDisplay();
