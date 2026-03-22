@@ -37,7 +37,6 @@ body::after {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-
 h1 {
   font-size: 2.4rem;
   margin: 0;
@@ -78,7 +77,6 @@ h1 {
   transform: translateY(2px);
   box-shadow: 0 1px 0 #f4a261;
 }
-
 
 #score {
   margin-top: 18px;
@@ -121,7 +119,6 @@ h1 {
   letter-spacing: 1px;
 }
 
-
 .card h2::after {
   content: "";
   display: block;
@@ -131,7 +128,6 @@ h1 {
   background: #ffe066;
   margin: 6px auto 0;
 }
-
 
 .card::before {
   content: "★";
@@ -164,13 +160,11 @@ h1 {
   filter: brightness(1.05);
 }
 
-
 .item.selected {
   background: #ffeaa7;
   color: #2d3436;
   box-shadow: 0 4px 0 #f6b93b;
 }
-
 
 .item.correct {
   background: #4cd137;
@@ -353,20 +347,15 @@ h1 {
   position: fixed;
   top: 18px;
   left: 18px;
-
-  width: 42px;        /* reduced size */
+  width: 42px;      
   height: 42px;
   border-radius: 50%;
   border: none;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 18px;
   font-weight: bold;
-
-  /* Gradient matching page */
  background: linear-gradient(135deg, #9adcff, #ffb5e8);
   color: white;
 
