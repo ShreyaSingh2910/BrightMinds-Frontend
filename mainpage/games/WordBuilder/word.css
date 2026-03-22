@@ -18,7 +18,7 @@ body {
 .desktop-layout {
   display: grid;
   grid-template-columns: 300px 1fr;
-  gap: 5px; /* ⬅ reduced from 48px */
+  gap: 5px; 
   align-items: center;
   width: 100%;
   max-width: 1150px;
@@ -94,7 +94,6 @@ body {
   background: #4dabf7;
   color: white;
 }
-
 
 .learning-panel {
   border-radius: 30px;
