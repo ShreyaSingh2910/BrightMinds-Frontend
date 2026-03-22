@@ -17,7 +17,6 @@ const BASE_URL = "https://brightminds-backend-3.onrender.com";
 let totalScore = 0;
 const MAX_SCORE_PER_QUESTION = 2;
 
-// Disable HTML5 drag on touch devices
 if ('ontouchstart' in window) {
   document.querySelectorAll('.part').forEach(el => {
     el.removeAttribute('draggable');
@@ -82,7 +81,6 @@ function saveGameScore(gameName, score) {
     })
   }).catch(err => console.error("Score save failed", err));
 }
-
 
 const All_levels = [
   { left: { n: 1, d: 2 }, right: { n: 3, d: 6 } },
@@ -159,13 +157,11 @@ part.addEventListener("dragstart", () => {
   activePart = part;
 });
 
-// enable mobile drag
 enableTouchDrag(part);
 
     partsArea.appendChild(part);
   }
 }
-/* ================= MOBILE TOUCH DRAG SUPPORT ================= */
 
 function enableTouchDrag(part) {
 
@@ -205,14 +201,11 @@ function enableTouchDrag(part) {
   }, { passive: false });
 
   part.addEventListener("touchend", e => {
-
     const rect = dropZone.getBoundingClientRect();
     const touch = e.changedTouches[0];
-
     const x = touch.clientX - rect.left - 100;
     const y = touch.clientY - rect.top - 100;
 
-    // Reset styles
     part.style.position = "";
     part.style.left = "";
     part.style.top = "";
