@@ -209,11 +209,6 @@ button {
   background: linear-gradient(135deg,#7c4dff, #5e35b1);
 }
 
-/* ===============================
-   📱 MOBILE RESPONSIVE (LEVEL 1)
-   Same style as Level 2 & 3
-   =============================== */
-
 @media (max-width: 480px) {
 
   body {
@@ -237,14 +232,12 @@ button {
     margin-bottom: 16px;
   }
 
-  /* ✅ Smaller Circle */
   .whole-area {
     width: 180px;
     height: 180px;
     margin: 0 auto;
   }
 
-  /* Parts area */
   .parts-area {
     gap: 8px;
     padding: 12px;
@@ -270,7 +263,6 @@ button {
     font-size: 16px;
   }
 
-  /* Back button */
   .back-btn-small {
     height: 34px;
     width: 42px;
