@@ -17,8 +17,6 @@ function saveGameScore(gameName, score) {
   }).catch(err => console.error("Score save failed", err));
 }
 
-
-
 const bgMusic = document.getElementById("bgMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
@@ -112,7 +110,7 @@ const data = {
 };
 planets.forEach(planet => {
   planet.addEventListener("click", () => {
-    // 📝 hide start instruction on first planet click
+   
 startMessage?.classList.add("hide");
 
     if (planet.classList.contains("locked")) return;
@@ -123,7 +121,7 @@ startMessage?.classList.add("hide");
     const name = planet.dataset.name;
     current = data[name];
     hintIndex = 0;
-    planetAttempts = 0;   // reset attempts for this planet
+    planetAttempts = 0;  
 
     message.textContent = "";
     hintText.textContent = "";
@@ -153,8 +151,6 @@ options.forEach(btn => {
       document
         .querySelector(`.planet[data-name="${current.answer}"]`)
         .classList.add("locked");
-
-      // Calculate score for this planet
 let planetScore;
 
 if (planetAttempts === 1) {
@@ -209,12 +205,9 @@ hintBtn.addEventListener("click", () => {
 
 function showFinal() {
 
-  // Hide everything except popup
   document.querySelector(".solar-wrapper").style.display = "none";
   document.querySelector(".panel").style.display = "none";
   document.querySelector(".start-message").style.display = "none";
   document.querySelector(".title").style.display = "none";
-
-  // Show popup
   document.getElementById("final").classList.remove("hidden");
 }
